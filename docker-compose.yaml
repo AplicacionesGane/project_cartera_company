@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  web:
+    image: nginx:stable-alpine3.19-slim
+    container_name: web_cartera
+    restart: always
+    volumes:
+      - ./client/dist:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - api-cartera-v1
+    networks:
+      - red-gane-int
+
+  api-cartera-v1:
+    build: ./api
+    image: api-cartera:v1.1
+    container_name: api_cartera_v1
+    restart: always
+    networks:
+      - red-gane-int
+
+networks:
+  red-gane-int:
+    external: true
