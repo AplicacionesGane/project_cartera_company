@@ -9,8 +9,9 @@ table {
 }
 
 thead {
-  background-color: #ffbfbf;
+  background-color: #1466d2;
   border-radius: 10px 10px 0 0; /* Rounded top corners */
+  color: white;
 }
 
 th {

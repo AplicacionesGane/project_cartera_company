@@ -43,12 +43,13 @@ function LoginPage (): JSX.Element {
   }
 
   return (
-    <section className="w-screen h-screen flex bg-gradient-to-b from-punch-200 to-punch-300 relative">
+    <section className="w-screen h-screen flex bg-gradient-to-b">
       <figure className='w-full'>
-        <img src="logo.webp" alt="logo para cartera" className='h-full' loading='lazy'/>
+        <img src="logo.webp" alt="logo para cartera" className='h-full' loading='lazy' />
       </figure>
 
       <section className='w-full grid place-content-center'>
+        <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <form className='min-w-96 flex flex-col gap-8' onSubmit={handleSubmit}>
           <figure className='flex items-center justify-center'>
             <img src="/gane.webp" alt="logo de gane" className='w-[220px] ' />
@@ -78,7 +79,7 @@ function LoginPage (): JSX.Element {
 
       {errorString && toast.error(errorString, { description: 'Error al Iniciar Sesion', id: ' ', duration: 5000 })}
 
-      <Toaster position='top-right' duration={4000} />
+      <Toaster position='top-right' duration={4000} richColors />
 
     </section >
   )

@@ -77,7 +77,7 @@ const BasesDetalle = () => {
       <section className='flex'>
         <Card className='flex flex-col gap-2'>
           <div className='flex justify-end'>
-            <Button variant='primary' color='red' onClick={() => navigate('/bases')}>Volver Bases</Button>
+            <Button variant='primary' color='blue' onClick={() => navigate('/bases')}>Volver Bases</Button>
           </div>
           <Title className='text-center'>Datos De Vinculado</Title>
           <p><span className='font-semibold'>Nombres: </span>{data?.Seller.NOMBRES}</p>
@@ -94,15 +94,15 @@ const BasesDetalle = () => {
             <div className='flex items-center justify-between px-4'>
               <Label>Nuevo Valor Base </Label>
               <input className='w-56 rounded-md border-none' name='base' disabled={!isBaseEnabled} />
-              <div className='bg-punch-300 px-4 py-2 rounded-md'>
-                <Switch color='red' checked={isBaseEnabled} onChange={() => setIsBaseEnabled(!isBaseEnabled)} />
+              <div className='bg-blue-600 px-4 py-2 rounded-md'>
+                <Switch color='blue' checked={isBaseEnabled} onChange={() => setIsBaseEnabled(!isBaseEnabled)} />
               </div>
             </div>
             <div className='flex items-center justify-between px-4'>
               <Label>Nuevo Valor Raspe</Label>
               <input className='w-56 rounded-md border-none' name='raspe' disabled={!isRaspeEnabled} />
-              <div className='bg-punch-300 px-4 py-2 rounded-md'>
-                <Switch color='red' checked={isRaspeEnabled} onChange={() => setIsRaspeEnabled(!isRaspeEnabled)} />
+              <div className='bg-blue-600 px-4 py-2 rounded-md'>
+                <Switch color='blue' checked={isRaspeEnabled} onChange={() => setIsRaspeEnabled(!isRaspeEnabled)} />
               </div>
             </div>
             <Label>Observación:</Label>
