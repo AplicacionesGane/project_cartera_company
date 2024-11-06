@@ -10,8 +10,12 @@
     "dev": "vite"
   },
   "dependencies": {
+    "@emotion/react": "11.13.3",
+    "@emotion/styled": "11.13.0",
     "@headlessui/react": "2.0.4",
     "@headlessui/tailwindcss": "0.2.1",
+    "@mui/material": "6.1.6",
+    "@mui/x-charts": "7.22.1",
     "@remixicon/react": "4.2.0",
     "@tremor/react": "3.17.2",
     "axios": "1.7.7",
