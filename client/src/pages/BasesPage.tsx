@@ -64,18 +64,18 @@ const BasesPage = () => {
         </div>
         {
           user.sub_process === 'aux cartera'
-            ? <Button color='red' onClick={handleCreateBase}>Asignar Nueva Base</Button>
-            : <Button variant="secondary" color='red' size="sm" icon={RiLockLine}></Button>
+            ? <Button color='blue' onClick={handleCreateBase}>Asignar Nueva Base</Button>
+            : <Button variant="secondary" color='blue' size="sm" icon={RiLockLine}></Button>
         }
       </section>
         <Table className='xl:max-h-[82vh] 3xl:max-h-[85vh]'>
           <TableHead>
-            <TableRow className='border-b-2 border-punch-300 sticky top-0 bg-punch-200'>
-              <TableHeaderCell className='text-center'>#</TableHeaderCell>
-              <TableHeaderCell className='text-center'>Nombres</TableHeaderCell>
-              <TableHeaderCell className='text-center'>N° Cedula</TableHeaderCell>
-              <TableHeaderCell className='text-center cursor-pointer hover:text-blue-400' onClick={handleSort}>Base Asignada</TableHeaderCell>
-              <TableHeaderCell className='text-center'>Opciones</TableHeaderCell>
+            <TableRow className='border-b-2 border-blue-500 sticky top-0 bg-blue-600 '>
+              <TableHeaderCell className='text-center text-white'>#</TableHeaderCell>
+              <TableHeaderCell className='text-center text-white'>Nombres</TableHeaderCell>
+              <TableHeaderCell className='text-center text-white'>N° Cedula</TableHeaderCell>
+              <TableHeaderCell className='text-center text-white cursor-pointer hover:text-blue-400' onClick={handleSort}>Base Asignada</TableHeaderCell>
+              <TableHeaderCell className='text-center text-white'>Opciones</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -93,7 +93,7 @@ const BasesPage = () => {
                   {
                     user.sub_process === 'aux cartera'
                       ? <Button variant="secondary" color='yellow' size="sm" onClick={handleClick(item.VINCULADO)}>Actualizar</Button>
-                      : <Button variant="secondary" color='red' size="sm" icon={RiLockLine}></Button>
+                      : <Button variant="secondary" color='blue' size="sm" icon={RiLockLine}></Button>
                   }
                 </TableCell>
               </TableRow>
