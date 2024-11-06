@@ -16,9 +16,9 @@ export const TableDatos = ({ data, funClick }: PropsCompo) => {
   }
 
   return (
-    <Card decoration="top" decorationColor="rose" className='p-2 mt-0.5'>
+    <Card decoration="top" decorationColor="blue" className='p-2 mt-0.5'>
       <Table className='xl:max-h-[80vh] 3xl:max-h-[82vh]'>
-        <TableHead className='border-b-2 border-punch-300 sticky top-0 bg-white dark:bg-dark-tremor-brand-muted'>
+        <TableHead className='border-b-2 border-blue-600 sticky top-0 bg-white dark:bg-dark-tremor-brand-muted'>
           <TableRow className='text-xs'>
             <TableHeaderCell>Empresa</TableHeaderCell>
             <TableHeaderCell>N° Cédula</TableHeaderCell>

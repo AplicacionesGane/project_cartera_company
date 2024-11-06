@@ -23,7 +23,7 @@ const Detallado = () => {
   return (
     filterVinculado && (
       <section className=''>
-         <Card className='flex gap-4 justify-between text-xs py-2 mt-0.5' decoration="top" decorationColor="rose">
+         <Card className='flex gap-4 justify-between text-xs py-2 mt-0.5' decoration="top" decorationColor="blue">
           <div>
             <p className='text-center'>Fecha:</p>
             <p className='font-semibold'>{fecha}</p>
