@@ -14,3 +14,16 @@ export interface Recaudo {
   NOTA_CONTEO: string;
   VERSION: string;
 }
+
+interface Seller {
+  NOMBRES: string;
+}
+
+export interface DataReporte {
+  FECHA: Date;
+  VINCULADO: string;
+  VALOR: number;
+  ESTADO: 'r' | 'u';
+  NOTA_CONTEO: string;
+  Seller?: Seller;
+}
