@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Recaudo } from '../model'
+import { Recaudo, Sellers } from '../model'
 import { fn, Op } from 'sequelize';
 
 export const getRecaudo = async (req: Request, res: Response) => {
@@ -26,8 +26,6 @@ export const getRecaudo = async (req: Request, res: Response) => {
 
 export const getReportRecaudo = async (req: Request, res: Response) => {
   const { fecha1, fecha2, zona } = req.body; 
-
-  console.log(fecha1, fecha2, zona);
   
   try {
     if (!fecha1 || !fecha2 || !zona) {
@@ -41,11 +39,17 @@ export const getReportRecaudo = async (req: Request, res: Response) => {
     }
   
     const result = await Recaudo.findAll({
-      attributes: ['VINCULADO', 'VALOR', 'ESTADO', 'NOTA_CONTEO'],
+      attributes: ['FECHA', 'VINCULADO', 'VALOR', 'ESTADO', 'NOTA_CONTEO'],
       where: { 
+        ESTADO: { [Op.in]: ['u', 'r'] },
         FECHA: { [Op.between]: [fecha1, fecha2] }, 
+        NOTA_CONTEO: { [Op.ne]: '' },
         EMPRESA: zona
-      }
+      },
+      include: [{ 
+        attributes: ['NOMBRES'],
+        model: Sellers
+      }]
     })
 
     res.status(200).json(result)
