@@ -1,4 +1,5 @@
 import { Model, InferAttributes, InferCreationAttributes, DataTypes } from 'sequelize';
+import { Sellers } from '../model/sellers.model'
 import { conection } from '../connections'
 
 class Recaudo extends Model<InferAttributes<Recaudo>, InferCreationAttributes<Recaudo>>{
@@ -41,5 +42,7 @@ Recaudo.init({
   tableName: 'DETALLERECAUDO',
   timestamps: false
 })
+
+Recaudo.belongsTo(Sellers, { foreignKey: 'VINCULADO', targetKey: 'DOCUMENTO' })
 
 export { Recaudo }

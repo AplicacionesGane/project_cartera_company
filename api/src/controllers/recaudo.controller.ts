@@ -26,8 +26,6 @@ export const getRecaudo = async (req: Request, res: Response) => {
 
 export const getReportRecaudo = async (req: Request, res: Response) => {
   const { fecha1, fecha2, zona } = req.body; 
-
-  console.log(fecha1, fecha2, zona);
   
   try {
     if (!fecha1 || !fecha2 || !zona) {
