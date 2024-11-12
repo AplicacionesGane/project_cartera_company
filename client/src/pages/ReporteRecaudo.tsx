@@ -1,20 +1,9 @@
 import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@tremor/react'
+import { DataReporte } from '../types/Recaudo'
 import { API_URL } from '../utils/contanst'
 import { useState } from 'react'
 import axios from 'axios'
-
-interface Seller {
-  NOMBRES: string;
-}
-
-export interface DataReporte {
-  FECHA: Date;
-  VINCULADO: string;
-  VALOR: number;
-  ESTADO: 'r' | 'u';
-  NOTA_CONTEO: string;
-  Seller?: Seller;
-}
+import { BottonExporReporteRecaudo } from '../components/ExportReporteRecaudo'
 
 export default function ReportClienteGanadores () {
   const [date1, setDate1] = useState('')
@@ -65,6 +54,8 @@ export default function ReportClienteGanadores () {
         <label>
           <label className='text-xs'>Cantidad De Datos: {data?.length}</label>
         </label>
+
+        <BottonExporReporteRecaudo datos={data ?? []} />
 
       </div>
 
