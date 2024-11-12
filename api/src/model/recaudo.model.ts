@@ -1,27 +1,7 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { Model, InferAttributes, InferCreationAttributes, DataTypes } from 'sequelize';
 import { conection } from '../connections'
 
-export interface RecaudoAtributes {
-  FECHA: Date;
-  RECAUDADOR: string;
-  ID_RECAUDO: string;
-  CAJADNO: string;
-  VINCULADO: string;
-  VALOR: number;
-  ESTADO: string;
-  RESPALDO: string;
-  HORASYNC: string;
-  HORAMOVI: string;
-  USR_CONTEO: string;
-  HORA_CONTEO: string;
-  NOTA_CONTEO: string;
-  VERSION: string;
-  EMPRESA: string;
-}
-
-type RecaudoCreationAttributes = Optional<RecaudoAtributes, 'VINCULADO'>;
-
-class Recaudo extends Model<RecaudoAtributes, RecaudoCreationAttributes>{
+class Recaudo extends Model<InferAttributes<Recaudo>, InferCreationAttributes<Recaudo>>{
   declare FECHA: Date;
   declare RECAUDADOR: string;
   declare ID_RECAUDO: string;
