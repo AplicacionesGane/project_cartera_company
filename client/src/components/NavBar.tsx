@@ -6,7 +6,8 @@ import { useEffect, useRef, useState } from 'react'
 const Links = [
   { link: '/', name: 'Inicio' },
   { link: '/detallado', name: 'Detallado' },
-  { link: '/bases', name: 'Bases' }
+  { link: '/bases', name: 'Bases' },
+  { link: '/reportRecaudo', name: 'Reporteador' }
 ]
 
 const LinkComponent = ({ link, name }: { link: string, name: string }) => {
