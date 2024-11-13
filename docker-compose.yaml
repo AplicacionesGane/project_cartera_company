@@ -20,6 +20,8 @@ services:
     restart: always
     networks:
       - red-gane-int
+    environment:
+      - TZ=America/Bogota
 
 networks:
   red-gane-int:
