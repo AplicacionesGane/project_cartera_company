@@ -1,14 +1,15 @@
 import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@tremor/react'
 import { BottonExporReporteRecaudo } from '../components/ExportReporteRecaudo'
+import { FormEvent, useMemo, useState } from 'react'
 import { DataReporte } from '../types/Recaudo'
 import { API_URL } from '../utils/contanst'
-import { FormEvent, useState } from 'react'
 import axios from 'axios'
 
 export default function ReportClienteGanadores () {
   const [date1, setDate1] = useState('')
   const [date2, setDate2] = useState('')
   const [zona, setZona] = useState<string | undefined>(undefined)
+  const [filter, setFilter] = useState<string>('')
 
   const [data, setData] = useState<DataReporte[] | null>(null)
 
@@ -25,6 +26,11 @@ export default function ReportClienteGanadores () {
       .catch(err => console.log(err))
   }
 
+  const filteredData = useMemo(() => {
+    if (!data) return null
+    return data.filter(item => item.VINCULADO.includes(filter))
+  }, [data, filter])
+
   return (
     <>
       <Card className='flex justify-around py-2 items-center' decoration="top" decorationColor="blue">
@@ -37,6 +43,7 @@ export default function ReportClienteGanadores () {
           <input type='date' value={date2} onChange={(e) => setDate2(e.target.value)}
             className='rounded-md' />
         </div>
+
         <form className='flex gap-2 items-center' onSubmit={handleSubmitInfo}>
           <label >Empresa: </label>
           <select name='zona' className='px-4 rounded-md w-40' value={zona} onChange={ev => setZona(ev.target.value)}>
@@ -52,10 +59,15 @@ export default function ReportClienteGanadores () {
 
         <p className='flex gap-2 items-center'>
           Cantidad De Datos:
-          <span className="px-2 py-1 text-sm font-semibold text-gray-800 bg-yellow-400 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800">{data?.length || '0'}</span>
+          <span className="px-2 py-1 text-sm font-semibold text-gray-800 bg-yellow-400 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800">{filteredData?.length || '0'}</span>
         </p>
 
-        <BottonExporReporteRecaudo datos={data ?? []} />
+        <div className='flex gap-2 items-center'>
+          <label>Filtrar N° Doc</label>
+          <input type="text" placeholder='1118*****' className='rounded-md' value={filter} onChange={ev => setFilter(ev.target.value)}/>
+        </div>
+
+        <BottonExporReporteRecaudo datos={filteredData ?? []} />
 
       </Card>
 
@@ -75,7 +87,7 @@ export default function ReportClienteGanadores () {
           </TableHead>
           <TableBody className=''>
             {
-              data?.map((item, index) => (
+              filteredData?.map((item, index) => (
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{item.VINCULADO}</TableCell>
