@@ -25,5 +25,8 @@ export interface DataReporte {
   VALOR: number;
   ESTADO: 'r' | 'u';
   NOTA_CONTEO: string;
+  USR_CONTEO: string;
+  HORA_CONTEO: string;
+  EMPRESA: string;
   Seller?: Seller;
 }
