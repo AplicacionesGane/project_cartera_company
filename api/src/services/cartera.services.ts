@@ -1,11 +1,10 @@
 import { CarteraAttributes } from '../model/cartera.model';
-import { SellerAttributes } from '../model/sellers.model';
 import { BaseAtributes } from '../model/bases.model';
 import { Bases, Cartera, Sellers } from '../model'
 import { col, fn, Op, where } from 'sequelize';
 
 const carAttr: (keyof CarteraAttributes)[] = ['EMPRESA', 'VINCULADO', 'SALDO_ANT', 'DEBITO', 'CREDITO', 'NUEVOSALDO', 'RECHAZADOS', 'ACEPTADOS', 'DIGITADOS', 'VTABNET', 'VTASIISS' ,'VTASFLEX', 'VTA_S1', 'PENDIENTES_CONT']
-const sellAttr: (keyof SellerAttributes)[] = ['NOMBRES', 'NOMBRECARGO', 'CCOSTO']
+const sellAttr: (keyof Sellers)[] = ['NOMBRES', 'NOMBRECARGO', 'CCOSTO']
 const baseAttr: (keyof BaseAtributes)[] = ['BASE', 'RASPE']
 
 function absfilter(abs: boolean) {
