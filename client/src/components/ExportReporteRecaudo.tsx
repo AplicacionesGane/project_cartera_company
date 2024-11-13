@@ -4,7 +4,7 @@ import { Button } from './ui'
 import { toast } from 'sonner'
 
 const generateExcelData = (datos: DataReporte[]): unknown[] => {
-  const titulo = [{ A: 'Reporte Cartera ' }]
+  const titulo = [{ A: 'Reporte Transportes Recaudos' }]
   const headers = [
     {
       A: 'Fecha',
@@ -12,7 +12,10 @@ const generateExcelData = (datos: DataReporte[]): unknown[] => {
       C: 'Nombres',
       D: 'Valor',
       E: 'Estado',
-      F: 'Nota conteo'
+      F: 'Hora conteo',
+      G: 'Usuario conteo',
+      H: 'Empresa',
+      I: 'Nota conteo'
     }
   ]
 
@@ -22,7 +25,10 @@ const generateExcelData = (datos: DataReporte[]): unknown[] => {
     C: it.Seller?.NOMBRES ?? 'No Registrado',
     D: it.VALOR,
     E: it.ESTADO === 'r' ? 'Rechazado' : 'Aceptado',
-    F: it.NOTA_CONTEO
+    F: it.HORA_CONTEO,
+    G: it.USR_CONTEO,
+    H: it.EMPRESA === '101' ? 'Servired' : it.EMPRESA === '102' ? 'Multired' : 'Sin Empresa Asignada',
+    I: it.NOTA_CONTEO
   }))
 
   return [...titulo, ...headers, ...rows]
@@ -37,8 +43,7 @@ const createExcelFile = (data: unknown[]): void => {
   const colWidths: ColInfo[] = [
     { width: 10 }, { width: 10 }, { width: 30 }, { width: 10 }, { width: 20 },
     { width: 10 }, { width: 10 }, { width: 20 }, { width: 10 }, { width: 10 },
-    { width: 10 }, { width: 10 }, { width: 10 }, { width: 10 }, { width: 10 },
-    { width: 10 }, { width: 10 }
+    { width: 10 }, { width: 10 }, { width: 10 }
   ]
 
   hoja['!cols'] = colWidths
