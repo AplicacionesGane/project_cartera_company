@@ -20,7 +20,7 @@ interface Seller {
 }
 
 export interface DataReporte {
-  FECHA: Date;
+  FECHA: string;
   VINCULADO: string;
   VALOR: number;
   ESTADO: 'r' | 'u';

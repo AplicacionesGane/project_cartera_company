@@ -76,6 +76,7 @@ export default function ReportClienteGanadores () {
           <TableHead className='border-b-2 border-blue-600 sticky top-0 bg-white dark:bg-dark-tremor-brand-muted'>
             <TableRow className=''>
               <TableHeaderCell>N°</TableHeaderCell>
+              <TableHeaderCell>Fecha</TableHeaderCell>
               <TableHeaderCell>Vinculado</TableHeaderCell>
               <TableHeaderCell>Nombres</TableHeaderCell>
               <TableHeaderCell>Valor</TableHeaderCell>
@@ -90,6 +91,7 @@ export default function ReportClienteGanadores () {
               filteredData?.map((item, index) => (
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
+                  <TableCell>{item.FECHA}</TableCell>
                   <TableCell>{item.VINCULADO}</TableCell>
                   <TableCell>{item.Seller?.NOMBRES ?? 'No Registrado'}</TableCell>
                   <TableCell>{item.VALOR}</TableCell>
