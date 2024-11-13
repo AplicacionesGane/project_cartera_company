@@ -1,11 +1,11 @@
-import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@tremor/react'
+import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TextInput } from '@tremor/react'
 import { DataReporte } from '../types/Recaudo'
 import { API_URL } from '../utils/contanst'
 import { useState } from 'react'
 import axios from 'axios'
 import { BottonExporReporteRecaudo } from '../components/ExportReporteRecaudo'
 
-export default function ReportClienteGanadores () {
+export default function ReportClienteGanadores() {
   const [date1, setDate1] = useState('')
   const [date2, setDate2] = useState('')
   const [zona, setZona] = useState<string | undefined>(undefined)
@@ -38,26 +38,29 @@ export default function ReportClienteGanadores () {
 
   return (
     <>
-      <div className='w-full flex gap-4 px-2 pt-1 items-center border-b pb-2'>
-        <input type='date' value={date1} onChange={(e) => setDate1(e.target.value)} />
+      <Card className='flex gap-4 justify-evenly text-xs py-2 mt-0.5' decoration="top" decorationColor="blue">
 
-        <input type='date' value={date2} onChange={(e) => setDate2(e.target.value)} />
+        <div className='flex gap-2 items-center' >
+          <TextInput type='date' value={date1} onChange={(e) => setDate1(e.target.value)} />
 
+          <TextInput type='date' value={date2} onChange={(e) => setDate2(e.target.value)} />
+
+        </div>
         <form className='gap-2 flex py-2'>
           <select name='zona' className='px-4 rounded-md w-52' value={zona} onChange={handleZonaChange}>
-            <option value=''>Seleccione Empresa</option>
+            <option value=''>Seleccione La Empresa</option>
             <option value='101'>Servired</option>
             <option value='102'>Multired</option>
           </select>
         </form>
 
-        <label>
+        <div className='flex flex-col items-center'>
           <label className='text-xs'>Cantidad De Datos: {data?.length}</label>
-        </label>
+        </div>
 
         <BottonExporReporteRecaudo datos={data ?? []} />
 
-      </div>
+      </Card>
 
       <Card decoration='top' decorationColor='blue' className='p-2 mt-0.5'>
         <Table className='xl:max-h-[80vh] 3xl:max-h-[82vh]'>
@@ -79,7 +82,7 @@ export default function ReportClienteGanadores () {
                   <TableCell>{item.VINCULADO}</TableCell>
                   <TableCell>{item.Seller?.NOMBRES ?? 'No Registrado'}</TableCell>
                   <TableCell>{item.VALOR}</TableCell>
-                  <TableCell>{item.ESTADO === 'r' ? 'Rechazado' : 'Aceptado' }</TableCell>
+                  <TableCell>{item.ESTADO === 'r' ? 'Rechazado' : 'Aceptado'}</TableCell>
                   <TableCell>{item.NOTA_CONTEO}</TableCell>
                 </TableRow>
               ))
