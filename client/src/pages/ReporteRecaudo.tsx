@@ -4,12 +4,15 @@ import { FormEvent, useMemo, useState } from 'react'
 import { DataReporte } from '../types/Recaudo'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
+import AlertDialogSlide from '../components/ui/Dialog'
 
-export default function ReportClienteGanadores () {
+export default function ReportClienteGanadores() {
   const [date1, setDate1] = useState('')
   const [date2, setDate2] = useState('')
   const [zona, setZona] = useState<string | undefined>(undefined)
   const [filter, setFilter] = useState<string>('')
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogContent, setDialogContent] = useState<React.ReactNode>(null);
 
   const [data, setData] = useState<DataReporte[] | null>(null)
 
@@ -30,6 +33,23 @@ export default function ReportClienteGanadores () {
     if (!data) return null
     return data.filter(item => item.VINCULADO.includes(filter))
   }, [data, filter])
+
+  const handleRowClick = (item: DataReporte) => {
+    setDialogContent(
+      <div className="p-4 shadow-lg rounded-lg bg-white flex flex-col items-center gap-6">
+        <p className="font-bold text-gray-700"> Fecha: {item.FECHA}</p>
+        <p className="font-bold text-gray-700"> Vinculado: {item.VINCULADO}</p>
+        <p className="font-bold text-gray-700"> Nombres: {item.Seller?.NOMBRES ?? 'No Registrado'}</p>
+        <p className="font-bold text-gray-700"> Valor: {item.VALOR}</p>
+        <p className="font-bold text-gray-700"> Estado: {item.ESTADO === 'r' ? 'Rechazado' : 'Aceptado'}</p>
+        <p className="font-bold text-gray-700"> Hora conteo: {item.HORA_CONTEO}</p>
+        <p className="font-bold text-gray-700"> User conteo: {item.USR_CONTEO}</p>
+        <p className="font-bold text-gray-700"> Nota conteo: </p>
+        <p className="font-bold text-gray-700">{item.NOTA_CONTEO}</p>
+      </div>
+    );
+    setOpenDialog(true);
+  };
 
   return (
     <>
@@ -64,7 +84,7 @@ export default function ReportClienteGanadores () {
 
         <div className='flex gap-2 items-center'>
           <label>Filtrar N° Doc</label>
-          <input type="text" placeholder='1118*****' className='rounded-md' value={filter} onChange={ev => setFilter(ev.target.value)}/>
+          <input type="text" placeholder='1118*****' className='rounded-md' value={filter} onChange={ev => setFilter(ev.target.value)} />
         </div>
 
         <BottonExporReporteRecaudo datos={filteredData ?? []} />
@@ -89,7 +109,7 @@ export default function ReportClienteGanadores () {
           <TableBody className=''>
             {
               filteredData?.map((item, index) => (
-                <TableRow key={index}>
+                <TableRow key={index} onClick={() => handleRowClick(item)} style={{ cursor: 'pointer' }}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{item.FECHA}</TableCell>
                   <TableCell>{item.VINCULADO}</TableCell>
@@ -107,6 +127,9 @@ export default function ReportClienteGanadores () {
           </TableBody>
         </Table>
       </Card>
+      <AlertDialogSlide open={openDialog} onClose={() => setOpenDialog(false)} content={dialogContent} />
     </>
   )
+
+
 }
