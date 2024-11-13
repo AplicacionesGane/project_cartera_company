@@ -68,6 +68,8 @@ export default function ReportClienteGanadores () {
               <TableHeaderCell>Nombres</TableHeaderCell>
               <TableHeaderCell>Valor</TableHeaderCell>
               <TableHeaderCell>Estado</TableHeaderCell>
+              <TableHeaderCell>Hora conteo</TableHeaderCell>
+              <TableHeaderCell>User conteo</TableHeaderCell>
               <TableHeaderCell>Nota conteo</TableHeaderCell>
             </TableRow>
           </TableHead>
@@ -82,6 +84,8 @@ export default function ReportClienteGanadores () {
                   <TableCell className={item.ESTADO === 'r' ? 'text-red-400 font-semibold' : item.ESTADO === 'u' ? 'text-green-400 font-semibold' : 'text-gray-600'}>
                     {item.ESTADO === 'r' ? 'Rechazado' : 'Aceptado'}
                   </TableCell>
+                  <TableCell>{item.HORA_CONTEO}</TableCell>
+                  <TableCell>{item.USR_CONTEO}</TableCell>
                   <TableCell>{item.NOTA_CONTEO}</TableCell>
                 </TableRow>
               ))
