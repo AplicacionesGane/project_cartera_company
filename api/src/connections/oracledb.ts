@@ -1,4 +1,4 @@
-import oracledb from 'oracledb';
+import oracledb, { Pool } from 'oracledb';
 
 const USER_DB = process.env.DB_ORACLE_USER as string;
 const PASSWORD_DB = process.env.DB_ORACLE_PASS as string;
@@ -7,7 +7,7 @@ const DIR_DB = process.env.DB_ORACLE_DIR as string;
 
 oracledb.initOracleClient({ libDir: DIR_DB });
 
-export async function connectionOracle() {
+export async function connectionOracle(): Promise<Pool | Error> {
   try {
     const pool = await oracledb.createPool({
       user: USER_DB,
@@ -21,7 +21,7 @@ export async function connectionOracle() {
     return pool;
   } catch (error) {
     console.error('Error connecting to Oracle database', error);
-    return error;
+    return error as Error
   }
 }
 
