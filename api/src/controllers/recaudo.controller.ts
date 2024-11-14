@@ -1,7 +1,6 @@
-import { connectionOracle } from '../connections/oracledb';
-import { RowType } from '../types/interface';
+import { reportConsolidadoVenta } from '../services/report.services';
 import { Request, Response } from 'express';
-import { Recaudo, Sellers } from '../model'
+import { Recaudo, Sellers } from '../model';
 import { fn, Op } from 'sequelize';
 
 export const getRecaudo = async (req: Request, res: Response) => {
@@ -62,36 +61,14 @@ export const getReportRecaudo = async (req: Request, res: Response) => {
 }
 
 export const getReportOracle = async (req: Request, res: Response) => {
-  let connection;
+  const { fecha, documento } = req.body;
+
+  if(!fecha || !documento) {
+    return res.status(400).json({ message: 'Falta fecha o documento, verificar estos datos' });
+  }
+
   try {
-    const pool = await connectionOracle();
-
-    if (pool instanceof Error) {
-      return res.status(500).json({ message: 'Error en getReportOracle' });
-    }
-
-    connection = await pool.getConnection();
-
-    const { rows, metaData } = await connection.execute<RowType[]>(`
-      SELECT tvn.fecha, tvn.persona, 
-             UPPER(pe.nombres || ' ' || pe.apellido1 || ' ' || pe.apellido2) nombres, 
-             pro.razonsocial, tvn.servicio, se.nombre nombreservicio, 
-             TVN.VENTABRUTA, round(TVN.VTABRUTASINIVA, 2) vtasiniva, 
-             round(TVN.IVA, 2) iva, round(TVN.COMISION, 2) comision, 
-             round(TVN.VENTANETA, 2) ventaneta, TVN.FORMULARIOS, 
-             tvn.sucursal, IPV.NOMBRE_COMERCIAL 
-      FROM V_TOTALVENTASNEGOCIO tvn
-      JOIN proveedores pro ON TVN.PROVEEDOR = pro.nit
-      JOIN servicios se ON tvn.servicio = se.codigo
-      JOIN personas pe ON pe.documento = tvn.persona
-      JOIN info_puntosventa_cem ipv ON ipv.codigo = TVN.SUCURSAL
-      WHERE tvn.fecha = TO_DATE('12/02/2024', 'DD/MM/YYYY') 
-        AND tvn.persona = 31477050
-    `);
-
-    if (!rows) {
-      return res.status(404).json({ message: 'No se encontraron datos' });
-    }
+    const { rows, metaData } = await reportConsolidadoVenta(documento, fecha);
 
     const data = rows.map(row => {
       return metaData?.reduce((acc, meta, index) => {
@@ -104,13 +81,5 @@ export const getReportOracle = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Error en getReportOracle' });
-  } finally {
-    if (connection) {
-      try {
-        await connection.close();
-      } catch (closeError) {
-        console.error('Error closing connection', closeError);
-      }
-    }
   }
 }
