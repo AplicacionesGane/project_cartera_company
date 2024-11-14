@@ -2,48 +2,31 @@ import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow
 import { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import { API_URL } from '../utils/contanst'
+import { DataOracle } from '../types/Recaudo'
 
 function ReportOracle () {
-
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<DataOracle[] | null>(null)
   const [filter, setFilter] = useState<string>('')
-  
+
   useEffect(() => {
     axios.get(`${API_URL}/reportOracle`)
       .then(res => {
-        const transformedData = res.data.map((item: any[]) => ({
-          fecha: item[0],
-          documento: item[1],
-          nombres: item[2],
-          producto: item[3],
-          estado: item[4],
-          notaConteo: item[5],
-          notaConteo0: item[6],
-          notaConteo1: item[7],
-          notaConteo2: item[8],
-          notaConteo3: item[9],
-          notaConteo4: item[10],
-          notaConteo5: item[11],
-          codigoventa: item[12],
-          punto: item[13],
-        }));
-        setData(transformedData);
+        setData(res.data)
+        console.log('res.data', res.data)
       })
       .catch(err => {
-        console.error('Error en getRecaudo', err);
-      });
-  }, []);
-  
+        console.error('Error en getRecaudo', err)
+      })
+  }, [])
 
   const filteredData = useMemo(() => {
-    if (!data) return null;
-    return data.filter(item => item.documento && item.documento.toString().includes(filter));
-  }, [data, filter]);
-  
+    if (!data) return null
+    return data.filter(item => item.persona && item.persona.toString().includes(filter))
+  }, [data, filter])
 
   return (
-    <> 
-    <Card className='flex justify-around py-2 items-center' decoration="top" decorationColor="blue">
+    <>
+      <Card className='flex justify-around py-2 items-center' decoration="top" decorationColor="blue">
 
         <p className='flex gap-2 items-center'>
           Cantdocumentoad De Datos:
@@ -63,19 +46,19 @@ function ReportOracle () {
             <TableRow className=''>
               <TableHeaderCell>N°</TableHeaderCell>
               <TableHeaderCell>Fecha</TableHeaderCell>
-              <TableHeaderCell>documento</TableHeaderCell>
+              <TableHeaderCell>Persona</TableHeaderCell>
               <TableHeaderCell>Nombres</TableHeaderCell>
-              <TableHeaderCell>producto</TableHeaderCell>
-              <TableHeaderCell>Estado</TableHeaderCell>
-              <TableHeaderCell>Nota conteo</TableHeaderCell>
-              <TableHeaderCell>Nota conteo</TableHeaderCell>
-              <TableHeaderCell>Nota conteo</TableHeaderCell>
-              <TableHeaderCell>Nota conteo</TableHeaderCell>
-              <TableHeaderCell>Nota conteo</TableHeaderCell>
-              <TableHeaderCell>Nota conteo</TableHeaderCell>
-              <TableHeaderCell>Nota conteo</TableHeaderCell>
-              <TableHeaderCell>Codigo PV</TableHeaderCell>
-              <TableHeaderCell>Punto de Venta</TableHeaderCell>
+              <TableHeaderCell>Razón Social</TableHeaderCell>
+              <TableHeaderCell>Servicio</TableHeaderCell>
+              <TableHeaderCell>Nombre Servicio</TableHeaderCell>
+              <TableHeaderCell>Venta Bruta</TableHeaderCell>
+              <TableHeaderCell>Venta Sin IVA</TableHeaderCell>
+              <TableHeaderCell>IVA</TableHeaderCell>
+              <TableHeaderCell>Comisión</TableHeaderCell>
+              <TableHeaderCell>Venta Neta</TableHeaderCell>
+              <TableHeaderCell>Formularios</TableHeaderCell>
+              <TableHeaderCell>Sucursal</TableHeaderCell>
+              <TableHeaderCell>Nombre Comercial</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -84,19 +67,19 @@ function ReportOracle () {
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{item.fecha}</TableCell>
-                  <TableCell>{item.documento}</TableCell>
+                  <TableCell>{item.persona}</TableCell>
                   <TableCell>{item.nombres}</TableCell>
-                  <TableCell>{item.producto}</TableCell>
-                  <TableCell>{item.estado}</TableCell>
-                  <TableCell>{item.notaConteo}</TableCell>
-                  <TableCell>{item.notaConteo0}</TableCell>
-                  <TableCell>{item.notaConteo1}</TableCell>
-                  <TableCell>{item.notaConteo2}</TableCell>
-                  <TableCell>{item.notaConteo3}</TableCell>
-                  <TableCell>{item.notaConteo4}</TableCell>
-                  <TableCell>{item.notaConteo5}</TableCell>
-                  <TableCell>{item.codigoventa}</TableCell>
-                  <TableCell>{item.punto}</TableCell>
+                  <TableCell>{item.razonsocial}</TableCell>
+                  <TableCell>{item.servicio}</TableCell>
+                  <TableCell>{item.nombreservicio}</TableCell>
+                  <TableCell>{item.ventabruta}</TableCell>
+                  <TableCell>{item.vtasiniva}</TableCell>
+                  <TableCell>{item.iva}</TableCell>
+                  <TableCell>{item.comision}</TableCell>
+                  <TableCell>{item.ventaneta}</TableCell>
+                  <TableCell>{item.formularios}</TableCell>
+                  <TableCell>{item.sucursal}</TableCell>
+                  <TableCell>{item.nombre_comercial}</TableCell>
                 </TableRow>
               ))
             }

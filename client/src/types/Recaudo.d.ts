@@ -30,3 +30,20 @@ export interface DataReporte {
   EMPRESA: string;
   Seller?: Seller;
 }
+
+export interface DataOracle {
+  fecha: string;
+  persona: string;
+  nombres: string;
+  razonsocial: string;
+  servicio: string;
+  nombreservicio: string;
+  ventabruta: string;
+  vtasiniva: string;
+  iva: string;
+  comision: string;
+  ventaneta: string;
+  formularios: string;
+  sucursal: string;
+  nombre_comercial: string;
+}
