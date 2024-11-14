@@ -70,11 +70,11 @@ export const getReportOracle = async (req: Request, res: Response) => {
 
     const connection = await pool.getConnection();
 
-    const result = await connection.execute("SELECT tvn.fecha, tvn.persona, upper(pe.nombres||' '||pe.apellido1||''||pe.apellido2) nombres, pro.razonsocial, tvn.servicio, se.nombre nombreservicio, TVN.VENTABRUTA, round(TVN.VTABRUTASINIVA,2)vtasiniva, round(TVN.IVA,2) iva, round(TVN.COMISION,2) comision, round(TVN.VENTANETA,2) ventaneta, TVN.FORMULARIOS, tvn.sucursal, IPV.NOMBRE_COMERCIAL from V_TOTALVENTASNEGOCIO tvn, proveedores pro, servicios se, personas pe, info_puntosventa_cem ipv WHERE tvn.fecha=to_date('12/02/2024','DD/MM/YYYY') and TVN.PROVEEDOR=pro.nit and tvn.servicio=se.codigo and pe.documento=tvn.persona and ipv.codigo=TVN.SUCURSAL and tvn.persona=31477050");
+    const { rows } = await connection.execute("SELECT tvn.fecha, tvn.persona, upper(pe.nombres||' '||pe.apellido1||''||pe.apellido2) nombres, pro.razonsocial, tvn.servicio, se.nombre nombreservicio, TVN.VENTABRUTA, round(TVN.VTABRUTASINIVA,2)vtasiniva, round(TVN.IVA,2) iva, round(TVN.COMISION,2) comision, round(TVN.VENTANETA,2) ventaneta, TVN.FORMULARIOS, tvn.sucursal, IPV.NOMBRE_COMERCIAL from V_TOTALVENTASNEGOCIO tvn, proveedores pro, servicios se, personas pe, info_puntosventa_cem ipv WHERE tvn.fecha=to_date('12/02/2024','DD/MM/YYYY') and TVN.PROVEEDOR=pro.nit and tvn.servicio=se.codigo and pe.documento=tvn.persona and ipv.codigo=TVN.SUCURSAL and tvn.persona=31477050");
 
     await connection.close();
 
-    return res.status(200).json(result);
+    return res.status(200).json(rows);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Error'});
