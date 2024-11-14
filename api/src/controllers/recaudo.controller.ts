@@ -67,8 +67,10 @@ export const getReportOracle = async (req: Request, res: Response) => {
     return res.status(400).json({ message: 'Falta fecha o documento, verificar estos datos' });
   }
 
+  const formattedDate = fecha.split('-').reverse().join('/');
+
   try {
-    const { rows, metaData } = await reportConsolidadoVenta(documento, fecha);
+    const { rows, metaData } = await reportConsolidadoVenta(formattedDate, documento);
 
     const data = rows.map(row => {
       return metaData?.reduce((acc, meta, index) => {

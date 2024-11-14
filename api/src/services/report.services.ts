@@ -2,7 +2,7 @@ import { connectionOracle } from '../connections/oracledb';
 import { Connection } from 'oracledb';
 import { RowType } from '../types/interface';
 
-export async function reportConsolidadoVenta(documento: number, fecha: string) {
+export async function reportConsolidadoVenta(fecha: string, documento: number,) {
   let connection: Connection | undefined;
 
   const pool = await connectionOracle();
