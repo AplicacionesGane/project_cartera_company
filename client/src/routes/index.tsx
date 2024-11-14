@@ -11,6 +11,9 @@ const BasesDetalle = lazy(() => import('../pages/BasesDetalle'))
 const AsignarNewBase = lazy(() => import('../pages/AsignarNewBase'))
 const RecaudoDetail = lazy(() => import('../pages/RecaudoDetail'))
 const ReporteRecaudo = lazy(() => import('../pages/ReporteRecaudo'))
+const ReportOracle = lazy(() => import('../pages/ReportOracle'))
+
+
 
 const router = createBrowserRouter([
   {
@@ -71,6 +74,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <ReporteRecaudo />
+          </Suspense>
+        )
+      },
+      {
+        path: '/Reporte',
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <ReportOracle />
           </Suspense>
         )
       },
