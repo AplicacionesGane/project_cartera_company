@@ -41,3 +41,19 @@ export interface ObjectCartera {
   Cargo: string;
 }
 
+export type RowType = [
+  string,  // fecha
+  number,  // persona
+  string,  // nombres
+  string,  // razonsocial
+  number,  // servicio
+  string,  // nombreservicio
+  number,  // VENTABRUTA
+  number,  // vtasiniva
+  number,  // iva
+  number,  // comision
+  number,  // ventaneta
+  number,  // FORMULARIOS
+  number,  // sucursal
+  string   // NOMBRE_COMERCIAL
+];
