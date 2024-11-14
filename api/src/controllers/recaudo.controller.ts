@@ -1,4 +1,5 @@
 import { connectionOracle } from '../connections/oracledb';
+import { RowType } from '../types/interface';
 import { Request, Response } from 'express';
 import { Recaudo, Sellers } from '../model'
 import { fn, Op } from 'sequelize';
@@ -61,6 +62,7 @@ export const getReportRecaudo = async (req: Request, res: Response) => {
 }
 
 export const getReportOracle = async (req: Request, res: Response) => {
+  let connection;
   try {
     const pool = await connectionOracle();
 
@@ -68,15 +70,47 @@ export const getReportOracle = async (req: Request, res: Response) => {
       return res.status(500).json({ message: 'Error en getReportOracle' });
     }
 
-    const connection = await pool.getConnection();
+    connection = await pool.getConnection();
 
-    const { rows } = await connection.execute("SELECT tvn.fecha, tvn.persona, upper(pe.nombres||' '||pe.apellido1||''||pe.apellido2) nombres, pro.razonsocial, tvn.servicio, se.nombre nombreservicio, TVN.VENTABRUTA, round(TVN.VTABRUTASINIVA,2)vtasiniva, round(TVN.IVA,2) iva, round(TVN.COMISION,2) comision, round(TVN.VENTANETA,2) ventaneta, TVN.FORMULARIOS, tvn.sucursal, IPV.NOMBRE_COMERCIAL from V_TOTALVENTASNEGOCIO tvn, proveedores pro, servicios se, personas pe, info_puntosventa_cem ipv WHERE tvn.fecha=to_date('12/02/2024','DD/MM/YYYY') and TVN.PROVEEDOR=pro.nit and tvn.servicio=se.codigo and pe.documento=tvn.persona and ipv.codigo=TVN.SUCURSAL and tvn.persona=31477050");
+    const { rows, metaData } = await connection.execute<RowType[]>(`
+      SELECT tvn.fecha, tvn.persona, 
+             UPPER(pe.nombres || ' ' || pe.apellido1 || ' ' || pe.apellido2) nombres, 
+             pro.razonsocial, tvn.servicio, se.nombre nombreservicio, 
+             TVN.VENTABRUTA, round(TVN.VTABRUTASINIVA, 2) vtasiniva, 
+             round(TVN.IVA, 2) iva, round(TVN.COMISION, 2) comision, 
+             round(TVN.VENTANETA, 2) ventaneta, TVN.FORMULARIOS, 
+             tvn.sucursal, IPV.NOMBRE_COMERCIAL 
+      FROM V_TOTALVENTASNEGOCIO tvn
+      JOIN proveedores pro ON TVN.PROVEEDOR = pro.nit
+      JOIN servicios se ON tvn.servicio = se.codigo
+      JOIN personas pe ON pe.documento = tvn.persona
+      JOIN info_puntosventa_cem ipv ON ipv.codigo = TVN.SUCURSAL
+      WHERE tvn.fecha = TO_DATE('12/02/2024', 'DD/MM/YYYY') 
+        AND tvn.persona = 31477050
+    `);
 
-    await connection.close();
+    if (!rows) {
+      return res.status(404).json({ message: 'No se encontraron datos' });
+    }
 
-    return res.status(200).json(rows);
+    const data = rows.map(row => {
+      return metaData?.reduce((acc, meta, index) => {
+        acc[meta.name.toLowerCase()] = row[index];
+        return acc;
+      }, {} as Record<string, any>);
+    });
+
+    return res.status(200).json(data);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Error'});
+    return res.status(500).json({ message: 'Error en getReportOracle' });
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (closeError) {
+        console.error('Error closing connection', closeError);
+      }
+    }
   }
 }
