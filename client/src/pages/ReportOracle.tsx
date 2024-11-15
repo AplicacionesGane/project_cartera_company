@@ -1,9 +1,10 @@
 import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@tremor/react'
-import { FormEvent, useState } from 'react'
+import { BottonExporReporteConsolidado } from '../components/ExportConsolidado'
+import { LoadingSvg } from '../components/icons'
 import { DataOracle } from '../types/Recaudo'
+import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
-import { LoadingSvg } from '../components/icons'
 
 function ReportOracle () {
   const [data, setData] = useState<DataOracle[] | null>(null)
@@ -51,6 +52,8 @@ function ReportOracle () {
           <button type='submit'
             className='p-2 bg-green-600 rounded-md text-white hover:bg-green-500'>Buscar</button>
         </form>
+
+        <BottonExporReporteConsolidado datos={data || []} />
 
       </Card>
 
