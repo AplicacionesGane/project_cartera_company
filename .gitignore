@@ -3,3 +3,6 @@ dist
 .env
 node-v22.5.1-linux-x64.tar.xz
 package-lock.json
+
+instantclient_11_2
+tnsnames.ora
