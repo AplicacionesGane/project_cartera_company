@@ -41,9 +41,9 @@ function ResumenRecaudo ({ datos, name }: { datos: DatesI[], name: string }) {
         <Table>
           <TableHead>
             <TableRow className='bg-blue-600'>
-              <TableHeaderCell>Estado</TableHeaderCell>
-              <TableHeaderCell>Cant Recaudo</TableHeaderCell>
-              <TableHeaderCell>Total</TableHeaderCell>
+              <TableHeaderCell className='text-white'>Estado</TableHeaderCell>
+              <TableHeaderCell className='text-white'>Cant Recaudo</TableHeaderCell>
+              <TableHeaderCell className='text-white'>Total</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>

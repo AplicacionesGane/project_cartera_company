@@ -1,13 +1,15 @@
-import { Button, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@tremor/react'
-import { formatPesoColombia } from '../utils/funtions'
-import { Input, Label } from '../components/ui'
+import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/TableTremor'
+import { Input } from '../components/ui/InputTremor'
+import { formatValue } from '../utils/funtions'
+import { Label } from '../components/ui'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
-import { RiLockLine } from '@remixicon/react'
 import { useEffect, useState } from 'react'
 import { BasesI } from '../types/Bases'
 import axios from 'axios'
 import { API_URL } from '../utils/contanst'
+import { Button } from '../components/ui/ButtonTremor'
+import { Badge } from '../components/BadgeTremor'
 
 const BasesPage = () => {
   const [data, setData] = useState<BasesI[]>([])
@@ -57,49 +59,58 @@ const BasesPage = () => {
   return (
     <section className=''>
       <section className='flex justify-around py-2 w-full'>
-        <div className='flex items-center gap-2 w-96'>
+        <div className='flex items-center gap-2'>
           <Label>Vinculado: </Label>
-          <Input type="text" placeholder="Buscar por cédula" onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded-md" value={vinculado} />
+          <Input type="text" placeholder="1118********" onChange={handleChange} value={vinculado} />
+        </div>
+        <div className='flex items-center gap-2 text-gray-600'>
+          <p>N° Datos:</p>
+          <Badge variant='warning'>
+            {filteredData.length}
+          </Badge>
         </div>
         {
           user.sub_process === 'aux cartera'
-            ? <Button color='blue' onClick={handleCreateBase}>Asignar Nueva Base</Button>
-            : <Button variant="secondary" color='blue' size="sm" icon={RiLockLine}></Button>
+            ? <Button onClick={handleCreateBase}>Asignar Nueva Base</Button>
+            : <Button variant='ghost'></Button>
         }
       </section>
-        <Table className='xl:max-h-[82vh] 3xl:max-h-[85vh]'>
-          <TableHead>
-            <TableRow className='border-b-2 border-blue-500 sticky top-0 bg-blue-600 '>
-              <TableHeaderCell className='text-center text-white'>#</TableHeaderCell>
-              <TableHeaderCell className='text-center text-white'>Nombres</TableHeaderCell>
-              <TableHeaderCell className='text-center text-white'>N° Cedula</TableHeaderCell>
-              <TableHeaderCell className='text-center text-white cursor-pointer hover:text-blue-400' onClick={handleSort}>Base Asignada</TableHeaderCell>
-              <TableHeaderCell className='text-center text-white'>Opciones</TableHeaderCell>
+      <TableRoot className='h-[83vh]'>
+        <Table>
+          <TableHead className='sticky top-0 bg-gray-100 z-30'>
+            <TableRow>
+              <TableHeaderCell>#</TableHeaderCell>
+              <TableHeaderCell>Nombres</TableHeaderCell>
+              <TableHeaderCell>N° Cedula</TableHeaderCell>
+              <TableHeaderCell onClick={handleSort} className='cursor-pointer hover:text-red-400'>
+                Base Asignada ...
+              </TableHeaderCell>
+              <TableHeaderCell>Opciones</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filteredData.map((item, index) => (
               <TableRow key={item.VINCULADO}>
-                <TableCell className='text-center'>{index + 1}</TableCell>
-                <TableCell >{item.Seller.NOMBRES}</TableCell>
-                <TableCell className='text-center'>
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{item.Seller.NOMBRES}</TableCell>
+                <TableCell>
                   {item.VINCULADO}
                 </TableCell>
-                <TableCell className='text-center'>
-                  {formatPesoColombia(item.BASE)}
+                <TableCell>
+                  {formatValue(item.BASE)}
                 </TableCell>
-                <TableCell className='text-center'>
+                <TableCell>
                   {
                     user.sub_process === 'aux cartera'
-                      ? <Button variant="secondary" color='yellow' size="sm" onClick={handleClick(item.VINCULADO)}>Actualizar</Button>
-                      : <Button variant="secondary" color='blue' size="sm" icon={RiLockLine}></Button>
+                      ? <Button variant='primary' onClick={handleClick(item.VINCULADO)}>Actualizar</Button>
+                      : <Button variant='ghost' ></Button>
                   }
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+      </TableRoot>
     </section>
   )
 }

@@ -44,12 +44,12 @@ export function TableInfo ({ data }: { data: DataIU[] }) {
           <Table>
             <TableHead className='bg-blue-600'>
               <TableRow>
-                <TableHeaderCell>Empresa</TableHeaderCell>
-                <TableHeaderCell>Caj Comercial</TableHeaderCell>
-                <TableHeaderCell>Col Independiente</TableHeaderCell>
-                <TableHeaderCell>Caj Tesorería</TableHeaderCell>
-                <TableHeaderCell>Vendedor</TableHeaderCell>
-                <TableHeaderCell>No definido</TableHeaderCell>
+                <TableHeaderCell className='text-white'>Empresa</TableHeaderCell>
+                <TableHeaderCell className='text-white'>Caj Comercial</TableHeaderCell>
+                <TableHeaderCell className='text-white'>Col Independiente</TableHeaderCell>
+                <TableHeaderCell className='text-white'>Caj Tesorería</TableHeaderCell>
+                <TableHeaderCell className='text-white'>Vendedor</TableHeaderCell>
+                <TableHeaderCell className='text-white'>No definido</TableHeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
