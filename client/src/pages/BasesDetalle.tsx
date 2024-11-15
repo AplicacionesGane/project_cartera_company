@@ -1,8 +1,10 @@
 import { Button as ButtonMe, Label } from '../components/ui'
-import { Card, Switch, Title, Button } from '@tremor/react'
+import { Card } from '../components/CardTremor'
+import { Switch } from '../components/SwitchTremor'
+import { Button } from '../components/ui/ButtonTremor'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BasesI, BasesIUpdates } from '../types/Bases'
-import { formatPesoColombia } from '../utils/funtions'
+import { formatValue } from '../utils/funtions'
 import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
 import { API_URL } from '../utils/contanst'
@@ -74,35 +76,35 @@ const BasesDetalle = () => {
 
   return (
     <>
-      <section className='flex'>
+      <section className='flex gap-2'>
         <Card className='flex flex-col gap-2'>
           <div className='flex justify-end'>
             <Button variant='primary' color='blue' onClick={() => navigate('/bases')}>Volver Bases</Button>
           </div>
-          <Title className='text-center'>Datos De Vinculado</Title>
+          <h1 className='text-center'>Datos De Vinculado</h1>
           <p><span className='font-semibold'>Nombres: </span>{data?.Seller.NOMBRES}</p>
           <p><span className='font-semibold'>N° Documento: </span>{data?.VINCULADO}</p>
           <div className='h-full flex justify-around items-center'>
-            <p className='p-2 rounded-md bg-yellow-200'>Valor Base: <span className='font-semibold'>{formatPesoColombia(data?.BASE as number)}</span></p>
-            <p className='p-2 rounded-md bg-yellow-200'>Valor Raspe: <span className='font-semibold'>{formatPesoColombia(data?.RASPE as number)}</span> </p>
+            <p className='p-2 rounded-md bg-yellow-200'>Valor Base: <span className='font-semibold'>{formatValue(data?.BASE as number)}</span></p>
+            <p className='p-2 rounded-md bg-yellow-200'>Valor Raspe: <span className='font-semibold'>{formatValue(data?.RASPE as number)}</span> </p>
           </div>
           <p className='max-h-10'>Observación Actual: <span className='font-semibold'>{data?.OBSERVACION}</span></p>
         </Card>
         <Card className='flex flex-col'>
-          <Title className='text-center pb-2'>Actualizar Base</Title>
+          <h1 className='text-center pb-2'>Actualizar Base</h1>
           <form ref={formRef} className='bg-slate-200 p-2 rounded-md flex flex-col gap-3' onSubmit={handleSubmit}>
             <div className='flex items-center justify-between px-4'>
               <Label>Nuevo Valor Base </Label>
               <input className='w-56 rounded-md border-none' name='base' disabled={!isBaseEnabled} />
-              <div className='bg-blue-600 px-4 py-2 rounded-md'>
-                <Switch color='blue' checked={isBaseEnabled} onChange={() => setIsBaseEnabled(!isBaseEnabled)} />
+              <div className='bg-blue-200 px-4 py-2 rounded-md'>
+                <Switch color='blue' checked={isBaseEnabled} onCheckedChange={() => setIsBaseEnabled(!isBaseEnabled)} />
               </div>
             </div>
             <div className='flex items-center justify-between px-4'>
               <Label>Nuevo Valor Raspe</Label>
               <input className='w-56 rounded-md border-none' name='raspe' disabled={!isRaspeEnabled} />
-              <div className='bg-blue-600 px-4 py-2 rounded-md'>
-                <Switch color='blue' checked={isRaspeEnabled} onChange={() => setIsRaspeEnabled(!isRaspeEnabled)} />
+              <div className='bg-blue-200 px-4 py-2 rounded-md'>
+                <Switch color='blue' checked={isRaspeEnabled} onCheckedChange={() => setIsRaspeEnabled(!isRaspeEnabled)} />
               </div>
             </div>
             <Label>Observación:</Label>
