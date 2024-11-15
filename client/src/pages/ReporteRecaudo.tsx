@@ -1,19 +1,17 @@
-import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@tremor/react'
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TableRoot } from '../components/TableTremor'
 import { BottonExporReporteRecaudo } from '../components/ExportReporteRecaudo'
 import { FormEvent, useMemo, useState } from 'react'
+import { Card } from '../components/CardTremor'
 import { DataReporte } from '../types/Recaudo'
 import { API_URL } from '../utils/contanst'
-import axios from 'axios'
-import AlertDialogSlide from '../components/ui/Dialog'
 import { toast } from 'sonner'
+import axios from 'axios'
 
-export default function ReportClienteGanadores() {
+export default function ReportClienteGanadores () {
   const [date1, setDate1] = useState('')
   const [date2, setDate2] = useState('')
   const [zona, setZona] = useState<string | undefined>(undefined)
   const [filter, setFilter] = useState<string>('')
-  const [openDialog, setOpenDialog] = useState(false);
-  const [dialogContent, setDialogContent] = useState<React.ReactNode>(null);
 
   const [data, setData] = useState<DataReporte[] | null>(null)
 
@@ -21,7 +19,7 @@ export default function ReportClienteGanadores() {
     e.preventDefault()
 
     if (date1 === '' || date2 === '' || zona === '') {
-      toast.error("Por favor llene todos los campos, fecha inicial fecha final y zona")
+      toast.error('Por favor llene todos los campos, fecha inicial fecha final y zona')
       return
     }
 
@@ -35,25 +33,9 @@ export default function ReportClienteGanadores() {
     return data.filter(item => item.VINCULADO.includes(filter))
   }, [data, filter])
 
-  const handleRowClick = (item: DataReporte) => {
-    setDialogContent(
-      <div className="grid grid-cols-1 md:grid-cols-2 p-4 shadow-lg rounded-lg bg-white items-center gap-6">
-        <p className="font-bold text-gray-700"> Fecha: {item.FECHA}</p>
-        <p className="font-bold text-gray-700"> Vinculado: {item.VINCULADO}</p>
-        <p className="font-bold text-gray-700"> Nombres: {item.Seller?.NOMBRES ?? 'No Registrado'}</p>
-        <p className="font-bold text-gray-700"> Valor: {item.VALOR}</p>
-        <p className="font-bold text-gray-700"> Estado: {item.ESTADO === 'r' ? 'Rechazado' : 'Aceptado'}</p>
-        <p className="font-bold text-gray-700"> Hora conteo: {item.HORA_CONTEO}</p>
-        <p className="font-bold text-gray-700"> User conteo: {item.USR_CONTEO}</p>
-        <p className="font-bold text-gray-700"> Nota conteo: {item.NOTA_CONTEO}</p>
-      </div>
-    );
-    setOpenDialog(true);
-  };
-
   return (
     <>
-      <Card className='flex justify-around py-2 items-center' decoration="top" decorationColor="blue">
+      <Card className='flex justify-around items-center'>
 
         <div className='flex gap-2 items-center' >
           <label>Fecha Inicial</label>
@@ -73,12 +55,12 @@ export default function ReportClienteGanadores() {
           </select>
 
           <button type='submit' className='bg-green-600 py-2 px-4 rounded-md text-white hover:bg-green-500'>
-            Solicitar Reporte
+            Buscar
           </button>
         </form>
 
         <p className='flex gap-2 items-center'>
-          Cantidad De Datos:
+          N° Datos:
           <span className="px-2 py-1 text-sm font-semibold text-gray-800 bg-yellow-400 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800">{filteredData?.length || '0'}</span>
         </p>
 
@@ -91,45 +73,44 @@ export default function ReportClienteGanadores() {
 
       </Card>
 
-      <Card decoration='top' decorationColor='blue' className='p-2 mt-0.5'>
-        <Table className='xl:max-h-[80vh] 3xl:max-h-[82vh]'>
-          <TableHead className='border-b-2 border-blue-600 sticky top-0 bg-white dark:bg-dark-tremor-brand-muted'>
-            <TableRow className=''>
-              <TableHeaderCell>N°</TableHeaderCell>
-              <TableHeaderCell>Fecha</TableHeaderCell>
-              <TableHeaderCell>Vinculado</TableHeaderCell>
-              <TableHeaderCell>Nombres</TableHeaderCell>
-              <TableHeaderCell>Valor</TableHeaderCell>
-              <TableHeaderCell>Estado</TableHeaderCell>
-              <TableHeaderCell>Hora conteo</TableHeaderCell>
-              <TableHeaderCell>User conteo</TableHeaderCell>
-              <TableHeaderCell>Nota conteo</TableHeaderCell>
-            </TableRow>
-          </TableHead>
-          <TableBody className=''>
-            {
-              filteredData?.map((item, index) => (
-                <TableRow key={index} onClick={() => handleRowClick(item)} style={{ cursor: 'pointer' }}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{item.FECHA}</TableCell>
-                  <TableCell>{item.VINCULADO}</TableCell>
-                  <TableCell>{item.Seller?.NOMBRES ?? 'No Registrado'}</TableCell>
-                  <TableCell>{item.VALOR}</TableCell>
-                  <TableCell className={item.ESTADO === 'r' ? 'text-red-400 font-semibold' : item.ESTADO === 'u' ? 'text-green-400 font-semibold' : 'text-gray-600'}>
-                    {item.ESTADO === 'r' ? 'Rechazado' : 'Aceptado'}
-                  </TableCell>
-                  <TableCell>{item.HORA_CONTEO}</TableCell>
-                  <TableCell>{item.USR_CONTEO}</TableCell>
-                  <TableCell>{item.NOTA_CONTEO}</TableCell>
-                </TableRow>
-              ))
-            }
-          </TableBody>
-        </Table>
+      <Card>
+        <TableRoot className='h-[80vh] overflow-y-auto'>
+          <Table>
+            <TableHead className='sticky top-0 bg-gray-100'>
+              <TableRow>
+                <TableHeaderCell>N°</TableHeaderCell>
+                <TableHeaderCell>Fecha</TableHeaderCell>
+                <TableHeaderCell>Vinculado</TableHeaderCell>
+                <TableHeaderCell>Nombres</TableHeaderCell>
+                <TableHeaderCell>Valor</TableHeaderCell>
+                <TableHeaderCell>Estado</TableHeaderCell>
+                <TableHeaderCell>Hora conteo</TableHeaderCell>
+                <TableHeaderCell>User conteo</TableHeaderCell>
+                <TableHeaderCell>Nota conteo</TableHeaderCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className=''>
+              {
+                filteredData?.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{item.FECHA}</TableCell>
+                    <TableCell>{item.VINCULADO}</TableCell>
+                    <TableCell>{item.Seller?.NOMBRES ?? 'No Registrado'}</TableCell>
+                    <TableCell>{item.VALOR}</TableCell>
+                    <TableCell className={item.ESTADO === 'r' ? 'text-red-400 font-semibold' : item.ESTADO === 'u' ? 'text-green-400 font-semibold' : 'text-gray-600'}>
+                      {item.ESTADO === 'r' ? 'Rechazado' : 'Aceptado'}
+                    </TableCell>
+                    <TableCell>{item.HORA_CONTEO}</TableCell>
+                    <TableCell>{item.USR_CONTEO}</TableCell>
+                    <TableCell>{item.NOTA_CONTEO}</TableCell>
+                  </TableRow>
+                ))
+              }
+            </TableBody>
+          </Table>
+        </TableRoot>
       </Card>
-      <AlertDialogSlide open={openDialog} onClose={() => setOpenDialog(false)} content={dialogContent} />
     </>
   )
-
-
 }

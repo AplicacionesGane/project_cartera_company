@@ -1,6 +1,7 @@
-import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@tremor/react'
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TableRoot } from '../components/TableTremor'
 import { BottonExporReporteConsolidado } from '../components/ExportConsolidado'
 import { LoadingSvg } from '../components/icons'
+import { Card } from '../components/CardTremor'
 import { DataOracle } from '../types/Recaudo'
 import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
@@ -30,8 +31,8 @@ function ReportOracle () {
   }
 
   return (
-    <section className='relative'>
-      <Card className='flex justify-around py-2 items-center' decoration='top' decorationColor='blue'>
+    <>
+      <Card className='flex justify-around'>
 
         <p className='flex gap-2 items-center'>
           Cantida Datos:
@@ -57,51 +58,53 @@ function ReportOracle () {
 
       </Card>
 
-      <Card decoration='top' decorationColor='blue' className='p-2 mt-0.5'>
-        <Table className='xl:max-h-[80vh] 3xl:max-h-[82vh]'>
-          <TableHead className='border-b-2 border-blue-600 sticky top-0 bg-white dark:bg-dark-tremor-brand-muted'>
-            <TableRow className=''>
-              <TableHeaderCell>N°</TableHeaderCell>
-              <TableHeaderCell>Fecha</TableHeaderCell>
-              <TableHeaderCell>Persona</TableHeaderCell>
-              <TableHeaderCell>Nombres</TableHeaderCell>
-              <TableHeaderCell>Razón Social</TableHeaderCell>
-              <TableHeaderCell>Servicio</TableHeaderCell>
-              <TableHeaderCell>Nombre Servicio</TableHeaderCell>
-              <TableHeaderCell>Venta Bruta</TableHeaderCell>
-              <TableHeaderCell>Venta Sin IVA</TableHeaderCell>
-              <TableHeaderCell>IVA</TableHeaderCell>
-              <TableHeaderCell>Comisión</TableHeaderCell>
-              <TableHeaderCell>Venta Neta</TableHeaderCell>
-              <TableHeaderCell>Formularios</TableHeaderCell>
-              <TableHeaderCell>Sucursal</TableHeaderCell>
-              <TableHeaderCell>Nombre Comercial</TableHeaderCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {
-              data?.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{item.fecha.slice(0, 10)}</TableCell>
-                  <TableCell>{item.persona}</TableCell>
-                  <TableCell>{item.nombres}</TableCell>
-                  <TableCell>{item.razonsocial}</TableCell>
-                  <TableCell>{item.servicio}</TableCell>
-                  <TableCell>{item.nombreservicio}</TableCell>
-                  <TableCell>{item.ventabruta}</TableCell>
-                  <TableCell>{item.vtasiniva}</TableCell>
-                  <TableCell>{item.iva}</TableCell>
-                  <TableCell>{item.comision}</TableCell>
-                  <TableCell>{item.ventaneta}</TableCell>
-                  <TableCell>{item.formularios}</TableCell>
-                  <TableCell>{item.sucursal}</TableCell>
-                  <TableCell>{item.nombre_comercial}</TableCell>
-                </TableRow>
-              ))
-            }
-          </TableBody>
-        </Table>
+      <Card className='mt-1'>
+        <TableRoot className='h-[80vh] overflow-y-auto'>
+          <Table>
+            <TableHead className='sticky top-0 bg-gray-100 z-30'>
+              <TableRow>
+                <TableHeaderCell>N°</TableHeaderCell>
+                <TableHeaderCell>Fecha</TableHeaderCell>
+                <TableHeaderCell>Persona</TableHeaderCell>
+                <TableHeaderCell>Nombres</TableHeaderCell>
+                <TableHeaderCell>Razón Social</TableHeaderCell>
+                <TableHeaderCell>Servicio</TableHeaderCell>
+                <TableHeaderCell>Nombre Servicio</TableHeaderCell>
+                <TableHeaderCell>Venta Bruta</TableHeaderCell>
+                <TableHeaderCell>Venta Sin IVA</TableHeaderCell>
+                <TableHeaderCell>IVA</TableHeaderCell>
+                <TableHeaderCell>Comisión</TableHeaderCell>
+                <TableHeaderCell>Venta Neta</TableHeaderCell>
+                <TableHeaderCell>Formularios</TableHeaderCell>
+                <TableHeaderCell>Sucursal</TableHeaderCell>
+                <TableHeaderCell>Nombre Comercial</TableHeaderCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {
+                data?.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{item.fecha.slice(0, 10)}</TableCell>
+                    <TableCell>{item.persona}</TableCell>
+                    <TableCell>{item.nombres}</TableCell>
+                    <TableCell>{item.razonsocial}</TableCell>
+                    <TableCell>{item.servicio}</TableCell>
+                    <TableCell>{item.nombreservicio}</TableCell>
+                    <TableCell>{item.ventabruta}</TableCell>
+                    <TableCell>{item.vtasiniva}</TableCell>
+                    <TableCell>{item.iva}</TableCell>
+                    <TableCell>{item.comision}</TableCell>
+                    <TableCell>{item.ventaneta}</TableCell>
+                    <TableCell>{item.formularios}</TableCell>
+                    <TableCell>{item.sucursal}</TableCell>
+                    <TableCell>{item.nombre_comercial}</TableCell>
+                  </TableRow>
+                ))
+              }
+            </TableBody>
+          </Table>
+        </TableRoot>
       </Card>
 
       {
@@ -117,7 +120,7 @@ function ReportOracle () {
           )}
         </div>
       }
-    </section>
+    </>
   )
 }
 
