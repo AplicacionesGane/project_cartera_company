@@ -2,63 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 12px; /* Rounded corners */
-}
-
-thead {
-  background-color: #1466d2;
-  border-radius: 10px 10px 0 0; /* Rounded top corners */
-  color: white;
-}
-
-th {
-  padding: 10px;
-  text-align: left;
-  font-weight: bold;
-}
-
-tbody tr {
-  border-bottom: 1px solid #ddd;
-}
-
-td {
-  padding: 10px;
-  word-wrap: break-word;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #f9f9f9;
-}
-
-@media (max-width: 600px) {
-  table {
-    display: block;
-    overflow-x: auto;
-    border-radius: 8px; /* Rounded corners */
-  }
-  
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
-    display: block;
-  }
-  
-  th {
-    text-align: left;
-    font-weight: bold;
-    border-radius: 8px 8px 0 0; /* Rounded top corners */
-  }
-  
-  td {
-    padding: 6px;
-  }
-  
-  tbody tr {
-    border-bottom: none;
-  }
+@font-face {
+  font-family: 'Geist Sans';
+  src: url('/src/assets/fonts/Geist[wght].woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
 }
