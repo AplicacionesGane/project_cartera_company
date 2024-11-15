@@ -1,6 +1,8 @@
 import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@tremor/react'
-import { FormEvent, useState } from 'react'
+import { BottonExporReporteConsolidado } from '../components/ExportConsolidado'
+import { LoadingSvg } from '../components/icons'
 import { DataOracle } from '../types/Recaudo'
+import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
 
@@ -8,9 +10,12 @@ function ReportOracle () {
   const [data, setData] = useState<DataOracle[] | null>(null)
   const [documento, setDocumento] = useState<string>('')
   const [fecha, setFecha] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault()
+
+    setLoading(true)
 
     axios.post(`${API_URL}/reportOracle`, { fecha: fecha.slice(0, 10), documento })
       .then(res => {
@@ -19,31 +24,36 @@ function ReportOracle () {
       .catch(err => {
         console.error('Error en getRecaudo', err)
       })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (
-    <>
-      <Card className='flex justify-around py-2 items-center' decoration="top" decorationColor="blue">
+    <section className='relative'>
+      <Card className='flex justify-around py-2 items-center' decoration='top' decorationColor='blue'>
 
         <p className='flex gap-2 items-center'>
           Cantida Datos:
-          <span className="px-2 py-1 text-sm font-semibold text-gray-800 bg-yellow-400 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800">{data?.length || '0'}</span>
+          <span className='px-2 py-1 text-sm font-semibold text-gray-800 bg-yellow-400 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800'>{data?.length || '0'}</span>
         </p>
 
         <form onSubmit={handleSubmit} className='flex items-center gap-4'>
           <div className='flex gap-2 items-center'>
-            <label htmlFor="fecha">Fecha</label>
+            <label htmlFor='fecha'>Fecha</label>
             <input className='p-2 rounded-md'
-              type="date" id="fecha" required value={fecha} onChange={e => setFecha(e.target.value)} />
+              type='date' id='fecha' required value={fecha} onChange={e => setFecha(e.target.value)} />
           </div>
           <div className='flex gap-2 items-center'>
-            <label htmlFor="documento">Documento</label>
+            <label htmlFor='documento'>Documento</label>
             <input className='p-2 rounded-md'
-              type="text" id="documento" required value={documento} onChange={e => setDocumento(e.target.value)} />
+              type='text' id='documento' required value={documento} onChange={e => setDocumento(e.target.value)} />
           </div>
           <button type='submit'
             className='p-2 bg-green-600 rounded-md text-white hover:bg-green-500'>Buscar</button>
         </form>
+
+        <BottonExporReporteConsolidado datos={data || []} />
 
       </Card>
 
@@ -93,7 +103,21 @@ function ReportOracle () {
           </TableBody>
         </Table>
       </Card>
-    </>
+
+      {
+        <div className="absolute top-36 right-48 left-48 z-30 flex flex-col items-center justify-center">
+          {loading && (
+            <div className="w-96 rounded-md flex flex-col shadow-lg items-center justify-center gap-4 py-4 px-6 z-30 bg-yellow-300 animate-pulse">
+              <span className="text-lg font-semibold text-gray-800">Solicitando Información ...</span>
+              <LoadingSvg />
+            </div>
+          )}
+          {!loading && data && data.length === 0 && (
+            <p className="text-center text-gray-600">No se encontraron datos para el documento y fecha seleccionados.</p>
+          )}
+        </div>
+      }
+    </section>
   )
 }
 
