@@ -1,9 +1,6 @@
 import { formatPesoColombia } from '../utils/funtions'
+import { DonutChart } from '../components/DonutChart'
 import { DataIU } from '../types/interface'
-import { DonutChart } from '@tremor/react'
-
-const dataFormatter = (number: number) =>
-  `$ ${Intl.NumberFormat('co-ES').format(number).toString()}`
 
 export function TableInfo ({ data }: { data: DataIU[] }) {
   const dataUnifi = data.map((item) => ({
@@ -16,11 +13,16 @@ export function TableInfo ({ data }: { data: DataIU[] }) {
   return (
     <section className='flex w-full justify-around'>
 
-      <div className='w-3/12'>
-        <DonutChart colors={['yellow', 'blue']} data={dataUnifi} className=''
-          variant="pie" valueFormatter={dataFormatter} onValueChange={(v) => console.log(v)} />
+      <div className='flex flex-col items-center gap-2'>
+        <DonutChart
+          data={dataUnifi}
+          category='name'
+          value='value'
+          variant='pie'
+          valueFormatter={(number: number) => `$${Intl.NumberFormat('es-CO').format(number).toString()}`}
+          />
 
-        <div className='flex justify-center'>
+        <div className='flex'>
           {dataUnifi.map((item, index) => (
             <section key={index} className='bg-gray-200 m-1 p-2 rounded-md'>
               <article className='flex items-center text-center'>
