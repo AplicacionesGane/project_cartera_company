@@ -8,6 +8,7 @@ pipeline {
     environment {
         ENV_API_CARTERA = credentials('ENV_API_CARTERA')
         ENV_CLIENT_CARTERA = credentials('ENV_CLIENT_CARTERA')
+        ENV_TNS_ORA = credentials('ENV_TNS_ORA_CARTERA')
     }
     
     stages {
@@ -16,8 +17,10 @@ pipeline {
                 script {
                     def envApiContent = readFile(ENV_API_CARTERA)
                     def envClientContent = readFile(ENV_CLIENT_CARTERA)
+                    def envTnsOraContent = readFile(ENV_TNS_ORA)
                     
                     writeFile file: './api/.env', text: envApiContent
+                    writeFile file: './api/tnsnames.ora', text: envTnsOraContent
                     writeFile file: './client/.env', text: envClientContent
                 }
             }
