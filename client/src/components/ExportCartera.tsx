@@ -1,7 +1,7 @@
 import { utils, ColInfo, writeFile } from 'xlsx'
 import { CarteraI } from '../types/cartera'
-import { Button } from './ui'
 import { toast } from 'sonner'
+import { Button } from './ui/ButtonTremor'
 
 const generateExcelData = (datos: CarteraI[]): unknown[] => {
   const titulo = [{ A: 'Reporte Cartera ' }]
@@ -93,7 +93,7 @@ export const BottonExporCartera = ({ datos }: { datos: CarteraI[] }): JSX.Elemen
   }
 
   return (
-    <Button onClick={handleDownload}>
+    <Button variant='secondary' onClick={handleDownload}>
       Exportar a Excel
     </Button>
   )

@@ -1,5 +1,5 @@
 import { fetchCartera } from '../services/carteraSevices'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CarteraI } from '../types/cartera'
 import { useSort } from './useSort'
 
@@ -8,6 +8,7 @@ export const useCartera = () => {
   const [data, setData] = useState<CarteraI[]>([])
   const [empresa, setEmpresa] = useState<string>('0')
   const { sortConfig, setSortConfig, ordenarArray } = useSort<CarteraI>()
+  const [vinculado, setVinculado] = useState<string>('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,5 +35,13 @@ export const useCartera = () => {
     setData(prevData => ordenarArray(prevData, propiedadActual, nuevaDireccion))
   }
 
-  return { data, setAbs, setEmpresa, handleClick }
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVinculado(e.target.value)
+  }
+
+  const dataFiltered = useMemo(() => {
+    return data.filter(item => item.Vinculado.toString().includes(vinculado))
+  }, [vinculado, data])
+
+  return { vinculado, dataFiltered, abs, setAbs, empresa, setEmpresa, handleClick, handleFilterChange }
 }

@@ -3,12 +3,12 @@ import { ObjectCartera } from "../types/interface";
 export function ReturCargo(seller: string): string {
   const sellerRoles: { [key: string]: string } = {
     VENDEDOR: 'Vendedor',
-    CAJERO_COMERCIAL: 'Caj_Comercial',
-    COLOCADOR_INDEPENDIENTE: 'Colo_Independiente',
-    CAJERO_TESORERIA: 'Caj_Tesoreria'
+    CAJERO_COMERCIAL: 'Caj Comercial',
+    COLOCADOR_INDEPENDIENTE: 'Col Independiente',
+    CAJERO_TESORERIA: 'Caj Tesorería'
   };
 
-  return sellerRoles[seller] || 'No_Definido';
+  return sellerRoles[seller] || 'No Definido';
 }
 
 export function calcularNuevoSaldo(item: any): number {
@@ -81,5 +81,5 @@ export function ReturnZona (zona: string): string {
     '39632': 'Jamundi'
   };
 
-  return zonas[zona] || 'No_Definido';
+  return zonas[zona] || 'No Definido';
 }

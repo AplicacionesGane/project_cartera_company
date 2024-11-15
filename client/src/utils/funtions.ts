@@ -1,1 +1,1 @@
-export const formatValue = (number: number) => `$${Intl.NumberFormat('es-CO').format(number).toString()}`
+export const formatValue = (number: number) => `$ ${Intl.NumberFormat('es-CO').format(number).toString()}`

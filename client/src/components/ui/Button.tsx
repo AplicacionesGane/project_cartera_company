@@ -4,7 +4,7 @@ export function Button ({ children, disabled, ...props }: Props): JSX.Element {
   return (
     <button
       type="submit"
-      className={`text-lg px-4 py-2   
+      className={`text-base px-2 py-1   
         text-white rounded-md
         bg-gradient-to-b from-blue-700 to-blue-800 hover:bg-gradient-to-b hover:from-blue-500 hover:to-blue-600 transition-all ease-in-out
         dark:bg-gradient-to-b dark:from-blue-900 dark:to-blue-800 dark:hover:bg-gradient-to-b dark:hover:from-blue-800 dark:hover:to-blue-600

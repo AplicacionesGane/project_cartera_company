@@ -1,7 +1,8 @@
-import { Card, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@tremor/react'
-import { formatPesoColombia } from '../utils/funtions'
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRoot, TableRow } from '../components/TableTremor'
+import { formatValue } from '../utils/funtions'
 import { CarteraI } from '../types/cartera'
 import { useNavigate } from 'react-router-dom'
+import { Card } from './CardTremor'
 
 interface PropsCompo {
   data: CarteraI[]
@@ -16,89 +17,91 @@ export const TableDatos = ({ data, funClick }: PropsCompo) => {
   }
 
   return (
-    <Card decoration="top" decorationColor="blue" className='p-2 mt-0.5'>
-      <Table className='xl:max-h-[80vh] 3xl:max-h-[82vh]'>
-        <TableHead className='border-b-2 border-blue-600 sticky top-0 bg-white dark:bg-dark-tremor-brand-muted'>
-          <TableRow className='text-xs'>
-            <TableHeaderCell>Empresa</TableHeaderCell>
-            <TableHeaderCell>N° Cédula</TableHeaderCell>
-            <TableHeaderCell>Nombre</TableHeaderCell>
-            <TableHeaderCell>Cargo</TableHeaderCell>
-            <TableHeaderCell>Zona</TableHeaderCell>
-            <TableHeaderCell className='text-center'>Base</TableHeaderCell>
-            <TableHeaderCell id={'SaldoAnt'} className='text-center text-xs cursor-pointer hover:text-blue-400' onClick={ev => funClick(ev)}>
+    <Card>
+      <TableRoot className='h-[83vh]'>
+        <Table>
+          <TableHead className='sticky top-0 bg-gray-100'>
+            <TableRow>
+              <TableHeaderCell>Empresa</TableHeaderCell>
+              <TableHeaderCell>N° Cédula</TableHeaderCell>
+              <TableHeaderCell>Nombres</TableHeaderCell>
+              <TableHeaderCell>Cargo</TableHeaderCell>
+              <TableHeaderCell>Zona</TableHeaderCell>
+              <TableHeaderCell>Base</TableHeaderCell>
+              <TableHeaderCell className='cursor-pointer hover:text-red-500' id={'SaldoAnt'} onClick={ev => funClick(ev)}>
                 Saldo Ant ...
-            </TableHeaderCell >
-            <TableHeaderCell className='text-center'>Débito</TableHeaderCell>
-            <TableHeaderCell className='text-center'>Crédito</TableHeaderCell>
-            <TableHeaderCell className='text-center'>Nuevo Saldo</TableHeaderCell>
-            <TableHeaderCell id={'Cartera'} className='text-center text-xs cursor-pointer hover:text-blue-400' onClick={ev => funClick(ev)}>
+              </TableHeaderCell >
+              <TableHeaderCell>Débito</TableHeaderCell>
+              <TableHeaderCell>Crédito</TableHeaderCell>
+              <TableHeaderCell>Nuevo Saldo</TableHeaderCell>
+              <TableHeaderCell className='cursor-pointer hover:text-red-500' id={'Cartera'} onClick={ev => funClick(ev)}>
                 Cartera ...
-            </TableHeaderCell>
-            <TableHeaderCell className='text-center'>Rechazados</TableHeaderCell>
-            <TableHeaderCell className='text-center'>Aceptados</TableHeaderCell>
-            <TableHeaderCell className='text-center'>Pendiente Conteo</TableHeaderCell>
-            <TableHeaderCell className='text-center'>Venta Bnet</TableHeaderCell>
-            <TableHeaderCell className='text-center'>Cuadre Web</TableHeaderCell>
-            <TableHeaderCell className='text-center'>Anulados</TableHeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody className='text-xs'>
-          {data.map((item, index) => (
-            <TableRow key={index}>
-              <TableCell>{item.Empresa}</TableCell>
-              <TableCell>{item.Vinculado}</TableCell>
-              <TableCell className='text-clip text-[0.7rem]'>{item.Nombres || 'No Registrado Bnet'}</TableCell>
-              <TableCell>{item.Cargo}</TableCell>
-              <TableCell>{item.Zona}</TableCell>
-              <TableCell>{formatPesoColombia(item.Base)}</TableCell>
-              <TableCell className={`${item.SaldoAnt > 0
-                ? 'bg-punch-200 dark:bg-punch-950 font-medium text-gray-800 dark:text-gray-300'
-                : 'bg-green-200 dark:bg-green-950 font-medium text-gray-800 dark:text-gray-300'}`}>
-                {formatPesoColombia(item.SaldoAnt)}
-              </TableCell>
-              <TableCell className='text-center'>
-                {formatPesoColombia(item.Debito)}
-              </TableCell>
-              <TableCell className='text-center'>
-                {formatPesoColombia(item.Credito)}
-              </TableCell>
-              <TableCell className='text-center' id='nuevo saldo'>
-                {formatPesoColombia(item.NuevoSaldo)}
-              </TableCell>
-              <TableCell className='text-center font-semibold text-black dark:text-gray-300' id='cartera'>
-                {formatPesoColombia(item.Cartera)}
-              </TableCell>
-              <TableCell className='text-center font-semibold text-black dark:text-gray-300'>
-              { item.Rechazados > 0
-                ? <span className='text-xs text-red-500 dark:text-red-400 hover:text-blue-600 cursor-pointer'
-                  onClick={handleClick(item.Vinculado, 'r')}>{formatPesoColombia(item.Rechazados)}</span>
-                : <span className='text-xs'> {formatPesoColombia(item.Rechazados)}</span>
-              }
-              </TableCell>
-              <TableCell className='text-center font-semibold text-black dark:text-gray-300'>
-                { item.Aceptados > 0
-                  ? <span className='text-xs text-green-500 dark:text-red-400 hover:text-blue-600 cursor-pointer'
-                  onClick={handleClick(item.Vinculado, 'u')}>{formatPesoColombia(item.Aceptados)}</span>
-                  : <span className='text-xs'> {formatPesoColombia(item.Aceptados)}</span>
-              }
-              </TableCell>
-              <TableCell className='text-center font-semibold text-black dark:text-gray-300'>
-                {formatPesoColombia(item.PendientesCont)}
-              </TableCell>
-              <TableCell className='text-center font-semibold text-black dark:text-gray-300'>
-                {formatPesoColombia(item.Vtabnet)}
-              </TableCell>
-              <TableCell className='text-center font-semibold text-black dark:text-gray-300'>
-                {formatPesoColombia(item.CuadreWeb)}
-              </TableCell>
-              <TableCell className='text-center font-semibold text-black dark:text-gray-300'>
-                {formatPesoColombia(item.Anulados)}
-              </TableCell>
+              </TableHeaderCell>
+              <TableHeaderCell>Rechazados</TableHeaderCell>
+              <TableHeaderCell>Aceptados</TableHeaderCell>
+              <TableHeaderCell>Pendiente Conteo</TableHeaderCell>
+              <TableHeaderCell>Venta Bnet</TableHeaderCell>
+              <TableHeaderCell>Cuadre Web</TableHeaderCell>
+              <TableHeaderCell>Anulados</TableHeaderCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {data.map((item, index) => (
+              <TableRow key={index}>
+                <TableCell>{item.Empresa}</TableCell>
+                <TableCell>{item.Vinculado}</TableCell>
+                <TableCell className=''>{item.Nombres || 'No Registrado Bnet'}</TableCell>
+                <TableCell>{item.Cargo}</TableCell>
+                <TableCell>{item.Zona}</TableCell>
+                <TableCell>{formatValue(item.Base)}</TableCell>
+                <TableCell className={`${item.SaldoAnt > 0
+                  ? 'bg-punch-200 dark:bg-punch-950 text-gray-800 dark:text-gray-300'
+                  : 'bg-green-200 dark:bg-green-950 text-gray-800 dark:text-gray-300'}`}>
+                  {formatValue(item.SaldoAnt)}
+                </TableCell>
+                <TableCell>
+                  {formatValue(item.Debito)}
+                </TableCell>
+                <TableCell>
+                  {formatValue(item.Credito)}
+                </TableCell>
+                <TableCell id='nuevo saldo'>
+                  {formatValue(item.NuevoSaldo)}
+                </TableCell>
+                <TableCell id='cartera'>
+                  {formatValue(item.Cartera)}
+                </TableCell>
+                <TableCell >
+                  {item.Rechazados > 0
+                    ? <span className='text-xs text-red-500 dark:text-red-400 hover:text-blue-600 cursor-pointer'
+                      onClick={handleClick(item.Vinculado, 'r')}>{formatValue(item.Rechazados)}</span>
+                    : <span className='text-xs'> {formatValue(item.Rechazados)}</span>
+                  }
+                </TableCell>
+                <TableCell >
+                  {item.Aceptados > 0
+                    ? <span className='text-xs text-green-500 dark:text-red-400 hover:text-blue-600 cursor-pointer'
+                      onClick={handleClick(item.Vinculado, 'u')}>{formatValue(item.Aceptados)}</span>
+                    : <span className='text-xs'> {formatValue(item.Aceptados)}</span>
+                  }
+                </TableCell>
+                <TableCell >
+                  {formatValue(item.PendientesCont)}
+                </TableCell>
+                <TableCell >
+                  {formatValue(item.Vtabnet)}
+                </TableCell>
+                <TableCell >
+                  {formatValue(item.CuadreWeb)}
+                </TableCell>
+                <TableCell >
+                  {formatValue(item.Anulados)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableRoot>
     </Card>
   )
 }

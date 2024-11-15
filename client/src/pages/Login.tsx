@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { UserIcon, LockIcon } from '../components/icons'
-import { Input, Button, Label } from '../components/ui'
+import { Button, Label } from '../components/ui'
 import { toast, Toaster } from 'sonner'
 import { useState } from 'react'
 import axios from 'axios'
@@ -58,7 +58,7 @@ function LoginPage (): JSX.Element {
             <Label>Usuario: </Label>
             <div className='flex items-center gap-2 w-full justify-around px-2'>
               <UserIcon />
-              <Input name='username' type='text' placeholder='CP1118342523' required
+              <input name='username' type='text' placeholder='CP1118342523' required
                 autoComplete='username' value={user} onChange={(ev) => { setUser(ev.target.value) }} />
             </div>
           </article>
@@ -67,7 +67,7 @@ function LoginPage (): JSX.Element {
             <Label>Contraseña:</Label>
             <div className='flex items-center gap-2 w-full justify-around px-2'>
               <LockIcon />
-              <Input name='contraseña' type='password' placeholder='***********' required
+              <input name='contraseña' type='password' placeholder='***********' required
                 autoComplete='contraseña' value={password} onChange={(ev) => { setPassword(ev.target.value) }} />
             </div>
           </article>

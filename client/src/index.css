@@ -8,3 +8,23 @@
   font-style: normal;
   font-weight: 100 900;
 }
+
+/* Personalización de la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 12px; /* Ancho de la barra de desplazamiento vertical */
+  height: 12px; /* Altura de la barra de desplazamiento horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color de fondo de la pista de desplazamiento */
+  border-radius: 10px; /* Bordes redondeados de la pista */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color del pulgar de desplazamiento */
+  border-radius: 10px; /* Bordes redondeados del pulgar */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color del pulgar de desplazamiento al pasar el ratón */
+}
