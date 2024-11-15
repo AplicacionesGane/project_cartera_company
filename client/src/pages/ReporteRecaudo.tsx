@@ -5,6 +5,7 @@ import { DataReporte } from '../types/Recaudo'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
 import AlertDialogSlide from '../components/ui/Dialog'
+import { toast } from 'sonner'
 
 export default function ReportClienteGanadores() {
   const [date1, setDate1] = useState('')
@@ -20,7 +21,7 @@ export default function ReportClienteGanadores() {
     e.preventDefault()
 
     if (date1 === '' || date2 === '' || zona === '') {
-      alert('Por favor llene todos los campos, fecha inicial fecha final y zona')
+      toast.error("Por favor llene todos los campos, fecha inicial fecha final y zona")
       return
     }
 
@@ -36,7 +37,7 @@ export default function ReportClienteGanadores() {
 
   const handleRowClick = (item: DataReporte) => {
     setDialogContent(
-      <div className="p-4 shadow-lg rounded-lg bg-white flex flex-col items-center gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 p-4 shadow-lg rounded-lg bg-white items-center gap-6">
         <p className="font-bold text-gray-700"> Fecha: {item.FECHA}</p>
         <p className="font-bold text-gray-700"> Vinculado: {item.VINCULADO}</p>
         <p className="font-bold text-gray-700"> Nombres: {item.Seller?.NOMBRES ?? 'No Registrado'}</p>
@@ -44,8 +45,7 @@ export default function ReportClienteGanadores() {
         <p className="font-bold text-gray-700"> Estado: {item.ESTADO === 'r' ? 'Rechazado' : 'Aceptado'}</p>
         <p className="font-bold text-gray-700"> Hora conteo: {item.HORA_CONTEO}</p>
         <p className="font-bold text-gray-700"> User conteo: {item.USR_CONTEO}</p>
-        <p className="font-bold text-gray-700"> Nota conteo: </p>
-        <p className="font-bold text-gray-700">{item.NOTA_CONTEO}</p>
+        <p className="font-bold text-gray-700"> Nota conteo: {item.NOTA_CONTEO}</p>
       </div>
     );
     setOpenDialog(true);
