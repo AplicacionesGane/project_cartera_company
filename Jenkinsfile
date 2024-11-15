@@ -51,6 +51,13 @@ pipeline {
                 }
             }
         }
+        stage('copy folder instan client to api'){
+            steps {
+                script {
+                  sh 'cp -r /home/containers/librerias/instantclient_11_2 ./api'
+                }
+            }
+        }
         stage('run docker compose'){
             steps {
                 script {
