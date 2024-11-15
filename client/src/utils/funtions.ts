@@ -1,6 +1,1 @@
-export const formatPesoColombia = (value: number) => {
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'COP'
-  }).format(value).slice(0, -3)
-}
+export const formatValue = (number: number) => `$${Intl.NumberFormat('es-CO').format(number).toString()}`

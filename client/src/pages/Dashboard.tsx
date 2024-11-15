@@ -46,12 +46,12 @@ function Dashboard () {
       </section>
 
       <section className='flex justify-around'>
-        {/*
+        {
           <>
             <ResumenRecaudo datos={recaudo.multired} name='Multired'/>
             <ResumenRecaudo datos={recaudo.servired} name='Servired'/>
           </>
-        */}
+        }
       </section>
 
     </>

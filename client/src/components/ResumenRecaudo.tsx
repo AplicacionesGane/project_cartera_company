@@ -1,5 +1,7 @@
-import { formatPesoColombia } from '../utils/funtions'
+import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/TableTremor'
+import { formatValue } from '../utils/funtions'
 import { DatesI } from '../types/interface'
+import { Badge } from './BadgeTremor'
 
 const estadoMap: { [key: string]: string } = {
   u: 'Aceptado',
@@ -23,8 +25,10 @@ const getEstadoClass = (estado: string): string => {
 
 const RenderEstado = ({ estado }: { estado: string }) => {
   return (
-    <p className={getEstadoClass(estado)}>
-      {estadoMap[estado] || 'Pendiente'}
+    <p>
+      <Badge variant='neutral' className={getEstadoClass(estado)}>
+        {estadoMap[estado]}
+      </Badge>
     </p>
   )
 }
@@ -33,27 +37,29 @@ function ResumenRecaudo ({ datos, name }: { datos: DatesI[], name: string }) {
   return (
     <section className='mt-12'>
       <h1 className='text-center py-2 font-semibold'>Resumen Recaudo {name}</h1>
-      <table className="mt-5">
-        <thead>
-          <tr>
-            <th>Estado</th>
-            <th>Cantidad Recuado</th>
-            <th className='text-center'>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            datos.map((item, index) => (
-              <tr key={index}>
-                <td className='text-center'>
-                  <RenderEstado estado={item.ESTADO} />
-                </td>
-                <td className='text-center'>{item.Cantidad}</td>
-                <td className='text-center'>{formatPesoColombia(item.Total)}</td>
-              </tr>
+      <TableRoot className='mt-8'>
+        <Table>
+          <TableHead>
+            <TableRow className='bg-blue-600'>
+              <TableHeaderCell>Estado</TableHeaderCell>
+              <TableHeaderCell>Cant Recaudo</TableHeaderCell>
+              <TableHeaderCell>Total</TableHeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {datos.map((item, index) => (
+              <TableRow key={index}>
+                 <TableCell>
+                  <RenderEstado key={index} estado={item.ESTADO} />
+                </TableCell>
+                <TableCell className='text-center'>{item.Cantidad}</TableCell>
+                <TableCell>{formatValue(item.Total | 0)}</TableCell>
+              </TableRow>
             ))}
-        </tbody>
-      </table>
+          </TableBody>
+        </Table>
+      </TableRoot>
+
     </section>
   )
 }
