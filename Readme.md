@@ -6,19 +6,19 @@ Es un proyecto de código abierto que se encuentra en el repositorio de GitHub y
 
 ## Infraestructura
 
-- Api: 
+- API-CARTERA: 
   - Lenguaje: TypeScript
-  - Framework: Express
-  - Base de datos: MySQL 8.2
+  - Framework: Express 
+  - Base de datos: MySQL 8.2.0
   - Servidor: Interno (Empresarial)
-  - Repositorio: [https://github.com/llOrtegall/proyect_cartera/tree/master/client](https://github.com/llOrtegall/proyect_cartera/tree/master/client)
-  - Librerías: Cors, Dotenv, Express, Mysql2, Nodemon, Typescript, Sequelize
+  - Repositorio: [https://github.com/AplicacionesGane/proyect_cartera_company]
+  - Librerías: Express, Mysql2, Typescript, Sequelize, Cors
 
 - Frontend:
   - Lenguaje: TypeScript
   - Framework: React
   - Servidor: Interno (Empresarial)
-  - Repositorio: [https://github.com/llOrtegall/proyect_cartera/tree/master/api](https://github.com/llOrtegall/proyect_cartera/tree/master/api)
+  - Repositorio: [https://github.com/AplicacionesGane/proyect_cartera_company]
   - Librerías: Axios, React, React-dom, React-router-dom, Typescript, xslx, sonner, tailwindcss, remixicon, tremor, headlessui/react
 
 ## Instalación
