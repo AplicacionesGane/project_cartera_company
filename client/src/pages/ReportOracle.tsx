@@ -108,7 +108,7 @@ function ReportOracle () {
       </Card>
 
       {
-        <div className="absolute top-36 right-48 left-48 z-30 flex flex-col items-center justify-center">
+        <div className="absolute inset-60 z-30 flex flex-col items-center justify-center">
           {loading && (
             <div className="w-96 rounded-md flex flex-col shadow-lg items-center justify-center gap-4 py-4 px-6 z-30 bg-yellow-300 animate-pulse">
               <span className="text-lg font-semibold text-gray-800">Solicitando Información ...</span>

@@ -52,7 +52,7 @@ function LoginPage (): JSX.Element {
         <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <form className='min-w-96 flex flex-col gap-8' onSubmit={handleSubmit}>
           <figure className='flex items-center justify-center'>
-            <img src="/gane.webp" alt="logo de gane" className='w-[220px] ' />
+            <img src="/gane.webp" alt="logo de gane" className='w-[220px] ' loading='lazy' />
           </figure>
           <article className='flex flex-col gap-1 text-md lg:text-lg 2xl:text-2xl'>
             <Label>Usuario: </Label>

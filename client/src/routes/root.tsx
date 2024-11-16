@@ -1,3 +1,4 @@
+import Loading from '../components/ui/LoadingComponent'
 import { useAuth } from '../auth/AuthProvider'
 import { Outlet } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
@@ -10,15 +11,15 @@ const Root = () => {
   const { user, isAuthenticated } = useAuth()
 
   if (!user.id || !isAuthenticated) {
-    return (<Suspense fallback={<div>Loading...</div>}><LoginPage /></Suspense>)
+    return (<Suspense fallback={<Loading />}><LoginPage /></Suspense>)
   }
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <NavBar />
       </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <section className='pt-1'>
           <Outlet />
         </section>
