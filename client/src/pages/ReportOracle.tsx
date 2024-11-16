@@ -109,7 +109,7 @@ function ReportOracle () {
                     <TableCell className='text-right'>{formatValue(item.iva)}</TableCell>
                     <TableCell className='text-right'>{formatValue(item.comision)}</TableCell>
                     <TableCell className='text-right'>{formatValue(item.ventaneta)}</TableCell>
-                    <TableCell className='text-right'>{formatValue(item.formularios)}</TableCell>
+                    <TableCell className='text-right'>{item.formularios}</TableCell>
                   </TableRow>
                 ))
               }
@@ -135,7 +135,7 @@ function ReportOracle () {
                   {formatValue(sumarTotales(data || []).ventaneta)}
                 </TableHeaderCell>
                 <TableHeaderCell colSpan={1} scope="row" className="text-right">
-                  {formatValue(sumarTotales(data || []).formularios)}
+                  {sumarTotales(data || []).formularios}
                 </TableHeaderCell>
               </TableRow>
             </TableFoot>
