@@ -6,6 +6,7 @@ import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
 import { formatValue } from '../utils/funtions'
+import { InfoPersonReport } from '../components/InfoPersonReport'
 
 function ReportOracle () {
   const [data, setData] = useState<DataOracle[] | null>(null)
@@ -76,28 +77,7 @@ function ReportOracle () {
 
       </Card>
 
-      <Card className='mt-1 grid grid-cols-12'>
-        <div className='col-span-2'>
-          <Label>Fecha: </Label>
-          <Badge variant='warning'>{fecha || ''}</Badge>
-        </div>
-        <div className='col-span-2'>
-          <Label>N° Documento: </Label>
-          <Badge variant='warning'>{data ? data[0].persona : ''}</Badge>
-        </div>
-        <div className='col-span-3'>
-          <Label>Nombres: </Label>
-          <Badge variant='warning'>{data ? data[0].nombres : ''}</Badge>
-        </div>
-        <div className='col-span-1'>
-          <Label>Sucursal: </Label>
-          <Badge variant='warning'>{data ? data[0].sucursal : ''}</Badge>
-        </div>
-        <div className='col-span-3'>
-          <Label>Nombre Sucursal: </Label>
-          <Badge variant='warning'>{data ? data[0].nombre_comercial : ''}</Badge>
-        </div>
-      </Card>
+      <InfoPersonReport data={data || []} fecha={fecha}/>
 
       <Card className='mt-1'>
         <TableRoot className='h-[75vh] overflow-y-auto'>
