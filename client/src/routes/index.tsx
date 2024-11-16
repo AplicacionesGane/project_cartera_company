@@ -10,7 +10,6 @@ const Detallado = lazy(() => import('../pages/Home'))
 const BasesPage = lazy(() => import('../pages/BasesPage'))
 const BasesDetalle = lazy(() => import('../pages/BasesDetalle'))
 const AsignarNewBase = lazy(() => import('../pages/AsignarNewBase'))
-const RecaudoDetail = lazy(() => import('../pages/RecaudoDetail'))
 const ReporteRecaudo = lazy(() => import('../pages/ReporteRecaudo'))
 const ReportOracle = lazy(() => import('../pages/ReportOracle'))
 const SeleccionReportes = lazy(() => import('../pages/SeleccionReportes'))
@@ -58,14 +57,6 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <AsignarNewBase />
-          </Suspense>
-        )
-      },
-      {
-        path: 'recaudo/:id/:estado',
-        element: (
-          <Suspense fallback={<Loading />}>
-            <RecaudoDetail />
           </Suspense>
         )
       },

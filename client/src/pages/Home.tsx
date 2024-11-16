@@ -4,13 +4,31 @@ import { SelectNative } from '../components/ui/SelectTremor'
 import { TableDatos } from '../components/TableDatos'
 import { useCartera } from '../hooks/useCartera'
 import { LoadingSvg } from '../components/icons'
+import { useState } from 'react'
+import RecaudoDetail from './RecaudoDetail'
 
 const Detallado = () => {
   const { dataFiltered, abs, setAbs, empresa, vinculado, setEmpresa, handleClick, handleFilterChange, loading } = useCartera()
   const fecha = new Date().toLocaleDateString()
 
+  const [id, setId] = useState('')
+  const [estado, setEstado] = useState('')
+  const [show, setShow] = useState(false)
+
+  const handlShowInfo = (id: string, estado: string) => {
+    setId(id)
+    setEstado(estado)
+    setShow(true)
+  }
+
+  const handleCloseInfo = () => {
+    setId('')
+    setEstado('')
+    setShow(false)
+  }
+
   return (
-    <section className='flex flex-col gap-1'>
+    <section className='flex flex-col gap-1 relative'>
       <Card className="flex justify-around">
         <div className='flex items-center gap-1'>
           <p className='text-center'>Fecha:</p>
@@ -42,7 +60,14 @@ const Detallado = () => {
           <BottonExporCartera datos={dataFiltered} />
         </div>
       </Card>
-      <TableDatos data={dataFiltered} funClick={handleClick} />
+
+      <TableDatos data={dataFiltered} funClick={handleClick} funShowInfo={handlShowInfo} />
+
+      <div>
+        {
+          show && <RecaudoDetail id={id} estado={estado} funCloseInfo={handleCloseInfo} />
+        }
+      </div>
 
       {
         <div className="absolute top-36 right-48 left-48 z-30 flex flex-col items-center justify-center">

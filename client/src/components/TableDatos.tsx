@@ -1,20 +1,14 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRoot, TableRow, Card } from './ui'
 import { formatValue } from '../utils/funtions'
 import { CarteraI } from '../types/cartera'
-import { useNavigate } from 'react-router-dom'
 
 interface PropsCompo {
   data: CarteraI[]
   funClick: (ev: React.MouseEvent<HTMLTableCellElement, MouseEvent>) => void
+  funShowInfo: (id: string, estado: string) => void
 }
 
-export const TableDatos = ({ data, funClick }: PropsCompo) => {
-  const navigate = useNavigate()
-
-  const handleClick = (id: string, estado: string) => {
-    return () => navigate(`/recaudo/${id}/${estado}`)
-  }
-
+export const TableDatos = ({ data, funClick, funShowInfo }: PropsCompo) => {
   return (
     <Card>
       <TableRoot className='h-[83vh]'>
@@ -73,14 +67,14 @@ export const TableDatos = ({ data, funClick }: PropsCompo) => {
                 <TableCell >
                   {item.Rechazados > 0
                     ? <span className='text-xs text-red-500 dark:text-red-400 hover:text-blue-600 cursor-pointer'
-                      onClick={handleClick(item.Vinculado, 'r')}>{formatValue(item.Rechazados)}</span>
+                      onClick={() => funShowInfo(item.Vinculado, 'r')}>{formatValue(item.Rechazados)}</span>
                     : <span className='text-xs'> {formatValue(item.Rechazados)}</span>
                   }
                 </TableCell>
                 <TableCell >
                   {item.Aceptados > 0
                     ? <span className='text-xs text-green-500 dark:text-red-400 hover:text-blue-600 cursor-pointer'
-                      onClick={handleClick(item.Vinculado, 'u')}>{formatValue(item.Aceptados)}</span>
+                      onClick={() => funShowInfo(item.Vinculado, 'u')}>{formatValue(item.Aceptados)}</span>
                     : <span className='text-xs'> {formatValue(item.Aceptados)}</span>
                   }
                 </TableCell>
