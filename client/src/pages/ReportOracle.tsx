@@ -30,6 +30,25 @@ function ReportOracle () {
       })
   }
 
+  const sumarTotales = (data: DataOracle[]) => {
+    return data.reduce((acc, item) => {
+      acc.ventabruta += parseInt(item.ventabruta)
+      acc.vtasiniva += parseInt(item.vtasiniva)
+      acc.iva += parseInt(item.iva)
+      acc.comision += parseInt(item.comision)
+      acc.ventaneta += parseInt(item.ventaneta)
+      acc.formularios += parseInt(item.formularios)
+      return acc
+    }, {
+      ventabruta: 0,
+      vtasiniva: 0,
+      iva: 0,
+      comision: 0,
+      ventaneta: 0,
+      formularios: 0
+    })
+  }
+
   return (
     <>
       <Card className='flex justify-around'>
@@ -121,22 +140,22 @@ function ReportOracle () {
                   Total:
                 </TableHeaderCell>
                 <TableHeaderCell colSpan={1} scope="row" className="text-right">
-                  4,642
+                  {formatValue(sumarTotales(data || []).ventabruta)}
                 </TableHeaderCell>
                 <TableHeaderCell colSpan={1} scope="row" className="text-right">
-                  497
+                  {formatValue(sumarTotales(data || []).vtasiniva)}
                 </TableHeaderCell>
                 <TableHeaderCell colSpan={1} scope="row" className="text-right">
-                  4,642
+                  {formatValue(sumarTotales(data || []).iva)}
                 </TableHeaderCell>
                 <TableHeaderCell colSpan={1} scope="row" className="text-right">
-                  4,642
+                  {formatValue(sumarTotales(data || []).comision)}
                 </TableHeaderCell>
                 <TableHeaderCell colSpan={1} scope="row" className="text-right">
-                  4,642
+                  {formatValue(sumarTotales(data || []).ventaneta)}
                 </TableHeaderCell>
                 <TableHeaderCell colSpan={1} scope="row" className="text-right">
-                  4,642
+                  {formatValue(sumarTotales(data || []).formularios)}
                 </TableHeaderCell>
               </TableRow>
             </TableFoot>
