@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+import Loading from '../components/ui/LoadingComponent'
 import { lazy, Suspense } from 'react'
 import Root from './root'
 
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <Dashboard />
           </Suspense>
         )
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       {
         path: 'detallado',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <Detallado />
           </Suspense>
         )
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
       {
         path: 'bases',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <BasesPage />
           </Suspense>
         )
@@ -47,7 +48,7 @@ const router = createBrowserRouter([
       {
         path: 'base/:id',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <BasesDetalle />
           </Suspense>
         )
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
       {
         path: 'asignarNuevaBase',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <AsignarNewBase />
           </Suspense>
         )
@@ -63,7 +64,7 @@ const router = createBrowserRouter([
       {
         path: 'recaudo/:id/:estado',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <RecaudoDetail />
           </Suspense>
         )
@@ -71,7 +72,7 @@ const router = createBrowserRouter([
       {
         path: '/Reportes',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <SeleccionReportes />
           </Suspense>
         )
@@ -79,7 +80,7 @@ const router = createBrowserRouter([
       {
         path: '/trasnportes',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <ReporteRecaudo />
           </Suspense>
         )
@@ -87,7 +88,7 @@ const router = createBrowserRouter([
       {
         path: '/consolidadoVenta',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <ReportOracle />
           </Suspense>
         )
@@ -95,7 +96,7 @@ const router = createBrowserRouter([
       {
         path: '*',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading />}>
             <NotFound />
           </Suspense>
         )

@@ -81,5 +81,5 @@ export function ReturnZona (zona: string): string {
     '39632': 'Jamundi'
   };
 
-  return zonas[zona] || 'No_Definido';
+  return zonas[zona] || 'No Definido';
 }

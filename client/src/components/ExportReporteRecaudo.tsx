@@ -75,7 +75,7 @@ export const BottonExporReporteRecaudo = ({ datos }: { datos: DataReporte[] }): 
 
   return (
     <Button onClick={handleDownload}>
-      Exportar a Excel
+      Exportar
     </Button>
   )
 }

@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { formatPesoColombia } from '../utils/funtions'
-import { Button, Card, Title } from '@tremor/react'
+import { Button, Card } from '../components/ui'
+import { formatValue } from '../utils/funtions'
 import { useEffect, useState } from 'react'
+import { API_URL } from '../utils/contanst'
 import { Recaudo } from '../types/Recaudo'
 import axios from 'axios'
-import { API_URL } from '../utils/contanst'
 
 function RecaudoDetail () {
   const { id, estado } = useParams<{ id: string, estado: string }>()
@@ -27,18 +27,18 @@ function RecaudoDetail () {
   }, [id, estado])
 
   return (
-    <Card className="p-4 shadow-lg rounded-lg bg-white flex flex-col items-center gap-6">
+    <Card>
       {
         data !== undefined
           ? (
             <>
-              <Title className='text-center py-2 text-3xl'>Detalle Recaudo</Title>
+              <h1 className='text-center py-2 text-3xl'>Detalle Recaudo</h1>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-4 text-xl">
                 <p className="font-bold text-gray-700"> <span className="font-bold">Fecha:</span> {data.FECHA}</p>
                 <p className="font-medium text-gray-700"> <span className="font-bold">Recaudador:</span> {data.RECAUDADOR}</p>
                 <p className="font-medium text-gray-700"> <span className="font-bold">Caja:</span> {data.CAJADNO}</p>
                 <p className="font-medium text-gray-700"> <span className="font-bold">Vinculado:</span> {data.VINCULADO}</p>
-                <p className="font-medium text-gray-700"> <span className="font-bold">Valor:</span> {formatPesoColombia(data.VALOR)}</p>
+                <p className="font-medium text-gray-700"> <span className="font-bold">Valor:</span> {formatValue(data.VALOR)}</p>
                 <p className="font-medium text-gray-700"> <span className="font-bold">Estado:</span>
                   {
                     data.ESTADO === 'p' ? ' Pendiente' : data.ESTADO === 'u' ? ' Aceptado' : data.ESTADO === 'c' ? ' Liberado' : ' Rechazado'

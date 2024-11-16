@@ -1,14 +1,13 @@
+import { Button, CloseIcon, Label, Input, Card } from './ui'
 import { PropsCrating } from '../types/interface'
 import { useAuth } from '../auth/AuthProvider'
 import { useNavigate } from 'react-router-dom'
-import { Button, CloseIcon, Input, Label } from './ui'
 import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
-import { Card } from '@tremor/react'
-import axios from 'axios'
 import { toast } from 'sonner'
+import axios from 'axios'
 
-export function FormCreate ({ nombres, vinculado, funClose }: PropsCrating) {
+export function AginarNuevaBaseComponent ({ nombres, vinculado, funClose }: PropsCrating) {
   const [base, setBase] = useState<number>(0)
   const [raspa, setRaspa] = useState<number>(0)
   const [error, setError] = useState('')
@@ -45,26 +44,26 @@ export function FormCreate ({ nombres, vinculado, funClose }: PropsCrating) {
   }
 
   return (
-    <section className='flex items-center justify-center w-full h-[99.5vh] bg-slate-900 bg-opacity-50 z-20 absolute top-1'>
-      <Card className="z-30 xl:w-[650px] max-w-[720px] px-5 flex flex-col items-center justify-center bg-gray-300">
+    <section className='absolute z-40 inset-40 2xl:inset-60'>
+      <Card className='px-20 py-16'>
         <button onClick={funClose} className='absolute top-0 right-0 p-2 hover:text-red-500'>
           <CloseIcon />
         </button>
         <h3 className='text-center text-xl font-semibold pb-2'>Asignación Nueva Base a Vinculado</h3>
         <form className='grid grid-cols-2 gap-4' onSubmit={ev => handleSubmit(ev)}>
-          <div className="">
+          <div className=' '>
             <Label>Nombres</Label>
-            <Input type="text" value={nombres} readOnly />
+            <Input type='text' value={nombres} readOnly />
           </div>
-          <div className="">
+          <div className=' '>
             <Label>N° Cédula</Label>
-            <Input type="text" value={vinculado} readOnly />
+            <Input type='text' value={vinculado} readOnly />
           </div>
-          <div className="">
+          <div className=' '>
             <Label>Valor Base</Label>
             <Input type='number' value={base} onChange={ev => setBase(parseInt(ev.target.value))} />
           </div>
-          <div className="">
+          <div className=' '>
             <Label>Valor Raspa</Label>
             <Input type='number' value={raspa} onChange={ev => setRaspa(parseInt(ev.target.value))} />
           </div>

@@ -1,9 +1,6 @@
-import { formatPesoColombia } from '../utils/funtions'
+import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, DonutChart } from './ui'
+import { formatValue } from '../utils/funtions'
 import { DataIU } from '../types/interface'
-import { DonutChart } from '@tremor/react'
-
-const dataFormatter = (number: number) =>
-  `$ ${Intl.NumberFormat('co-ES').format(number).toString()}`
 
 export function TableInfo ({ data }: { data: DataIU[] }) {
   const dataUnifi = data.map((item) => ({
@@ -16,51 +13,59 @@ export function TableInfo ({ data }: { data: DataIU[] }) {
   return (
     <section className='flex w-full justify-around'>
 
-      <div className='w-3/12'>
-        <DonutChart colors={['yellow', 'blue']} data={dataUnifi} className=''
-          variant="pie" valueFormatter={dataFormatter} onValueChange={(v) => console.log(v)} />
+      <div className='flex flex-col items-center gap-2'>
+        <DonutChart
+          colors={['amber', 'blue']}
+          data={dataUnifi}
+          category='name'
+          value='value'
+          variant='pie'
+          valueFormatter={(number: number) => `$${Intl.NumberFormat('es-CO').format(number).toString()}`}
+        />
 
-        <div className='flex justify-center'>
+        <div className='flex'>
           {dataUnifi.map((item, index) => (
             <section key={index} className='bg-gray-200 m-1 p-2 rounded-md'>
               <article className='flex items-center text-center'>
                 <p className={`w-4 h-4 p-2 rounded-full ${item.name === 'Multired' ? 'bg-blue-500' : 'bg-yellow-500'} `}></p>
-                <p className='px-2'>Total <span className='font-medium'>{item.name}:</span></p>
+                <p className='px-2'>Total <span className='font-medium'>{item.name}</span></p>
               </article>
-              <p className='text-center'>{formatPesoColombia(item.value)}</p>
+              <p className='text-center'>{formatValue(item.value)}</p>
             </section>
           ))}
         </div>
 
-        <h1 className='text-center text-xl font-bold'>Total: {formatPesoColombia(total)}</h1>
+        <h1 className='text-center text-xl font-bold'>Total: {formatValue(total)}</h1>
       </div>
 
-      <div className='w-6/12 flex items-center'>
-        <table>
-          <thead>
-            <tr>
-              <th>Empresa</th>
-              <th>Caj comercial</th>
-              <th>Col Independiente</th>
-              <th>Caj Tesoreria</th>
-              <th>Vendedor</th>
-              <th>No Definido</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              data.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.Empresa}</td>
-                  <td>{formatPesoColombia(item.Caj_Comercial)}</td>
-                  <td>{formatPesoColombia(item.Colo_Independiente)}</td>
-                  <td>{formatPesoColombia(item.Caj_Tesoreria | 0)}</td>
-                  <td>{formatPesoColombia(item.Vendedor)}</td>
-                  <td>{formatPesoColombia(item.No_Definido | 0)}</td>
-                </tr>
+      <div className='flex items-center'>
+        <TableRoot>
+          <Table>
+            <TableHead className='bg-blue-600'>
+              <TableRow>
+                <TableHeaderCell className='text-white'>Empresa</TableHeaderCell>
+                <TableHeaderCell className='text-white'>Caj Comercial</TableHeaderCell>
+                <TableHeaderCell className='text-white'>Col Independiente</TableHeaderCell>
+                <TableHeaderCell className='text-white'>Caj Tesorería</TableHeaderCell>
+                <TableHeaderCell className='text-white'>Vendedor</TableHeaderCell>
+                <TableHeaderCell className='text-white'>No definido</TableHeaderCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.Empresa}</TableCell>
+                  <TableCell>{formatValue(item.Caj_Comercial)}</TableCell>
+                  <TableCell>{formatValue(item.Colo_Independiente)}</TableCell>
+                  <TableCell>{formatValue(item.Caj_Tesoreria | 0)}</TableCell>
+                  <TableCell>{formatValue(item.Vendedor)}</TableCell>
+                  <TableCell>{formatValue(item.No_Definido | 0)}</TableCell>
+                </TableRow>
               ))}
-          </tbody>
-        </table>
+            </TableBody>
+          </Table>
+        </TableRoot>
+
       </div>
 
     </section>

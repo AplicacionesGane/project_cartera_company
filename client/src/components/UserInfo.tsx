@@ -1,7 +1,7 @@
-import { useAuth } from '../../auth/AuthProvider'
-import { LOGIN_URL } from '../../utils/contanst'
-import { User } from '../../types/user'
-import { LogoutIcon } from '../icons'
+import { useAuth } from '../auth/AuthProvider'
+import { LOGIN_URL } from '../utils/contanst'
+import { User } from '../types/user'
+import { LogoutIcon } from './icons'
 import axios from 'axios'
 
 interface Props {

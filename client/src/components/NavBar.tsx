@@ -1,7 +1,9 @@
-import { NavLink } from 'react-router-dom'
-import UserInfo from './ui/UserInfo'
-import { useAuth } from '../auth/AuthProvider'
 import { useEffect, useRef, useState } from 'react'
+import { useAuth } from '../auth/AuthProvider'
+import { NavLink } from 'react-router-dom'
+import UserInfo from './UserInfo'
+import { useTheme } from '../context/ThemeContext'
+import { Switch } from './ui'
 
 const Links = [
   { link: '/', name: 'Inicio' },
@@ -18,11 +20,12 @@ const LinkComponent = ({ link, name }: { link: string, name: string }) => {
   )
 }
 
-export function NavBar () {
+export default function NavBar () {
   const { user } = useAuth()
   const [visible, setVisible] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+  const { darkMode, toggleDarkMode } = useTheme()
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,6 +54,10 @@ export function NavBar () {
           {Links.map((link, index) => <LinkComponent key={index} link={link.link} name={link.name} />)}
         </div>
 
+        <div>
+          <Switch checked={darkMode} onCheckedChange={toggleDarkMode} />
+        </div>
+
         <button className='bg-blue-700 rounded-full h-10 w-10 text-xl flex items-center justify-center cursor-pointer
            hover:bg-blue-500 dark:hover:bg-dark-tremor-brand-faint dark:bg-dark-tremor-brand-faint' ref={buttonRef}
           onClick={() => setVisible(!visible)} >
@@ -63,7 +70,7 @@ export function NavBar () {
 
       {visible && (
         <div ref={menuRef}
-          className='absolute z-20 bg-gray-200 shadow-md right-2 top-12 px-5 py-2 mt-1 rounded-md flex flex-col items-center gap-1'>
+          className='absolute z-50 bg-gray-200 shadow-md right-2 top-12 px-5 py-2 mt-1 rounded-md flex flex-col items-center gap-1'>
           <UserInfo key={user.id} user={user} />
         </div>
       )}

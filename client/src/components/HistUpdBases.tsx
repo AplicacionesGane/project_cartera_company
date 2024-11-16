@@ -1,5 +1,5 @@
 import { BasesIUpdates } from '../types/Bases'
-import { Card } from '@tremor/react'
+import { Card } from './ui'
 
 export const HistUpdBases = ({ data }: { data: BasesIUpdates[] }) => {
   return (
