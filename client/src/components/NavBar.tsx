@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
 import { NavLink } from 'react-router-dom'
 import UserInfo from './UserInfo'
+import { useTheme } from '../context/ThemeContext'
+import { Switch } from './ui'
 
 const Links = [
   { link: '/', name: 'Inicio' },
@@ -23,6 +25,7 @@ export default function NavBar () {
   const [visible, setVisible] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
+  const { darkMode, toggleDarkMode } = useTheme()
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -49,6 +52,10 @@ export default function NavBar () {
 
         <div className='flex gap-4'>
           {Links.map((link, index) => <LinkComponent key={index} link={link.link} name={link.name} />)}
+        </div>
+
+        <div>
+          <Switch checked={darkMode} onCheckedChange={toggleDarkMode} />
         </div>
 
         <button className='bg-blue-700 rounded-full h-10 w-10 text-xl flex items-center justify-center cursor-pointer
