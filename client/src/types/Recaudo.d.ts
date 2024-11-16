@@ -32,18 +32,18 @@ export interface DataReporte {
 }
 
 export interface DataOracle {
-  fecha: string;
-  persona: string;
+  fecha: Date;
+  persona: number;
   nombres: string;
   razonsocial: string;
-  servicio: string;
+  servicio: number;
   nombreservicio: string;
-  ventabruta: string;
-  vtasiniva: string;
-  iva: string;
-  comision: string;
-  ventaneta: string;
-  formularios: string;
-  sucursal: string;
+  ventabruta: number;
+  vtasiniva: number;
+  iva: number;
+  comision: number;
+  ventaneta: number;
+  formularios: number;
+  sucursal: number;
   nombre_comercial: string;
 }

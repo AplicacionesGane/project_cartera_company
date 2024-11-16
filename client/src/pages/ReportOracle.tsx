@@ -33,12 +33,12 @@ function ReportOracle () {
 
   const sumarTotales = (data: DataOracle[]) => {
     return data.reduce((acc, item) => {
-      acc.ventabruta += parseInt(item.ventabruta)
-      acc.vtasiniva += parseInt(item.vtasiniva)
-      acc.iva += parseInt(item.iva)
-      acc.comision += parseInt(item.comision)
-      acc.ventaneta += parseInt(item.ventaneta)
-      acc.formularios += parseInt(item.formularios)
+      acc.ventabruta += item.ventabruta
+      acc.vtasiniva += item.vtasiniva
+      acc.iva += item.iva
+      acc.comision += item.comision
+      acc.ventaneta += item.ventaneta
+      acc.formularios += item.formularios
       return acc
     }, {
       ventabruta: 0,
@@ -104,12 +104,12 @@ function ReportOracle () {
                     <TableCell>{item.nombreservicio}</TableCell>
                     <TableCell>{item.razonsocial}</TableCell>
                     <TableCell>{item.servicio}</TableCell>
-                    <TableCell className='text-right'>{formatValue(parseInt(item.ventabruta))}</TableCell>
-                    <TableCell className='text-right'>{formatValue(parseInt(item.vtasiniva))}</TableCell>
-                    <TableCell className='text-right'>{formatValue(parseInt(item.iva))}</TableCell>
-                    <TableCell className='text-right'>{formatValue(parseInt(item.comision))}</TableCell>
-                    <TableCell className='text-right'>{formatValue(parseInt(item.ventaneta))}</TableCell>
-                    <TableCell className='text-right'>{formatValue(parseInt(item.formularios))}</TableCell>
+                    <TableCell className='text-right'>{formatValue(item.ventabruta)}</TableCell>
+                    <TableCell className='text-right'>{formatValue(item.vtasiniva)}</TableCell>
+                    <TableCell className='text-right'>{formatValue(item.iva)}</TableCell>
+                    <TableCell className='text-right'>{formatValue(item.comision)}</TableCell>
+                    <TableCell className='text-right'>{formatValue(item.ventaneta)}</TableCell>
+                    <TableCell className='text-right'>{formatValue(item.formularios)}</TableCell>
                   </TableRow>
                 ))
               }

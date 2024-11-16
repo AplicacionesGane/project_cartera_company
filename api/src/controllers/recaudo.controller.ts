@@ -76,7 +76,7 @@ export const getReportOracle = async (req: Request, res: Response) => {
       return metaData?.reduce((acc, meta, index) => {
         acc[meta.name.toLowerCase()] = row[index];
         return acc;
-      }, {} as Record<string, any>);
+      }, {} as Record<string | number, any>);
     });
 
     return res.status(200).json(data);
