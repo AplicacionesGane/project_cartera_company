@@ -1,10 +1,11 @@
-import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TableRoot, Card, Label, Input, Button } from '../components/ui'
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TableRoot, Card, Label, Input, Button, Badge, TableFoot } from '../components/ui'
 import { BottonExporReporteConsolidado } from '../components/ExportConsolidado'
 import { LoadingSvg } from '../components/icons'
 import { DataOracle } from '../types/Recaudo'
 import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
+import { formatValue } from '../utils/funtions'
 
 function ReportOracle () {
   const [data, setData] = useState<DataOracle[] | null>(null)
@@ -35,19 +36,17 @@ function ReportOracle () {
 
         <p className='flex gap-2 items-center'>
           Cantida Datos:
-          <span className='px-2 py-1 text-sm font-semibold text-gray-800 bg-yellow-400 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800'>{data?.length || '0'}</span>
+          <Badge variant='default'>{data?.length || '0'}</Badge>
         </p>
 
         <form onSubmit={handleSubmit} className='flex items-center gap-4'>
           <div className='flex gap-2 items-center'>
             <Label htmlFor='fecha'>Fecha</Label>
-            <Input className='p-2 rounded-md'
-              type='date' id='fecha' required value={fecha} onChange={e => setFecha(e.target.value)} />
+            <Input type='date' id='fecha' required value={fecha} onChange={e => setFecha(e.target.value)} />
           </div>
           <div className='flex gap-2 items-center'>
             <Label htmlFor='documento'>Documento</Label>
-            <Input className='p-2 rounded-md'
-              type='text' id='documento' required value={documento} onChange={e => setDocumento(e.target.value)} />
+            <Input type='text' id='documento' required value={documento} onChange={e => setDocumento(e.target.value)} />
           </div>
           <Button type='submit'>Buscar</Button>
         </form>
@@ -58,26 +57,44 @@ function ReportOracle () {
 
       </Card>
 
+      <Card className='mt-1 grid grid-cols-12'>
+        <div className='col-span-2'>
+          <Label>Fecha: </Label>
+          <Badge variant='warning'>{fecha || ''}</Badge>
+        </div>
+        <div className='col-span-2'>
+          <Label>N° Documento: </Label>
+          <Badge variant='warning'>{data ? data[0].persona : ''}</Badge>
+        </div>
+        <div className='col-span-3'>
+          <Label>Nombres: </Label>
+          <Badge variant='warning'>{data ? data[0].nombres : ''}</Badge>
+        </div>
+        <div className='col-span-1'>
+          <Label>Sucursal: </Label>
+          <Badge variant='warning'>{data ? data[0].sucursal : ''}</Badge>
+        </div>
+        <div className='col-span-3'>
+          <Label>Nombre Sucursal: </Label>
+          <Badge variant='warning'>{data ? data[0].nombre_comercial : ''}</Badge>
+        </div>
+      </Card>
+
       <Card className='mt-1'>
-        <TableRoot className='h-[80vh] overflow-y-auto'>
+        <TableRoot className='h-[75vh] overflow-y-auto'>
           <Table>
             <TableHead className='sticky top-0 bg-gray-100 z-30'>
               <TableRow>
                 <TableHeaderCell>N°</TableHeaderCell>
-                <TableHeaderCell>Fecha</TableHeaderCell>
-                <TableHeaderCell>Persona</TableHeaderCell>
-                <TableHeaderCell>Nombres</TableHeaderCell>
+                <TableHeaderCell>Nombre Servicio</TableHeaderCell>
                 <TableHeaderCell>Razón Social</TableHeaderCell>
                 <TableHeaderCell>Servicio</TableHeaderCell>
-                <TableHeaderCell>Nombre Servicio</TableHeaderCell>
                 <TableHeaderCell>Venta Bruta</TableHeaderCell>
                 <TableHeaderCell>Venta Sin IVA</TableHeaderCell>
                 <TableHeaderCell>IVA</TableHeaderCell>
                 <TableHeaderCell>Comisión</TableHeaderCell>
                 <TableHeaderCell>Venta Neta</TableHeaderCell>
                 <TableHeaderCell>Formularios</TableHeaderCell>
-                <TableHeaderCell>Sucursal</TableHeaderCell>
-                <TableHeaderCell>Nombre Comercial</TableHeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -85,24 +102,44 @@ function ReportOracle () {
                 data?.map((item, index) => (
                   <TableRow key={index}>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{item.fecha.slice(0, 10)}</TableCell>
-                    <TableCell>{item.persona}</TableCell>
-                    <TableCell>{item.nombres}</TableCell>
+                    <TableCell>{item.nombreservicio}</TableCell>
                     <TableCell>{item.razonsocial}</TableCell>
                     <TableCell>{item.servicio}</TableCell>
-                    <TableCell>{item.nombreservicio}</TableCell>
-                    <TableCell>{item.ventabruta}</TableCell>
-                    <TableCell>{item.vtasiniva}</TableCell>
-                    <TableCell>{item.iva}</TableCell>
-                    <TableCell>{item.comision}</TableCell>
-                    <TableCell>{item.ventaneta}</TableCell>
-                    <TableCell>{item.formularios}</TableCell>
-                    <TableCell>{item.sucursal}</TableCell>
-                    <TableCell>{item.nombre_comercial}</TableCell>
+                    <TableCell className='text-right'>{formatValue(parseInt(item.ventabruta))}</TableCell>
+                    <TableCell className='text-right'>{formatValue(parseInt(item.vtasiniva))}</TableCell>
+                    <TableCell className='text-right'>{formatValue(parseInt(item.iva))}</TableCell>
+                    <TableCell className='text-right'>{formatValue(parseInt(item.comision))}</TableCell>
+                    <TableCell className='text-right'>{formatValue(parseInt(item.ventaneta))}</TableCell>
+                    <TableCell className='text-right'>{formatValue(parseInt(item.formularios))}</TableCell>
                   </TableRow>
                 ))
               }
             </TableBody>
+            <TableFoot className='sticky bottom-0 bg-gray-100 z-30'>
+              <TableRow>
+                <TableHeaderCell colSpan={4} scope="row" className="text-right">
+                  Total:
+                </TableHeaderCell>
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
+                  4,642
+                </TableHeaderCell>
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
+                  497
+                </TableHeaderCell>
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
+                  4,642
+                </TableHeaderCell>
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
+                  4,642
+                </TableHeaderCell>
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
+                  4,642
+                </TableHeaderCell>
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
+                  4,642
+                </TableHeaderCell>
+              </TableRow>
+            </TableFoot>
           </Table>
         </TableRoot>
       </Card>
@@ -116,7 +153,7 @@ function ReportOracle () {
             </div>
           )}
           {!loading && data && data.length === 0 && (
-            <p className="text-center text-gray-600">No se encontraron datos para el documento y fecha seleccionados.</p>
+            <p className="text-right text-gray-600">No se encontraron datos para el documento y fecha seleccionados.</p>
           )}
         </div>
       }
