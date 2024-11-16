@@ -18,7 +18,7 @@ const LinkComponent = ({ link, name }: { link: string, name: string }) => {
   )
 }
 
-export function NavBar () {
+export default function NavBar () {
   const { user } = useAuth()
   const [visible, setVisible] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
