@@ -1,7 +1,6 @@
-import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TableRoot } from '../components/TableTremor'
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TableRoot, Card, Label, Input, Button } from '../components/ui'
 import { BottonExporReporteConsolidado } from '../components/ExportConsolidado'
 import { LoadingSvg } from '../components/icons'
-import { Card } from '../components/CardTremor'
 import { DataOracle } from '../types/Recaudo'
 import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
@@ -41,20 +40,21 @@ function ReportOracle () {
 
         <form onSubmit={handleSubmit} className='flex items-center gap-4'>
           <div className='flex gap-2 items-center'>
-            <label htmlFor='fecha'>Fecha</label>
-            <input className='p-2 rounded-md'
+            <Label htmlFor='fecha'>Fecha</Label>
+            <Input className='p-2 rounded-md'
               type='date' id='fecha' required value={fecha} onChange={e => setFecha(e.target.value)} />
           </div>
           <div className='flex gap-2 items-center'>
-            <label htmlFor='documento'>Documento</label>
-            <input className='p-2 rounded-md'
+            <Label htmlFor='documento'>Documento</Label>
+            <Input className='p-2 rounded-md'
               type='text' id='documento' required value={documento} onChange={e => setDocumento(e.target.value)} />
           </div>
-          <button type='submit'
-            className='p-2 bg-green-600 rounded-md text-white hover:bg-green-500'>Buscar</button>
+          <Button type='submit'>Buscar</Button>
         </form>
 
-        <BottonExporReporteConsolidado datos={data || []} />
+        <div className='flex items-center'>
+          <BottonExporReporteConsolidado datos={data || []} />
+        </div>
 
       </Card>
 

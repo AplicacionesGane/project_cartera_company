@@ -1,7 +1,6 @@
-import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TableRoot } from '../components/TableTremor'
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TableRoot, Card, Label, Input, SelectNative, Button, Badge } from '../components/ui'
 import { BottonExporReporteRecaudo } from '../components/ExportReporteRecaudo'
 import { FormEvent, useMemo, useState } from 'react'
-import { Card } from '../components/CardTremor'
 import { DataReporte } from '../types/Recaudo'
 import { API_URL } from '../utils/contanst'
 import { toast } from 'sonner'
@@ -38,35 +37,35 @@ export default function ReportClienteGanadores () {
       <Card className='flex justify-around items-center'>
 
         <div className='flex gap-2 items-center' >
-          <label>Fecha Inicial</label>
-          <input type='date' value={date1} onChange={(e) => setDate1(e.target.value)}
+          <Label>Fecha Inicial</Label>
+          <Input type='date' value={date1} onChange={(e) => setDate1(e.target.value)}
             className='rounded-md' />
-          <label>Fecha Final</label>
-          <input type='date' value={date2} onChange={(e) => setDate2(e.target.value)}
+          <Label>Fecha Final</Label>
+          <Input type='date' value={date2} onChange={(e) => setDate2(e.target.value)}
             className='rounded-md' />
         </div>
 
         <form className='flex gap-2 items-center' onSubmit={handleSubmitInfo}>
-          <label >Empresa: </label>
-          <select name='zona' className='px-4 rounded-md w-40' value={zona} onChange={ev => setZona(ev.target.value)}>
+          <Label >Empresa: </Label>
+          <SelectNative name='zona' className='px-4 rounded-md w-40' value={zona} onChange={ev => setZona(ev.target.value)}>
             <option value=''>Seleccione</option>
             <option value='101'>Servired</option>
             <option value='102'>Multired</option>
-          </select>
+          </SelectNative>
 
-          <button type='submit' className='bg-green-600 py-2 px-4 rounded-md text-white hover:bg-green-500'>
+          <Button type='submit'>
             Buscar
-          </button>
+          </Button>
         </form>
 
         <p className='flex gap-2 items-center'>
           N° Datos:
-          <span className="px-2 py-1 text-sm font-semibold text-gray-800 bg-yellow-400 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800">{filteredData?.length || '0'}</span>
+          <Badge variant='warning'>{filteredData?.length || '0'}</Badge>
         </p>
 
         <div className='flex gap-2 items-center'>
-          <label>Filtrar N° Doc</label>
-          <input type="text" placeholder='1118*****' className='rounded-md' value={filter} onChange={ev => setFilter(ev.target.value)} />
+          <Label>Filtrar N° Doc</Label>
+          <Input type="text" placeholder='1118*****' className='rounded-md' value={filter} onChange={ev => setFilter(ev.target.value)} />
         </div>
 
         <BottonExporReporteRecaudo datos={filteredData ?? []} />

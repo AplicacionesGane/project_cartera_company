@@ -8,15 +8,20 @@ export const useCartera = () => {
   const [data, setData] = useState<CarteraI[]>([])
   const [empresa, setEmpresa] = useState<string>('0')
   const { sortConfig, setSortConfig, ordenarArray } = useSort<CarteraI>()
+  const [loading, setLoading] = useState<boolean>(false)
   const [vinculado, setVinculado] = useState<string>('')
 
   useEffect(() => {
+    setLoading(true)
+
     const fetchData = async () => {
       try {
         const data = await fetchCartera(empresa, abs)
         setData(data)
+        setLoading(false)
       } catch (error) {
         console.error('Failed to fetch data:', error)
+        setLoading(false)
       }
     }
 
@@ -43,5 +48,5 @@ export const useCartera = () => {
     return data.filter(item => item.Vinculado.toString().includes(vinculado))
   }, [vinculado, data])
 
-  return { vinculado, dataFiltered, abs, setAbs, empresa, setEmpresa, handleClick, handleFilterChange }
+  return { vinculado, dataFiltered, abs, setAbs, empresa, setEmpresa, handleClick, handleFilterChange, loading }
 }

@@ -1,7 +1,6 @@
-import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/TableTremor'
+import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Badge } from './ui'
 import { formatValue } from '../utils/funtions'
 import { DatesI } from '../types/interface'
-import { Badge } from './BadgeTremor'
 
 const estadoMap: { [key: string]: string } = {
   u: 'Aceptado',

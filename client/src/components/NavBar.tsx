@@ -1,7 +1,7 @@
-import { NavLink } from 'react-router-dom'
-import UserInfo from './ui/UserInfo'
-import { useAuth } from '../auth/AuthProvider'
 import { useEffect, useRef, useState } from 'react'
+import { useAuth } from '../auth/AuthProvider'
+import { NavLink } from 'react-router-dom'
+import UserInfo from './UserInfo'
 
 const Links = [
   { link: '/', name: 'Inicio' },

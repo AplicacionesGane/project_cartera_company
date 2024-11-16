@@ -1,7 +1,7 @@
 // Tremor Card [v0.0.2]
 
 import { Slot } from '@radix-ui/react-slot'
-import { cx } from '../lib/utils'
+import { cx } from '../../lib/utils'
 import React from 'react'
 
 interface CardProps extends React.ComponentPropsWithoutRef<'div'> {

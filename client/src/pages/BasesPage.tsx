@@ -1,15 +1,11 @@
-import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/TableTremor'
-import { Input } from '../components/ui/InputTremor'
+import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Input, Label, Badge, Button } from '../components/ui'
 import { formatValue } from '../utils/funtions'
-import { Label } from '../components/ui'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
 import { useEffect, useState } from 'react'
+import { API_URL } from '../utils/contanst'
 import { BasesI } from '../types/Bases'
 import axios from 'axios'
-import { API_URL } from '../utils/contanst'
-import { Button } from '../components/ui/ButtonTremor'
-import { Badge } from '../components/BadgeTremor'
 
 const BasesPage = () => {
   const [data, setData] = useState<BasesI[]>([])

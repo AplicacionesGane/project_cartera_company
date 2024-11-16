@@ -1,12 +1,8 @@
-import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRoot, TableRow } from '../components/TableTremor'
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRoot, TableRow, Card, Label, Input, Button } from '../components/ui'
 import { AginarNuevaBaseComponent } from '../components/AsignarBase'
-import { Button } from '../components/ui/ButtonTremor'
-import { Input } from '../components/ui/InputTremor'
 import { PropsCrating } from '../types/interface'
-import { Card } from '../components/CardTremor'
 import { API_URL } from '../utils/contanst'
 import { useEffect, useState } from 'react'
-import { Label } from '../components/ui'
 import axios from 'axios'
 
 interface UserSinBase {

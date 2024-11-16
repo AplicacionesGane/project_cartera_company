@@ -2,9 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import { Pie, PieChart as ReChartsDonutChart, ResponsiveContainer, Sector, Tooltip } from 'recharts'
-
-import { AvailableChartColors, AvailableChartColorsKeys, constructCategoryColors, getColorClassName } from '../lib/chartUtils'
-import { cx } from '../lib/utils'
+import { AvailableChartColors, AvailableChartColorsKeys, constructCategoryColors, getColorClassName } from '../../lib/chartUtils'
+import { cx } from '../../lib/utils'
 
 const sumNumericArray = (arr: number[]): number =>
   arr.reduce((sum, num) => sum + num, 0)

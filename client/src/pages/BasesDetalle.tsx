@@ -1,11 +1,8 @@
-import { Button as ButtonMe, Label } from '../components/ui'
-import { Card } from '../components/CardTremor'
-import { Switch } from '../components/SwitchTremor'
-import { Button } from '../components/ui/ButtonTremor'
+import { Card, Button, Switch, Label } from '../components/ui'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BasesI, BasesIUpdates } from '../types/Bases'
-import { formatValue } from '../utils/funtions'
 import { useEffect, useRef, useState } from 'react'
+import { formatValue } from '../utils/funtions'
 import { useAuth } from '../auth/AuthProvider'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
@@ -111,7 +108,7 @@ const BasesDetalle = () => {
             <input name='obs' placeholder='ej: Base incrementada por ventas acumuladas' type='text' className='border-none rounded-md max-h-10' />
 
             <div className='w-full flex justify-center py-2'>
-              <ButtonMe>Actualizar Base</ButtonMe>
+              <Button>Actualizar Base</Button>
             </div>
 
           </form>

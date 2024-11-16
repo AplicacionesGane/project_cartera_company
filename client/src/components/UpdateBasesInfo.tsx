@@ -1,7 +1,6 @@
 import { formatValue } from '../utils/funtions'
 import { BasesIUpdates } from '../types/Bases'
-import { Card } from '../components/CardTremor'
-import { Badge } from './ui/Badge'
+import { Badge, Card } from './ui'
 
 function UpdatesBasesInfo ({ data }: { data: BasesIUpdates[] }) {
   return (

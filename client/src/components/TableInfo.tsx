@@ -1,7 +1,6 @@
-import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from './TableTremor'
+import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, DonutChart } from './ui'
 import { formatValue } from '../utils/funtions'
 import { DataIU } from '../types/interface'
-import { DonutChart } from './DonutChart'
 
 export function TableInfo ({ data }: { data: DataIU[] }) {
   const dataUnifi = data.map((item) => ({

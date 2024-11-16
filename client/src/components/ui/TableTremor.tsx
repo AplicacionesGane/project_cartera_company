@@ -1,7 +1,7 @@
 // Tremor Table [v0.0.3]
 
 import React from 'react'
-import { cx } from '../lib/utils'
+import { cx } from '../../lib/utils'
 
 const TableRoot = React.forwardRef<
   HTMLDivElement,

@@ -1,8 +1,8 @@
 // Tremor Label [v0.0.2]
 
-import * as LabelPrimitives from '@radix-ui/react-label'
-import { cx } from '../lib/utils'
 import React from 'react'
+import * as LabelPrimitives from '@radix-ui/react-label'
+import { cx } from '../../lib/utils'
 
 interface LabelProps
   extends React.ComponentPropsWithoutRef<typeof LabelPrimitives.Root> {

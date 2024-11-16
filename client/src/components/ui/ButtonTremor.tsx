@@ -1,5 +1,4 @@
 // Tremor Button [v0.2.0]
-
 import { tv, type VariantProps } from 'tailwind-variants'
 import { RiLoader2Fill } from '@remixicon/react'
 import { cx, focusRing } from '../../lib/utils'
@@ -91,9 +90,7 @@ const buttonVariants = tv({
   }
 })
 
-interface ButtonProps
-  extends React.ComponentPropsWithoutRef<'button'>,
-    VariantProps<typeof buttonVariants> {
+interface ButtonProps extends React.ComponentPropsWithoutRef<'button'>, VariantProps<typeof buttonVariants> {
   asChild?: boolean
   isLoading?: boolean
   loadingText?: string
@@ -115,25 +112,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const Component = asChild ? Slot : 'button'
     return (
-      <Component
-        ref={forwardedRef}
-        className={cx(buttonVariants({ variant }), className)}
-        disabled={disabled || isLoading}
-        tremor-id="tremor-raw"
-        {...props}
+      <Component ref={forwardedRef} className={cx(buttonVariants({ variant }), className)}
+        disabled={disabled || isLoading} tremor-id="tremor-raw" {...props}
       >
         {isLoading
           ? (
-          <span className="pointer-events-none flex shrink-0 items-center justify-center gap-1.5">
-            <RiLoader2Fill
-              className="size-4 shrink-0 animate-spin"
-              aria-hidden="true"
-            />
-            <span className="sr-only">
-              {loadingText || 'Loading'}
+            <span className="pointer-events-none flex shrink-0 items-center justify-center gap-1.5">
+              <RiLoader2Fill
+                className="size-4 shrink-0 animate-spin"
+                aria-hidden="true"
+              />
+              <span className="sr-only">
+                {loadingText || 'Loading'}
+              </span>
+              {loadingText || children}
             </span>
-            {loadingText || children}
-          </span>
             )
           : (
               children

@@ -1,15 +1,12 @@
+import { Input, Card, Label, Badge, Switch } from '../components/ui'
 import { BottonExporCartera } from '../components/ExportCartera'
-import { SelectNative } from '../components/SelectTremor'
+import { SelectNative } from '../components/ui/SelectTremor'
 import { TableDatos } from '../components/TableDatos'
-import { Input } from '../components/ui/InputTremor'
-import { Switch } from '../components/SwitchTremor'
-import { Label } from '../components/LabelTremor'
 import { useCartera } from '../hooks/useCartera'
-import { Card } from '../components/CardTremor'
-import { Badge } from '../components/BadgeTremor'
+import { LoadingSvg } from '../components/icons'
 
 const Detallado = () => {
-  const { dataFiltered, abs, setAbs, empresa, vinculado, setEmpresa, handleClick, handleFilterChange } = useCartera()
+  const { dataFiltered, abs, setAbs, empresa, vinculado, setEmpresa, handleClick, handleFilterChange, loading } = useCartera()
   const fecha = new Date().toLocaleDateString()
 
   return (
@@ -46,6 +43,17 @@ const Detallado = () => {
         </div>
       </Card>
       <TableDatos data={dataFiltered} funClick={handleClick} />
+
+      {
+        <div className="absolute top-36 right-48 left-48 z-30 flex flex-col items-center justify-center">
+          {loading && (
+            <div className="w-96 rounded-md flex flex-col shadow-lg items-center justify-center gap-4 py-4 px-6 z-30 bg-yellow-300 animate-pulse">
+              <span className="text-lg font-semibold text-gray-800">Solicitando Información ...</span>
+              <LoadingSvg />
+            </div>
+          )}
+        </div>
+      }
     </section>
   )
 }

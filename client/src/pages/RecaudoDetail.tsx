@@ -1,11 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { Button } from '../components/ui/ButtonTremor'
-import { Card } from '../components/CardTremor'
+import { Button, Card } from '../components/ui'
 import { formatValue } from '../utils/funtions'
 import { useEffect, useState } from 'react'
+import { API_URL } from '../utils/contanst'
 import { Recaudo } from '../types/Recaudo'
 import axios from 'axios'
-import { API_URL } from '../utils/contanst'
 
 function RecaudoDetail () {
   const { id, estado } = useParams<{ id: string, estado: string }>()

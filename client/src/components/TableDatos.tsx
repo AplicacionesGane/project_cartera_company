@@ -1,8 +1,7 @@
-import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRoot, TableRow } from '../components/TableTremor'
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRoot, TableRow, Card } from './ui'
 import { formatValue } from '../utils/funtions'
 import { CarteraI } from '../types/cartera'
 import { useNavigate } from 'react-router-dom'
-import { Card } from './CardTremor'
 
 interface PropsCompo {
   data: CarteraI[]

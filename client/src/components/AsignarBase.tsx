@@ -1,13 +1,11 @@
+import { Button, CloseIcon, Label, Input, Card } from './ui'
 import { PropsCrating } from '../types/interface'
 import { useAuth } from '../auth/AuthProvider'
 import { useNavigate } from 'react-router-dom'
-import { Button, CloseIcon, Label } from './ui'
-import { Input } from './ui/InputTremor'
 import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
-import { Card } from './CardTremor'
-import axios from 'axios'
 import { toast } from 'sonner'
+import axios from 'axios'
 
 export function AginarNuevaBaseComponent ({ nombres, vinculado, funClose }: PropsCrating) {
   const [base, setBase] = useState<number>(0)
