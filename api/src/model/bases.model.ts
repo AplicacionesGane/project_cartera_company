@@ -1,5 +1,5 @@
+import { DataTypes, Model, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { conection } from '../connections'
-import { DataTypes, Model, InferAttributes, InferCreationAttributes } from "sequelize";
 import { Sellers } from './sellers.model';
 
 class Bases extends Model<InferAttributes<Bases>,InferCreationAttributes<Bases>> {

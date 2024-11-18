@@ -1,4 +1,4 @@
-import { ObjectCartera } from "../types/interface";
+import { ObjectCartera } from '../types/interface';
 
 export function ReturCargo(seller: string): string {
   const sellerRoles: { [key: string]: string } = {
@@ -51,8 +51,8 @@ export interface Resumen {
 
 export const sumarCarteraPorEmpresaYCargo = (carteras: ObjectCartera[]) => {
   const resumen = carteras.reduce((acc, { Empresa, Cargo, Cartera }) => {
-    // Verificar si la empresa es "Servired" o "Multired"
-    if (Empresa === "Servired" || Empresa === "Multired") {
+    // Verificar si la empresa es 'Servired' o 'Multired'
+    if (Empresa === 'Servired' || Empresa === 'Multired') {
       // Inicializar la empresa si no existe
       if (!acc[Empresa]) {
         acc[Empresa] = {};
