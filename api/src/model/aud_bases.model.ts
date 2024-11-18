@@ -1,7 +1,21 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes, Model, InferAttributes, InferCreationAttributes } from "sequelize";
 import { conection } from '../connections'
 
-class Aud_Bases extends Model { }
+class Aud_Bases extends Model<InferAttributes<Aud_Bases>, InferCreationAttributes<Aud_Bases>> {
+  declare FECHA: Date;
+  declare VINCULADO: string;
+  declare BASE_ANT: number;
+  declare BASE_NEW: number;
+  declare RASPE_ANT: number;
+  declare RASPE_NEW: number;
+  declare EXCP2_ANT: number;
+  declare EXCP2_NEW: number;
+  declare EXCP3_ANT: number;
+  declare EXCP3_NEW: number;
+  declare LOGIN: string;
+  declare OBSERVACION: string;
+  declare VERSION: string;
+}
 
 Aud_Bases.init({
   FECHA: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
