@@ -5,6 +5,7 @@ import { DataReporte } from '../types/Recaudo'
 import { API_URL } from '../utils/contanst'
 import { toast } from 'sonner'
 import axios from 'axios'
+import { DialogHero } from '../components/ReporteDetail'
 
 export default function ReportClienteGanadores () {
   const [date1, setDate1] = useState('')
@@ -13,6 +14,13 @@ export default function ReportClienteGanadores () {
   const [filter, setFilter] = useState<string>('')
 
   const [data, setData] = useState<DataReporte[] | null>(null)
+  const [open, setOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState<DataReporte | null>(null)
+
+  const handleRowClick = (item: DataReporte) => {
+    setSelectedItem(item)
+    setOpen(true)
+  }
 
   const handleSubmitInfo = (e: FormEvent) => {
     e.preventDefault()
@@ -71,7 +79,7 @@ export default function ReportClienteGanadores () {
         <BottonExporReporteRecaudo datos={filteredData ?? []} />
 
       </Card>
-
+      <DialogHero open={open} onClose={() => setOpen(false)} data={selectedItem} />
       <Card>
         <TableRoot className='h-[80vh] overflow-y-auto'>
           <Table>
@@ -91,7 +99,7 @@ export default function ReportClienteGanadores () {
             <TableBody className=''>
               {
                 filteredData?.map((item, index) => (
-                  <TableRow key={index}>
+                  <TableRow key={index} onClick={() => handleRowClick(item)} className="cursor-pointer hover:bg-gray-200">
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{item.FECHA}</TableCell>
                     <TableCell>{item.VINCULADO}</TableCell>
