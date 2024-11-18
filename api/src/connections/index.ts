@@ -1,4 +1,4 @@
-import { DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER, PORT } from '../config';
+import { DB_HOST, DB_NAME, DB_PASS, DB_PORT, DB_USER } from '../config';
 import { Sequelize } from 'sequelize';
 
 const conection = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
