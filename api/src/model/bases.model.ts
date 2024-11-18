@@ -1,21 +1,8 @@
 import { conection } from '../connections'
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, Model, InferAttributes, InferCreationAttributes } from "sequelize";
 import { Sellers } from './sellers.model';
 
-export interface BaseAtributes {
-  VINCULADO: string;
-  BASE: number;
-  RASPE: number;
-  EXCP2: number;
-  EXCP3: number;
-  LOGIN: string;
-  OBSERVACION: string;
-  VERSION: string;
-}
-
-type BaseCreationAttributes = Optional<BaseAtributes, 'VINCULADO'>;
-
-class Bases extends Model<BaseAtributes,BaseCreationAttributes> {
+class Bases extends Model<InferAttributes<Bases>,InferCreationAttributes<Bases>> {
   declare VINCULADO: string;
   declare BASE: number;
   declare RASPE: number;
