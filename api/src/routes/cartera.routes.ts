@@ -1,5 +1,5 @@
-import { getCartera } from "../controllers/cartera.controller";
-import { Router } from "express";
+import { getCartera } from '../controllers/cartera.controller';
+import { Router } from 'express';
 
 export const CarteraRouter = Router();
 

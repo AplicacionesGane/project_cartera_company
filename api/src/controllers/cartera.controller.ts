@@ -1,6 +1,6 @@
 import { CarteraDataServices } from '../services/cartera.services'
-import { Request, Response } from 'express'
 import { mapCarteraResults } from '../utils/funtions';
+import { Request, Response } from 'express'
 
 export const getCartera = async (req: Request, res: Response) => {
   const { empresa, abs } = req.query;

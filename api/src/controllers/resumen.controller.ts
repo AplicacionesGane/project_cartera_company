@@ -1,5 +1,5 @@
-import { calculateCartera, ReturCargo, sumarCarteraPorEmpresaYCargo } from '../utils/funtions'
 import { getDetalleRecaudoMultired, getDetalleRecaudoServired, getResumenCartera } from '../services/resumen.services'
+import { calculateCartera, ReturCargo, sumarCarteraPorEmpresaYCargo } from '../utils/funtions'
 import { ObjectCartera } from '../types/interface'
 import { Request, Response } from 'express'
 

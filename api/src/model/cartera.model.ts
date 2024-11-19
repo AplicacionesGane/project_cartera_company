@@ -1,40 +1,9 @@
-import { DataTypes, Model, Optional } from 'sequelize'
+import { DataTypes, Model, InferAttributes, InferCreationAttributes } from 'sequelize'
 import { conection } from '../connections'
 import { Sellers } from './sellers.model'
 import { Bases } from './bases.model';
 
-export type CarteraAttributes = {
-  EMPRESA: string
-  CUENTA: string
-  VINCULADO: string
-  FECHA: Date
-  BASE: number
-  RASPAS: number
-  EXCP2: number
-  EXCP3: number
-  SALDO_ANT: number
-  DEBITO: number
-  CREDITO: number
-  NUEVOSALDO: number
-  VTABNET: number
-  VTASIISS: number
-  VTASFLEX: number
-  VTA_S1: number
-  VTA_S2: number
-  VTA_S3: number
-  RECHAZADOS: number
-  ACEPTADOS: number
-  DIGITADOS: number
-  OBSERVACION1: string | null
-  OBSERVACION2: string | null
-  OBSERVACION3: string | null
-  VERSION: string
-  PENDIENTES_CONT: number
-}
-
-type CarteraCreationAttributes = Optional<CarteraAttributes, 'VINCULADO'>
-
-class Cartera extends Model<CarteraAttributes, CarteraCreationAttributes> {
+class Cartera extends Model<InferAttributes<Cartera>, InferCreationAttributes<Cartera>> {
   declare EMPRESA: string
   declare CUENTA: string
   declare VINCULADO: string
