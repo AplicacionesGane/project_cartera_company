@@ -61,16 +61,30 @@ export const getReportRecaudo = async (req: Request, res: Response) => {
 }
 
 export const getReportOracle = async (req: Request, res: Response) => {
-  const { fecha, documento } = req.body;
+  const { fecha, fecha2, documento } = req.body;
 
-  if(!fecha || !documento) {
+  if (!fecha || !fecha2 || !documento) {
     return res.status(400).json({ message: 'Falta fecha o documento, verificar estos datos' });
   }
 
-  const formattedDate = fecha.split('-').reverse().join('/');
+  // calcular que entre la fecha 1 y la fecha 2 no pase mas de 61 dias
+  const date1 = new Date(fecha);
+  const date2 = new Date(fecha2);
+
+  const diffTime = Math.abs(date2.getTime() - date1.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  console.log(diffDays);
+
+  if (diffDays > 61) {
+    return res.status(400).json({ message: 'El rango de fechas no puede ser mayor a 62 días' });
+  }
+
+  const formattedDate1 = fecha.split('-').reverse().join('/');
+  const formattedDate2 = fecha2.split('-').reverse().join('/');
 
   try {
-    const { rows, metaData } = await reportConsolidadoVenta(formattedDate, documento);
+    const { rows, metaData } = await reportConsolidadoVenta(formattedDate1, formattedDate2, documento);
 
     const data = rows.map(row => {
       return metaData?.reduce((acc, meta, index) => {
@@ -78,7 +92,6 @@ export const getReportOracle = async (req: Request, res: Response) => {
         return acc;
       }, {} as Record<string | number, any>);
     });
-
     return res.status(200).json(data);
   } catch (error) {
     console.error(error);
