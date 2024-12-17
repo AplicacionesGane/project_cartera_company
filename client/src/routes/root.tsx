@@ -24,7 +24,7 @@ const Root = () => {
           <Outlet />
         </section>
       </Suspense>
-      <Toaster position='top-right' duration={3000} />
+      <Toaster position='top-right' duration={3000} richColors />
     </>
 
   )
