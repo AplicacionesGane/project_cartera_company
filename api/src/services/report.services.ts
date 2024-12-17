@@ -1,9 +1,13 @@
 import { connectionOracle } from '../connections/oracledb';
-import { Connection } from 'oracledb';
 import { RowType } from '../types/interface';
+import { Connection } from 'oracledb';
 
-export async function reportConsolidadoVenta(fecha: string, documento: number,) {
+const FunBetweenDates = (startDate: string, endDate: string) => `tvn.fecha BETWEEN TO_DATE('${startDate}', 'DD/MM/YYYY') AND TO_DATE('${endDate}', 'DD/MM/YYYY')`;
+
+export async function reportConsolidadoVenta(fecha1: string, fecha2: string, documento: number,) {
   let connection: Connection | undefined;
+
+  const datesString = FunBetweenDates(fecha1, fecha2);
 
   const pool = await connectionOracle();
 
@@ -41,9 +45,9 @@ export async function reportConsolidadoVenta(fecha: string, documento: number,) 
       JOIN 
         info_puntosventa_cem ipv ON ipv.codigo = tvn.SUCURSAL
       WHERE 
-        tvn.fecha = TO_DATE(:fecha, 'DD/MM/YYYY') 
+        ${datesString}
         AND tvn.persona = :documento
-    `, [fecha, documento] );
+    `, [documento]);
 
     if (!rows || !metaData) {
       throw new Error('No se encontraron datos')

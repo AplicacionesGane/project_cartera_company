@@ -1,17 +1,19 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TableRoot, Card, Label, Input, Button, Badge, TableFoot } from '../components/ui'
 import { BottonExporReporteConsolidado } from '../components/ExportConsolidado'
+import { InfoPersonReport } from '../components/InfoPersonReport'
 import { LoadingSvg } from '../components/icons'
+import { formatValue } from '../utils/funtions'
 import { DataOracle } from '../types/Recaudo'
 import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
-import { formatValue } from '../utils/funtions'
-import { InfoPersonReport } from '../components/InfoPersonReport'
+import { toast } from 'sonner'
 
 function ReportOracle () {
   const [data, setData] = useState<DataOracle[] | null>(null)
   const [documento, setDocumento] = useState<string>('')
   const [fecha, setFecha] = useState<string>('')
+  const [fecha2, setFecha2] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
   const handleSubmit = (ev: FormEvent) => {
@@ -19,11 +21,16 @@ function ReportOracle () {
 
     setLoading(true)
 
-    axios.post(`${API_URL}/reportOracle`, { fecha: fecha.slice(0, 10), documento })
+    axios.post(`${API_URL}/reportOracle`, { fecha: fecha.slice(0, 10), fecha2: fecha2.slice(0, 10), documento })
       .then(res => {
         setData(res.data)
       })
       .catch(err => {
+        if (err.response.status === 400) {
+          toast.error('Error al intentar obtener los datos', {
+            description: err.response.data.message
+          })
+        }
         console.error('Error en getRecaudo', err)
       })
       .finally(() => {
@@ -61,8 +68,12 @@ function ReportOracle () {
 
         <form onSubmit={handleSubmit} className='flex items-center gap-4'>
           <div className='flex gap-2 items-center'>
-            <Label htmlFor='fecha'>Fecha</Label>
+            <Label htmlFor='fecha'>Fecha Inicial</Label>
             <Input type='date' id='fecha' required value={fecha} onChange={e => setFecha(e.target.value)} />
+          </div>
+          <div className='flex gap-2 items-center'>
+            <Label htmlFor='fecha2'>Fecha Final</Label>
+            <Input type='date' id='fecha2' required value={fecha2} onChange={e => setFecha2(e.target.value)} />
           </div>
           <div className='flex gap-2 items-center'>
             <Label htmlFor='documento'>Documento</Label>
@@ -77,7 +88,7 @@ function ReportOracle () {
 
       </Card>
 
-      <InfoPersonReport data={data || []} fecha={fecha}/>
+      <InfoPersonReport data={data || []} fecha={fecha} />
 
       <Card className='mt-1'>
         <TableRoot className='h-[75vh] overflow-y-auto'>
@@ -85,6 +96,8 @@ function ReportOracle () {
             <TableHead className='sticky top-0 bg-gray-100 z-30'>
               <TableRow>
                 <TableHeaderCell>N°</TableHeaderCell>
+                <TableHeaderCell>N° Sucursal</TableHeaderCell>
+                <TableHeaderCell>Nombre Comercial</TableHeaderCell>
                 <TableHeaderCell>Nombre Servicio</TableHeaderCell>
                 <TableHeaderCell>Razón Social</TableHeaderCell>
                 <TableHeaderCell>Servicio</TableHeaderCell>
@@ -101,6 +114,8 @@ function ReportOracle () {
                 data?.map((item, index) => (
                   <TableRow key={index}>
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell className='text-justify'>{item.sucursal}</TableCell>
+                    <TableCell className='text-justify'>{item.nombre_comercial}</TableCell>
                     <TableCell>{item.nombreservicio}</TableCell>
                     <TableCell>{item.razonsocial}</TableCell>
                     <TableCell>{item.servicio}</TableCell>
