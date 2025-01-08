@@ -48,7 +48,7 @@ export const getReportRecaudo = async (req: Request, res: Response) => {
         EMPRESA: zona
       },
       include: [{
-        attributes: ['NOMBRES'],
+        attributes: ['NOMBRES', 'NOMBRECARGO'],
         model: Sellers
       }]
     })
