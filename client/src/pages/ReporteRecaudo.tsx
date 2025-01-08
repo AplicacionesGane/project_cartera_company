@@ -1,11 +1,11 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, TableRoot, Card, Label, Input, SelectNative, Button, Badge } from '../components/ui'
 import { BottonExporReporteRecaudo } from '../components/ExportReporteRecaudo'
+import { DialogHero } from '../components/ReporteDetail'
 import { FormEvent, useMemo, useState } from 'react'
 import { DataReporte } from '../types/Recaudo'
 import { API_URL } from '../utils/contanst'
 import { toast } from 'sonner'
 import axios from 'axios'
-import { DialogHero } from '../components/ReporteDetail'
 
 export default function ReportClienteGanadores () {
   const [date1, setDate1] = useState('')
@@ -89,6 +89,7 @@ export default function ReportClienteGanadores () {
                 <TableHeaderCell>Fecha</TableHeaderCell>
                 <TableHeaderCell>Vinculado</TableHeaderCell>
                 <TableHeaderCell>Nombres</TableHeaderCell>
+                <TableHeaderCell>Cargo</TableHeaderCell>
                 <TableHeaderCell>Valor</TableHeaderCell>
                 <TableHeaderCell>Estado</TableHeaderCell>
                 <TableHeaderCell>Hora conteo</TableHeaderCell>
@@ -104,6 +105,7 @@ export default function ReportClienteGanadores () {
                     <TableCell>{item.FECHA}</TableCell>
                     <TableCell>{item.VINCULADO}</TableCell>
                     <TableCell>{item.Seller?.NOMBRES ?? 'No Registrado'}</TableCell>
+                    <TableCell>{item.Seller?.NOMBRECARGO ?? 'No Registrado'}</TableCell>
                     <TableCell>{item.VALOR}</TableCell>
                     <TableCell className={item.ESTADO === 'r' ? 'text-red-400 font-semibold' : item.ESTADO === 'u' ? 'text-green-400 font-semibold' : 'text-gray-600'}>
                       {item.ESTADO === 'r' ? 'Rechazado' : 'Aceptado'}
