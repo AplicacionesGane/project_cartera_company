@@ -17,6 +17,7 @@ export interface Recaudo {
 
 interface Seller {
   NOMBRES: string;
+  NOMBRECARGO: string;
 }
 
 export interface DataReporte {
