@@ -10,12 +10,13 @@ const generateExcelData = (datos: DataReporte[]): unknown[] => {
       A: 'Fecha',
       B: 'Vinculado',
       C: 'Nombres',
-      D: 'Valor',
-      E: 'Estado',
-      F: 'Hora conteo',
-      G: 'Usuario conteo',
-      H: 'Empresa',
-      I: 'Nota conteo'
+      D: 'Cargo',
+      E: 'Valor',
+      F: 'Estado',
+      G: 'Hora conteo',
+      H: 'Usuario conteo',
+      I: 'Empresa',
+      J: 'Nota conteo'
     }
   ]
 
@@ -23,12 +24,13 @@ const generateExcelData = (datos: DataReporte[]): unknown[] => {
     A: it.FECHA,
     B: it.VINCULADO,
     C: it.Seller?.NOMBRES ?? 'No Registrado',
-    D: it.VALOR,
-    E: it.ESTADO === 'r' ? 'Rechazado' : 'Aceptado',
-    F: it.HORA_CONTEO,
-    G: it.USR_CONTEO,
-    H: it.EMPRESA === '101' ? 'Servired' : it.EMPRESA === '102' ? 'Multired' : 'Sin Empresa Asignada',
-    I: it.NOTA_CONTEO
+    D: it.Seller?.NOMBRECARGO ?? 'No Registrado',
+    E: it.VALOR,
+    F: it.ESTADO === 'r' ? 'Rechazado' : 'Aceptado',
+    G: it.HORA_CONTEO,
+    H: it.USR_CONTEO,
+    I: it.EMPRESA === '101' ? 'Servired' : it.EMPRESA === '102' ? 'Multired' : 'Sin Empresa Asignada',
+    J: it.NOTA_CONTEO
   }))
 
   return [...titulo, ...headers, ...rows]
