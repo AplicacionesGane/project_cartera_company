@@ -50,7 +50,8 @@ export const getReportRecaudo = async (req: Request, res: Response) => {
       include: [{
         attributes: ['NOMBRES', 'NOMBRECARGO'],
         model: Sellers
-      }]
+      }],
+      order: [['FECHA', 'DESC'], ['HORA_CONTEO', 'ASC']]
     })
 
     res.status(200).json(result)
