@@ -51,7 +51,7 @@ export const getReportRecaudo = async (req: Request, res: Response) => {
         attributes: ['NOMBRES', 'NOMBRECARGO'],
         model: Sellers
       }],
-      order: [['FECHA', 'DESC'], ['HORA_CONTEO', 'ASC']]
+      order: [['FECHA', 'ASC'], ['HORA_CONTEO', 'ASC']]
     })
 
     res.status(200).json(result)
