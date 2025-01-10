@@ -25,15 +25,24 @@ pipeline {
                 }
             }
         }
-        stage('install dependencies') {
+        stage('Install dependencies') {
             steps {
                 script {
-                    sh 'cd ./client && yarn'
-                    sh 'cd ./client && yarn build'
+                    dir('client') {
+                        sh 'pnpm install'
+                    }
                 }
             }
         }
-
+        stage('Build client') {
+        steps {
+                script {
+                    dir('client') {
+                        sh 'pnpm build'
+                    }
+                }
+            }
+        }
         stage('down docker compose'){
             steps {
                 script {
