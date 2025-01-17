@@ -75,8 +75,6 @@ export const getReportOracle = async (req: Request, res: Response) => {
   const diffTime = Math.abs(date2.getTime() - date1.getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-  console.log(diffDays);
-
   if (diffDays > 61) {
     return res.status(400).json({ message: 'El rango de fechas no puede ser mayor a 62 días' });
   }
