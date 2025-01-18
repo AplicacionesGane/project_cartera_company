@@ -2,6 +2,7 @@ import { CarteraDataServices } from '../services/cartera.services'
 import { mapCarteraResults } from '../utils/funtions';
 import { connMngrOra } from '../connections/mngr'
 import { Request, Response } from 'express'
+import { Cartera } from '../model';
 
 type RowType = [
   string,  // fecha
@@ -77,7 +78,17 @@ export const getReportMngr = async (req: Request, res: Response) => {
       }, {} as Record<string | number, any>);
     });
 
-    return res.status(200).json(data);
+    connetion.close();
+
+    const CarteraInicial = await Cartera.findOne({
+      attributes: ['SALDO_ANT'],
+      where: {
+        VINCULADO: vinculado,
+        FECHA: formattedDate1
+      }
+    })
+
+    return res.status(200).json({ data, CarteraInicial });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error', error });
