@@ -46,6 +46,7 @@ export const getReportMngr = async (req: Request, res: Response) => {
   const formattedDate1 = fecha1.split('-').reverse().join('/');
   const formattedDate2 = fecha2.split('-').reverse().join('/');
 
+  
   try {
     const pool = await connMngrOra();
 
@@ -78,13 +79,13 @@ export const getReportMngr = async (req: Request, res: Response) => {
       }, {} as Record<string | number, any>);
     });
 
-    connetion.close();
+    
 
     const CarteraInicial = await Cartera.findOne({
       attributes: ['SALDO_ANT'],
       where: {
         VINCULADO: vinculado,
-        FECHA: formattedDate1
+        FECHA: fecha1
       }
     })
 
@@ -92,5 +93,9 @@ export const getReportMngr = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error', error });
+  } finally {
+    if (connetion) {
+      connetion.close();
+    }
   }
 }
