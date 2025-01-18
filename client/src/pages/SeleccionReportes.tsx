@@ -34,6 +34,18 @@ export default function SeleccionReportes () {
         </div>
       </article>
 
+      <article className='flex flex-col justify-around bg-gradient-to-r from-green-900 to-green-800 p-4 rounded-md shadow-xl space-y-2'>
+        <h1 className='font-semibold text-2xl text-white'>Reporte Cartera</h1>
+        <p className='text-white text-balance'>
+          Reporte de cartera - modo desarrollo
+        </p>
+        <div className='flex items-center justify-between'>
+          <RiBarChartGroupedLine size={48} color='white' />
+          <button onClick={() => navigate('/reportMngr')}
+            className='bg-yellow-300 hover:bg-yellow-400 p-2 rounded-md font-semibold'>Ingresar</button>
+        </div>
+      </article>
+
     </section>
   )
 }
