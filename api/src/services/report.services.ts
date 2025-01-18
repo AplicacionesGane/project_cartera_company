@@ -17,6 +17,7 @@ export async function reportConsolidadoVenta(fecha1: string, fecha2: string, doc
 
   connection = await pool.getConnection();
 
+  // !! revisar la query 
   try {
     const { rows, metaData } = await connection.execute<RowType[]>(`
       SELECT 
