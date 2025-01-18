@@ -18,5 +18,5 @@ export async function connMngrOra(): Promise<Pool | Error> {
   } catch (error) {
     console.error('Error connecting to Oracle database', error);
     return error as Error
-  }
+  } 
 }
