@@ -42,8 +42,8 @@ export const getReportMngr = async (req: Request, res: Response) => {
 
   let connetion;
 
-  //const formattedDate1 = fecha1.split('-').reverse().join('/');
-  //const formattedDate2 = fecha2.split('-').reverse().join('/');
+  const formattedDate1 = fecha1.split('-').reverse().join('/');
+  const formattedDate2 = fecha2.split('-').reverse().join('/');
 
   try {
     const pool = await connMngrOra();
@@ -63,7 +63,7 @@ export const getReportMngr = async (req: Request, res: Response) => {
       0 VERSION
       FROM manager.mngmcn mn
       WHERE mcncuenta = '13459501'
-      And mcnfecha between TO_DATE('${fecha1}', 'DD/MM/YYYY') and TO_DATE('${fecha2}', 'DD/MM/YYYY')
+      And mcnfecha between TO_DATE('${formattedDate1}', 'DD/MM/YYYY') and TO_DATE('${formattedDate2}', 'DD/MM/YYYY')
       and (mcntpreg = 0 or mcntpreg = 1 or mcntpreg = 2 or mcntpreg > 6)
       AND mcnVincula in ('${vinculado}')
       group by mcnfecha,mcncuenta,mcnEmpresa,mcnVincula
