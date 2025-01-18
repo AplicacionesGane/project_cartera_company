@@ -1,13 +1,13 @@
-import { DB_ORACLE_DIR, DB_ORACLE_DIR_TNS, DB_ORACLE_NAME, DB_ORACLE_PASS, DB_ORACLE_USER } from '../config'
+import { DB_ORACLE_DIR, DB_ORACLE_DIR_TNS, DB_ORACLE_NAME, DB_MNG_USER, DB_MNG_PASS } from '../config'
 import oracledb, { Pool } from 'oracledb';
 
 oracledb.initOracleClient({ libDir: DB_ORACLE_DIR });
 
-export async function connOracle(): Promise<Pool | Error> {
+export async function connMngrOra(): Promise<Pool | Error> {
   try {
     const pool = await oracledb.createPool({
-      user: DB_ORACLE_USER,
-      password: DB_ORACLE_PASS,
+      user: DB_MNG_USER,
+      password: DB_MNG_PASS,
       configDir: DB_ORACLE_DIR_TNS,
       connectString: DB_ORACLE_NAME
     })

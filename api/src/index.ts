@@ -4,7 +4,7 @@ import cors from 'cors'
 
 import { BasesRouter, CarteraRouter, SellersRouter, recaudoRouter } from './routes'
 import { routerResumen } from './routes/resumen.routes'
-import { CARTERA_FRONTEND, PORT, v1 } from './config'
+import { CARTERA_FRONTEND, PORT, VERSION } from './config'
 
 const app = express()
 
@@ -15,11 +15,11 @@ app.use(cors({
   credentials: true,
 }))
 
-app.use(v1, CarteraRouter)
-app.use(v1, BasesRouter)
-app.use(v1, SellersRouter)
-app.use(v1, routerResumen)
-app.use(v1, recaudoRouter)
+app.use(VERSION, CarteraRouter)
+app.use(VERSION, BasesRouter)
+app.use(VERSION, SellersRouter)
+app.use(VERSION, routerResumen)
+app.use(VERSION, recaudoRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running at http:localhost:${PORT}`)

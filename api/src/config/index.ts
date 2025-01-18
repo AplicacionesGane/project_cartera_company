@@ -1,10 +1,32 @@
-export const PORT = process.env.PORT ?? 3000
-export const CARTERA_FRONTEND = process.env.CARTERA_FRONTEND!
-export const v1 = '/api/cartera/v1'
+import { z } from 'zod';
 
-// TODO: variables de entorno de las conneción a la base de datos
-export const DB_NAME = process.env.DB_NAME!
-export const DB_USER = process.env.DB_USER!
-export const DB_PASS = process.env.DB_PASS!
-export const DB_HOST = process.env.DB_HOST!
-export const DB_PORT = parseInt(process.env.DB_PORT!)
+const envSchama = z.object({
+  PORT: z.string().min(4),
+  CARTERA_FRONTEND: z.string().min(4),
+  VERSION: z.string().min(4),
+  DB_NAME: z.string().min(4),
+  DB_USER: z.string().min(4),
+  DB_PASS: z.string().min(4),
+  DB_HOST: z.string().min(4),
+  DB_PORT: z.string().min(4).transform((val) => parseInt(val, 10)),
+  DB_ORACLE_USER: z.string().min(6),
+  DB_ORACLE_PASS: z.string().min(6),
+  DB_ORACLE_NAME: z.string().min(4),
+  DB_MNG_USER: z.string().min(6),
+  DB_MNG_PASS: z.string().min(6),
+  DB_ORACLE_DIR: z.string().min(6),
+  DB_ORACLE_DIR_TNS: z.string().min(6),
+})
+
+const { success, data, error } = envSchama.safeParse(process.env)
+
+if (!success) {
+  console.error(error.format());
+  process.exit(1);
+}
+
+export const { PORT, CARTERA_FRONTEND, VERSION,
+  DB_NAME, DB_USER, DB_PASS, DB_HOST, DB_PORT,
+  DB_ORACLE_USER, DB_ORACLE_PASS, DB_ORACLE_NAME, DB_MNG_USER,
+  DB_MNG_PASS, DB_ORACLE_DIR, DB_ORACLE_DIR_TNS
+} = data
