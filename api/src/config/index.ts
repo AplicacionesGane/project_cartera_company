@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const envSchama = z.object({
-  PORT: z.string().min(4),
+  PORT: z.string().min(2),
   CARTERA_FRONTEND: z.string().min(4),
   VERSION: z.string().min(4),
   DB_NAME: z.string().min(4),
