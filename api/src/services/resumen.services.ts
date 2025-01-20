@@ -11,7 +11,6 @@ const EMPRESAS_INCLUIDAS = ['101', '102']
  */
 
 interface CarteraIR extends Cartera {
-  Seller: Sellers | null
   Basis: Bases | null
 }
 
