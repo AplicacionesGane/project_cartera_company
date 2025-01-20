@@ -30,6 +30,7 @@ class Cartera extends Model<InferAttributes<Cartera>, InferCreationAttributes<Ca
   declare OBSERVACION3: string | null
   declare VERSION: string
   declare PENDIENTES_CONT: number
+  declare Seller?: Sellers
 }
 
 Cartera.init({
