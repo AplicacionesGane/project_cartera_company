@@ -141,14 +141,15 @@ export default function ReportMngr () {
             </TableFoot>
             <TableFoot className=''>
               <TableRow>
-                <TableHeaderCell colSpan={2} scope="row" className="text-right">
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">Totales</TableHeaderCell>
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
                   {formatValue(sumaIngresos)}
                 </TableHeaderCell>
 
-                <TableHeaderCell colSpan={2} scope="row" className="text-right">
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
                   {formatValue(sumaEgresos)}
                 </TableHeaderCell>
-                <TableHeaderCell colSpan={1} scope="row" className="text-right">
+                <TableHeaderCell colSpan={2} scope="row" className="text-right">
                   {formatValue(sumaAbonos)}
                 </TableHeaderCell>
               </TableRow>
