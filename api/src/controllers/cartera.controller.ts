@@ -11,6 +11,9 @@ const schema = z.object({
   vinculado: z.string().transform((val) => parseInt(val, 10)),
 })
 
+const CODIGOS_SERVIRED = '1113, 1002, 1072, 1071, 2072, 2026'
+const CODIGO_MULTIRED = '1213, 1252, 1204, 2202, 2226'
+
 type RowType = [
   string,  // fecha
   string,  // cuenta
@@ -71,12 +74,18 @@ export const getReportMngr = async (req: Request, res: Response) => {
       },
       include: [{
         model: Sellers,
-        attributes: ['NOMBRES', 'CCOSTO'],
+        attributes: ['NOMBRES', 'CCOSTO', 'NOMBRECARGO'],
       }]
     });
 
-    // JAMUNDI 39632, 
-    // const CCOSTO = CarteraInicial?.Seller?.CCOSTO;
+
+    const SellerPowerBi = CarteraInicial?.Seller
+
+    if (!SellerPowerBi) {
+      return res.status(404).json({ message: 'El documento ingresado no se encuentra en BD POWER BI' });
+    }
+
+    const SQL_CODES = SellerPowerBi.CCOSTO === '39632' ? CODIGOS_SERVIRED : CODIGO_MULTIRED;
 
     const pool = await connMngrOra();
 
@@ -89,18 +98,18 @@ export const getReportMngr = async (req: Request, res: Response) => {
     const { rows, metaData } = await connetion.execute<RowType[][]>(`
       SELECT
       mcnfecha fecha, mcncuenta cuenta, mcnEmpresa empresa, mcnVincula vinculado, 
-      SUM (case when (mn.mcntipodoc not in (1213,1252,1204,2202,2226)) then mcnvaldebi else 0 end) INGRESOS, 
-      SUM (case when (mn.mcntipodoc not in (1213,1252,1204,2202,2226)) then mcnvalcred else 0 end) EGRESOS,
-      SUM (case when (mn.mcntipodoc in (1213,1252,1204,2202,2226)) then mcnvalcred else 0 end) ABONOS_CARTERA,
+      SUM (case when (mn.mcntipodoc not in (${SQL_CODES})) then mcnvaldebi else 0 end) INGRESOS, 
+      SUM (case when (mn.mcntipodoc not in (${SQL_CODES})) then mcnvalcred else 0 end) EGRESOS,
+      SUM (case when (mn.mcntipodoc in (${SQL_CODES})) then mcnvalcred else 0 end) ABONOS_CARTERA,
       0 VERSION
       FROM manager.mngmcn mn
       WHERE mcncuenta = '13459501'
-      And mcnfecha between TO_DATE('${frmDate1}', 'DD-MM-YYYY') and TO_DATE('${frmDate2}', 'DD-MM-YYYY')
+      And mcnfecha between TO_DATE(:fecha1, 'DD-MM-YYYY') and TO_DATE(:fecha2, 'DD-MM-YYYY')
       AND (mcntpreg = 0 or mcntpreg = 1 or mcntpreg = 2 or mcntpreg > 6)
-      AND mcnVincula in (${vinculado})
+      AND mcnVincula in (:documento)
       GROUP BY mcnfecha, mcncuenta, mcnEmpresa, mcnVincula
       ORDER BY mcnfecha
-    `);
+    `, [frmDate1, frmDate2, vinculado]);
 
     const data = rows?.map(row => {
       return metaData?.reduce((acc, meta, index) => {
@@ -109,7 +118,7 @@ export const getReportMngr = async (req: Request, res: Response) => {
       }, {} as Record<string | number, any>);
     });
 
-    res.status(200).json({ data, CarteraInicial });
+    res.status(200).json({ data, CarteraInicial, Seller: SellerPowerBi });
     return
   } catch (error) {
     console.error(error);
