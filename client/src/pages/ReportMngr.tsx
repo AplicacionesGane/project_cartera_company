@@ -3,8 +3,9 @@ import { formatValue } from '../utils/funtions'
 import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
+import { BottonExporCarteraMngr } from '../components/ExporMngr'
 
-interface MngrRecaudo {
+export interface MngrRecaudo {
   fecha: string;
   cuenta: string;
   empresa: string;
@@ -95,11 +96,12 @@ export default function ReportMngr () {
           <Button type='submit'>Buscar</Button>
         </form>
       </Card>
-      <Card className='mt-1 flex justify-around'>
+      <Card className='mt-1 flex justify-around items-center'>
         <h1 className='font-semibold'>INFORMACIÓN VENDEDOR CONSULTADO:</h1>
         <p>Nombre: {data?.Seller.NOMBRES}</p>
         <p>Cargo: {data?.Seller.NOMBRECARGO}</p>
         <p>Empresa:<span className='px-1'>{data?.Seller.CCOSTO === '39632' ? 'SERVIRED' : 'MULTIRED'}</span></p>
+        <BottonExporCarteraMngr datos={data?.cartera || []} />
       </Card>
       <Card className='mt-1'>
         <div className='flex justify-end'>
