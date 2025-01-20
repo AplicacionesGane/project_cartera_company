@@ -16,9 +16,14 @@ interface MngrRecaudo {
 }
 
 interface Response {
-  data: MngrRecaudo[]
+  cartera: MngrRecaudo[]
   CarteraInicial: {
     SALDO_ANT: number
+  },
+  Seller: {
+    NOMBRES: string
+    CCOSTO: string
+    NOMBRECARGO: string
   }
 }
 
@@ -44,12 +49,12 @@ export default function ReportMngr () {
       })
   }
 
-  const sumaIngresos = data?.data.reduce((acc, item) => {
+  const sumaIngresos = data?.cartera.reduce((acc, item) => {
     console.log(acc)
     return acc + item.ingresos
   }, 0) || 0
-  const sumaEgresos = data?.data.reduce((acc, item) => acc + item.egresos, 0) || 0
-  const sumaAbonos = data?.data.reduce((acc, item) => acc + item.abonos_cartera, 0) || 0
+  const sumaEgresos = data?.cartera.reduce((acc, item) => acc + item.egresos, 0) || 0
+  const sumaAbonos = data?.cartera.reduce((acc, item) => acc + item.abonos_cartera, 0) || 0
 
   const total = sumaIngresos - sumaEgresos - sumaAbonos
 
@@ -93,6 +98,12 @@ export default function ReportMngr () {
           <Button type='submit'>Buscar</Button>
         </form>
       </Card>
+      <Card className='mt-1 flex justify-around'>
+        <h1 className='font-semibold'>INFORMACIÓN VENDEDOR CONSULTADO:</h1>
+        <p>Nombre: {data?.Seller.NOMBRES}</p>
+        <p>Cargo: {data?.Seller.NOMBRECARGO}</p>
+        <p>Empresa:<span className='px-1'>{data?.Seller.CCOSTO === '39632' ? 'SERVIRED' : 'MULTIRED'}</span></p>
+      </Card>
       <Card className='mt-1'>
         <div>
           <p className='text-center'>Saldo Inicial: {formatValue(data?.CarteraInicial.SALDO_ANT || 0)}</p>
@@ -111,7 +122,7 @@ export default function ReportMngr () {
             </TableHead>
             <TableBody>
               {
-                data?.data.map((item, index) => (
+                data?.cartera.map((item, index) => (
                   <TableRow key={index}>
                     <TableCell>{item.fecha.split('T')[0]}</TableCell>
                     <TableCell>{formatValue(item.ingresos)}</TableCell>

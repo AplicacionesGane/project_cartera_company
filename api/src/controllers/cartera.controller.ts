@@ -118,7 +118,7 @@ export const getReportMngr = async (req: Request, res: Response) => {
       }, {} as Record<string | number, any>);
     });
 
-    res.status(200).json({ data, CarteraInicial, Seller: SellerPowerBi });
+    res.status(200).json({ cartera: data, CarteraInicial, Seller: SellerPowerBi });
     return
   } catch (error) {
     console.error(error);
