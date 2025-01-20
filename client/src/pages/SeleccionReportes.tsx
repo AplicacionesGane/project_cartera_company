@@ -1,4 +1,4 @@
-import { RiCaravanLine, RiBarChartGroupedLine } from '@remixicon/react'
+import { RiCaravanLine, RiBarChartGroupedLine, RiFileChartFill } from '@remixicon/react'
 import { useNavigate } from 'react-router-dom'
 
 export default function SeleccionReportes () {
@@ -37,10 +37,10 @@ export default function SeleccionReportes () {
       <article className='flex flex-col justify-around bg-gradient-to-r from-green-900 to-green-800 p-4 rounded-md shadow-xl space-y-2'>
         <h1 className='font-semibold text-2xl text-white'>Reporte Cartera</h1>
         <p className='text-white text-balance'>
-          Reporte de cartera - modo desarrollo
+          Reporte manager de cartera, permite visualizar el estado de la cartera de los vinculados Colocador Independiente y/o Cajero Comercial. Se debe seleccionar un rancgo de fechas para la consulta.
         </p>
         <div className='flex items-center justify-between'>
-          <RiBarChartGroupedLine size={48} color='white' />
+          <RiFileChartFill size={48} color='white' />
           <button onClick={() => navigate('/reportMngr')}
             className='bg-yellow-300 hover:bg-yellow-400 p-2 rounded-md font-semibold'>Ingresar</button>
         </div>
