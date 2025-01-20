@@ -1,4 +1,4 @@
-import { Badge, Button, Card, Input, Label, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRoot, TableRow } from '../components/ui'
+import { Badge, Button, Card, Input, Label, Table, TableBody, TableCell, TableFoot, TableHead, TableHeaderCell, TableRoot, TableRow } from '../components/ui'
 import { formatValue } from '../utils/funtions'
 import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
@@ -49,14 +49,11 @@ export default function ReportMngr () {
       })
   }
 
-  const sumaIngresos = data?.cartera.reduce((acc, item) => {
-    console.log(acc)
-    return acc + item.ingresos
-  }, 0) || 0
+  const sumaIngresos = data?.cartera.reduce((acc, item) => acc + item.ingresos, 0) || 0
   const sumaEgresos = data?.cartera.reduce((acc, item) => acc + item.egresos, 0) || 0
   const sumaAbonos = data?.cartera.reduce((acc, item) => acc + item.abonos_cartera, 0) || 0
-
-  const total = sumaIngresos - sumaEgresos - sumaAbonos
+  const saldoInicial = data?.CarteraInicial.SALDO_ANT || 0
+  const total = sumaIngresos + saldoInicial - sumaEgresos - sumaAbonos
 
   return (
     <>
@@ -105,19 +102,19 @@ export default function ReportMngr () {
         <p>Empresa:<span className='px-1'>{data?.Seller.CCOSTO === '39632' ? 'SERVIRED' : 'MULTIRED'}</span></p>
       </Card>
       <Card className='mt-1'>
-        <div>
-          <p className='text-center'>Saldo Inicial: {formatValue(data?.CarteraInicial.SALDO_ANT || 0)}</p>
+        <div className='flex justify-end'>
+          <Badge className='text-base mb-1' variant='warning'>Saldo Inicial: {formatValue(data?.CarteraInicial.SALDO_ANT || 0)}</Badge>
         </div>
         <TableRoot className='h-[75vh] overflow-y-auto'>
           <Table>
             <TableHead className='sticky top-0 bg-gray-100 z-30'>
               <TableRow>
                 <TableHeaderCell>Fecha</TableHeaderCell>
-                <TableHeaderCell>Ingresos</TableHeaderCell>
-                <TableHeaderCell>Egresos</TableHeaderCell>
-                <TableHeaderCell>Saldo Día</TableHeaderCell>
-                <TableHeaderCell>Abono Cartera</TableHeaderCell>
-                <TableHeaderCell>Diferencia día</TableHeaderCell>
+                <TableHeaderCell className="text-right">Ingresos</TableHeaderCell>
+                <TableHeaderCell className="text-right">Egresos</TableHeaderCell>
+                <TableHeaderCell className="text-right">Saldo Día</TableHeaderCell>
+                <TableHeaderCell className="text-right">Abono Cartera</TableHeaderCell>
+                <TableHeaderCell className="text-right">Diferencia día</TableHeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -125,20 +122,39 @@ export default function ReportMngr () {
                 data?.cartera.map((item, index) => (
                   <TableRow key={index}>
                     <TableCell>{item.fecha.split('T')[0]}</TableCell>
-                    <TableCell>{formatValue(item.ingresos)}</TableCell>
-                    <TableCell>{formatValue(item.egresos)}</TableCell>
-                    <TableCell>{formatValue(item.ingresos - item.egresos)}</TableCell>
-                    <TableCell>{formatValue(item.abonos_cartera)}</TableCell>
-                    <TableCell>{formatValue((item.ingresos - item.egresos) - item.abonos_cartera)}</TableCell>
+                    <TableCell className="text-right">{formatValue(item.ingresos)}</TableCell>
+                    <TableCell className="text-right">{formatValue(item.egresos)}</TableCell>
+                    <TableCell className="text-right">{formatValue(item.ingresos - item.egresos)}</TableCell>
+                    <TableCell className="text-right">{formatValue(item.abonos_cartera)}</TableCell>
+                    <TableCell className="text-right">{formatValue((item.ingresos - item.egresos) - item.abonos_cartera)}</TableCell>
                   </TableRow>
                 ))
               }
             </TableBody>
+            <TableFoot className='sticky bottom-0 bg-gray-100 z-30'>
+              <TableRow>
+                <TableHeaderCell colSpan={5} scope="row" className="text-right">Saldo final cartera:</TableHeaderCell>
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
+                  {formatValue(total)}
+                </TableHeaderCell>
+              </TableRow>
+            </TableFoot>
+            <TableFoot className=''>
+              <TableRow>
+                <TableHeaderCell colSpan={2} scope="row" className="text-right">
+                  {formatValue(sumaIngresos)}
+                </TableHeaderCell>
+
+                <TableHeaderCell colSpan={2} scope="row" className="text-right">
+                  {formatValue(sumaEgresos)}
+                </TableHeaderCell>
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
+                  {formatValue(sumaAbonos)}
+                </TableHeaderCell>
+              </TableRow>
+            </TableFoot>
           </Table>
         </TableRoot>
-        <div>
-          Saldo Final {formatValue(total || 0)}
-        </div>
 
         {
           loading && (
