@@ -3,8 +3,11 @@ import { MngrRecaudo } from '../pages/ReportMngr'
 import { Button } from './ui'
 import { toast } from 'sonner'
 
-const generateExcelData = (datos: MngrRecaudo[]): unknown[] => {
-  const titulo = [{ A: 'Reporte Manager' }]
+const generateExcelData = (datos: MngrRecaudo[], initial: number, base: number): unknown[] => {
+  const date = new Date().toLocaleDateString().split('/').reverse().join('-')
+  const hour = new Date().toLocaleTimeString()
+
+  const titulo = [{ A: `Reporte Manager - Generado: ${date} ${hour}` }]
   const headers = [
     {
       A: 'FECHA',
@@ -16,6 +19,9 @@ const generateExcelData = (datos: MngrRecaudo[]): unknown[] => {
     }
   ]
 
+  const initialRow = [{ G: 'Saldo Inicial', H: initial }]
+  const baseRow = [{ G: 'Base Asignada', H: base }]
+
   const rows = datos.map((it) => ({
     A: it.fecha.split('T')[0],
     B: it.ingresos,
@@ -25,9 +31,10 @@ const generateExcelData = (datos: MngrRecaudo[]): unknown[] => {
     F: (it.ingresos - it.egresos) - it.abonos_cartera
   }))
 
-  return [...titulo, ...headers, ...rows]
+  return [...titulo, ...headers, ...initialRow, ...baseRow, ...rows]
 }
 
+// check the type of the data
 const createExcelFile = (data: unknown[]): void => {
   const libro = utils.book_new()
   const hoja = utils.json_to_sheet(data, { skipHeader: true })
@@ -42,13 +49,13 @@ const createExcelFile = (data: unknown[]): void => {
   ]
 
   hoja['!cols'] = colWidths
-  utils.book_append_sheet(libro, hoja, 'Cartera')
+  utils.book_append_sheet(libro, hoja, 'CartetaManager')
   writeFile(libro, 'ReporteCarteraManager.xlsx')
 }
 
-export const BottonExporCarteraMngr = ({ datos }: { datos: MngrRecaudo[] }): JSX.Element => {
+export const BottonExporCarteraMngr = ({ datos, initial, base }: { datos: MngrRecaudo[], initial: number, base: number }): JSX.Element => {
   const handleDownload = (): void => {
-    const dataFinal = generateExcelData(datos)
+    const dataFinal = generateExcelData(datos, initial, base)
 
     const promises = new Promise((resolve) => {
       setTimeout(() => {
