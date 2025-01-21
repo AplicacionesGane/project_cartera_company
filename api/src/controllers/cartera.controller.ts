@@ -2,7 +2,7 @@ import { CarteraDataServices } from '../services/cartera.services'
 import { mapCarteraResults } from '../utils/funtions';
 import { connMngrOra } from '../connections/mngr'
 import { Request, Response } from 'express'
-import { Cartera, Sellers } from '../model';
+import { Bases, Cartera, Sellers } from '../model';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -78,12 +78,13 @@ export const getReportMngr = async (req: Request, res: Response) => {
       }]
     });
 
-
     const SellerPowerBi = CarteraInicial?.Seller
 
     if (!SellerPowerBi) {
       return res.status(404).json({ message: 'El documento ingresado no se encuentra en BD POWER BI' });
     }
+
+    const base = await Bases.findOne({ attributes: ['BASE'], where: { VINCULADO: vinculado } })
 
     const SQL_CODES = SellerPowerBi.CCOSTO === '39632' ? CODIGOS_SERVIRED : CODIGO_MULTIRED;
 
@@ -118,7 +119,7 @@ export const getReportMngr = async (req: Request, res: Response) => {
       }, {} as Record<string | number, any>);
     });
 
-    res.status(200).json({ cartera: data, CarteraInicial, Seller: SellerPowerBi });
+    res.status(200).json({ cartera: data, CarteraInicial, Seller: SellerPowerBi, base: base?.BASE || 0 });
     return
   } catch (error) {
     console.error(error);

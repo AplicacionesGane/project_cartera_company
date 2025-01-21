@@ -1,9 +1,9 @@
 import { Badge, Button, Card, Input, Label, Table, TableBody, TableCell, TableFoot, TableHead, TableHeaderCell, TableRoot, TableRow } from '../components/ui'
+import { BottonExporCarteraMngr } from '../components/ExporMngr'
 import { formatValue } from '../utils/funtions'
 import { FormEvent, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
-import { BottonExporCarteraMngr } from '../components/ExporMngr'
 
 export interface MngrRecaudo {
   fecha: string;
@@ -25,7 +25,8 @@ interface Response {
     NOMBRES: string
     CCOSTO: string
     NOMBRECARGO: string
-  }
+  },
+  base: number
 }
 
 export default function ReportMngr () {
@@ -54,7 +55,8 @@ export default function ReportMngr () {
   const sumaEgresos = data?.cartera.reduce((acc, item) => acc + item.egresos, 0) || 0
   const sumaAbonos = data?.cartera.reduce((acc, item) => acc + item.abonos_cartera, 0) || 0
   const saldoInicial = data?.CarteraInicial.SALDO_ANT || 0
-  const total = sumaIngresos + saldoInicial - sumaEgresos - sumaAbonos
+  const base = data?.base || 0
+  const total = sumaIngresos + saldoInicial - sumaEgresos - sumaAbonos - base
 
   return (
     <>
@@ -101,11 +103,11 @@ export default function ReportMngr () {
         <p>Nombre: {data?.Seller.NOMBRES}</p>
         <p>Cargo: {data?.Seller.NOMBRECARGO}</p>
         <p>Empresa:<span className='px-1'>{data?.Seller.CCOSTO === '39632' ? 'SERVIRED' : 'MULTIRED'}</span></p>
-        <BottonExporCarteraMngr datos={data?.cartera || []} />
+        <BottonExporCarteraMngr datos={data?.cartera || []} initial={saldoInicial} base={base} />
       </Card>
       <Card className='mt-1'>
         <div className='flex justify-end'>
-          <Badge className='text-base mb-1' variant='warning'>Saldo Inicial: {formatValue(data?.CarteraInicial.SALDO_ANT || 0)}</Badge>
+          <Badge className='text-base' variant='warning'>Saldo Inicial: {formatValue(data?.CarteraInicial.SALDO_ANT || 0)}</Badge>
         </div>
         <TableRoot className='h-[75vh] overflow-y-auto'>
           <Table>
@@ -153,6 +155,14 @@ export default function ReportMngr () {
                 </TableHeaderCell>
                 <TableHeaderCell colSpan={2} scope="row" className="text-right">
                   {formatValue(sumaAbonos)}
+                </TableHeaderCell>
+              </TableRow>
+            </TableFoot>
+            <TableFoot className=''>
+              <TableRow>
+                <TableHeaderCell colSpan={5} scope="row" className="text-right">Base asignada:</TableHeaderCell>
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
+                  <Badge variant='success'>{formatValue(data?.base || 0)}</Badge>
                 </TableHeaderCell>
               </TableRow>
             </TableFoot>
