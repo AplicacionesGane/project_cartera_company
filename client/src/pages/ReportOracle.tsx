@@ -129,7 +129,7 @@ function ReportOracle () {
                 ))
               }
             </TableBody>
-            <TableFoot className='sticky bottom-0 bg-gray-100 z-30'>
+            <TableFoot className=''>
               <TableRow>
                 <TableHeaderCell colSpan={4} scope="row" className="text-right">
                   Total:
