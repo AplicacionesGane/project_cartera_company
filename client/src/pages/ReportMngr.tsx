@@ -103,7 +103,7 @@ export default function ReportMngr () {
         <p>Nombre: {data?.Seller.NOMBRES}</p>
         <p>Cargo: {data?.Seller.NOMBRECARGO}</p>
         <p>Empresa:<span className='px-1'>{data?.Seller.CCOSTO === '39632' ? 'SERVIRED' : 'MULTIRED'}</span></p>
-        <BottonExporCarteraMngr datos={data?.cartera || []} />
+        <BottonExporCarteraMngr datos={data?.cartera || []} initial={saldoInicial} base={base} />
       </Card>
       <Card className='mt-1'>
         <div className='flex justify-end'>
