@@ -1,18 +1,9 @@
+import { MngrReport, Seller } from '../types/cartera'
 import { utils, ColInfo, writeFile } from 'xlsx'
-import { MngrRecaudo } from '../pages/ReportMngr'
 import { Button } from './ui'
 import { toast } from 'sonner'
 
-const generateExcelData = (
-  datos: MngrRecaudo[],
-  initial: number,
-  base: number,
-  info: {
-    NOMBRES: string
-    CCOSTO: string
-    NOMBRECARGO: string
-    DOCUMENTO: string
-  } | undefined): unknown[] => {
+const generateExcelData = (datos: MngrReport[], initial: number, base: number, info: Seller | undefined): unknown[] => {
   const date = new Date().toLocaleDateString().split('/').reverse().join('-')
   const hour = new Date().toLocaleTimeString()
 
@@ -64,12 +55,7 @@ const createExcelFile = (data: unknown[]): void => {
 }
 
 export const BottonExporCarteraMngr = ({ datos, initial, base, info }: {
-  datos: MngrRecaudo[], initial: number, base: number, info: {
-    NOMBRES: string
-    CCOSTO: string
-    NOMBRECARGO: string
-    DOCUMENTO: string
-  } | undefined
+  datos: MngrReport[], initial: number, base: number, info: Seller | undefined
 }): JSX.Element => {
   const handleDownload = (): void => {
     const dataFinal = generateExcelData(datos, initial, base, info)
