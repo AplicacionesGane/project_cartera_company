@@ -100,13 +100,13 @@ function ReportOracle () {
                 <TableHeaderCell>Nombre Comercial</TableHeaderCell>
                 <TableHeaderCell>Nombre Servicio</TableHeaderCell>
                 <TableHeaderCell>Razón Social</TableHeaderCell>
-                <TableHeaderCell>Servicio</TableHeaderCell>
-                <TableHeaderCell>Venta Bruta</TableHeaderCell>
-                <TableHeaderCell>Venta Sin IVA</TableHeaderCell>
-                <TableHeaderCell>IVA</TableHeaderCell>
-                <TableHeaderCell>Comisión</TableHeaderCell>
-                <TableHeaderCell>Venta Neta</TableHeaderCell>
-                <TableHeaderCell>Formularios</TableHeaderCell>
+                <TableHeaderCell className='text-right'>Servicio</TableHeaderCell>
+                <TableHeaderCell className='text-right'>Venta Bruta</TableHeaderCell>
+                <TableHeaderCell className='text-right'>Venta Sin IVA</TableHeaderCell>
+                <TableHeaderCell className='text-right'>IVA</TableHeaderCell>
+                <TableHeaderCell className='text-right'>Comisión</TableHeaderCell>
+                <TableHeaderCell className='text-right'>Venta Neta</TableHeaderCell>
+                <TableHeaderCell className='text-right'>Formularios</TableHeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -115,10 +115,10 @@ function ReportOracle () {
                   <TableRow key={index}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell className='text-justify'>{item.sucursal}</TableCell>
-                    <TableCell className='text-justify'>{item.nombre_comercial}</TableCell>
-                    <TableCell>{item.nombreservicio}</TableCell>
-                    <TableCell>{item.razonsocial}</TableCell>
-                    <TableCell>{item.servicio}</TableCell>
+                    <TableCell title={item.nombre_comercial} className='text-justify'>{item.nombre_comercial.slice(0, 16)}</TableCell>
+                    <TableCell title={item.nombreservicio} className=''>{item.nombreservicio.slice(0, 12)}</TableCell>
+                    <TableCell title={item.razonsocial} className=''>{item.razonsocial.slice(0, 12)}</TableCell>
+                    <TableCell className='text-right'>{item.servicio}</TableCell>
                     <TableCell className='text-right'>{formatValue(item.ventabruta)}</TableCell>
                     <TableCell className='text-right'>{formatValue(item.vtasiniva)}</TableCell>
                     <TableCell className='text-right'>{formatValue(item.iva)}</TableCell>
@@ -129,10 +129,10 @@ function ReportOracle () {
                 ))
               }
             </TableBody>
-            <TableFoot className=''>
+            <TableFoot className='sticky bottom-0 bg-gray-100 z-30'>
               <TableRow>
-                <TableHeaderCell colSpan={4} scope="row" className="text-right">
-                  Total:
+                <TableHeaderCell colSpan={6} scope="row" className="text-right">
+                  Totales:
                 </TableHeaderCell>
                 <TableHeaderCell colSpan={1} scope="row" className="text-right">
                   {formatValue(sumarTotales(data || []).ventabruta)}
