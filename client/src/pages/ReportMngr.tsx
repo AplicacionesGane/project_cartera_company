@@ -25,6 +25,7 @@ interface Response {
     NOMBRES: string
     CCOSTO: string
     NOMBRECARGO: string
+    DOCUMENTO: string
   },
   base: number
 }
@@ -103,7 +104,7 @@ export default function ReportMngr () {
         <p>Nombre: {data?.Seller.NOMBRES}</p>
         <p>Cargo: {data?.Seller.NOMBRECARGO}</p>
         <p>Empresa:<span className='px-1'>{data?.Seller.CCOSTO === '39632' ? 'SERVIRED' : 'MULTIRED'}</span></p>
-        <BottonExporCarteraMngr datos={data?.cartera || []} initial={saldoInicial} base={base} />
+        <BottonExporCarteraMngr datos={data?.cartera || []} initial={saldoInicial} base={base} info={data?.Seller}/>
       </Card>
       <Card className='mt-1'>
         <div className='flex justify-end'>
