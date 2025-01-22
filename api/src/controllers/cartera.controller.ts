@@ -74,7 +74,7 @@ export const getReportMngr = async (req: Request, res: Response) => {
       },
       include: [{
         model: Sellers,
-        attributes: ['NOMBRES', 'CCOSTO', 'NOMBRECARGO'],
+        attributes: ['DOCUMENTO', 'NOMBRES', 'CCOSTO', 'NOMBRECARGO'],
       }]
     });
 
