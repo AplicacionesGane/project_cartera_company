@@ -4,8 +4,8 @@ import { SelectNative } from '../components/ui/SelectTremor'
 import { TableDatos } from '../components/TableDatos'
 import { useCartera } from '../hooks/useCartera'
 import { LoadingSvg } from '../components/icons'
-import { useState } from 'react'
 import RecaudoDetail from './RecaudoDetail'
+import { useState } from 'react'
 
 const Detallado = () => {
   const { dataFiltered, abs, setAbs, empresa, vinculado, setEmpresa, handleClick, handleFilterChange, loading } = useCartera()

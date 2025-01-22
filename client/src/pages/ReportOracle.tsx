@@ -115,9 +115,9 @@ function ReportOracle () {
                   <TableRow key={index}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell className='text-justify'>{item.sucursal}</TableCell>
-                    <TableCell className='text-justify'>{item.nombre_comercial}</TableCell>
-                    <TableCell>{item.nombreservicio}</TableCell>
-                    <TableCell>{item.razonsocial}</TableCell>
+                    <TableCell title={item.nombre_comercial} className='text-justify'>{item.nombre_comercial.slice(0, 16)}</TableCell>
+                    <TableCell title={item.nombreservicio} className=''>{item.nombreservicio.slice(0, 12)}</TableCell>
+                    <TableCell title={item.razonsocial} className=''>{item.razonsocial.slice(0, 12)}</TableCell>
                     <TableCell>{item.servicio}</TableCell>
                     <TableCell className='text-right'>{formatValue(item.ventabruta)}</TableCell>
                     <TableCell className='text-right'>{formatValue(item.vtasiniva)}</TableCell>
@@ -131,7 +131,7 @@ function ReportOracle () {
             </TableBody>
             <TableFoot className=''>
               <TableRow>
-                <TableHeaderCell colSpan={4} scope="row" className="text-right">
+                <TableHeaderCell colSpan={1} scope="row" className="text-right">
                   Total:
                 </TableHeaderCell>
                 <TableHeaderCell colSpan={1} scope="row" className="text-right">
