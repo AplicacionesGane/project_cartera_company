@@ -2,32 +2,9 @@ import { Badge, Button, Card, Input, Label, Table, TableBody, TableCell, TableFo
 import { BottonExporCarteraMngr } from '../components/ExporMngr'
 import { formatValue } from '../utils/funtions'
 import { FormEvent, useState } from 'react'
+import { Response } from '../types/cartera'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
-
-export interface MngrRecaudo {
-  fecha: string;
-  cuenta: string;
-  empresa: string;
-  vinculado: string;
-  ingresos: number;
-  egresos: number;
-  abonos_cartera: number;
-  version: number;
-}
-
-interface Response {
-  cartera: MngrRecaudo[]
-  CarteraInicial: {
-    SALDO_ANT: number
-  },
-  Seller: {
-    NOMBRES: string
-    CCOSTO: string
-    NOMBRECARGO: string
-  },
-  base: number
-}
 
 export default function ReportMngr () {
   const [data, setData] = useState<Response | null>(null)
@@ -103,7 +80,7 @@ export default function ReportMngr () {
         <p>Nombre: {data?.Seller.NOMBRES}</p>
         <p>Cargo: {data?.Seller.NOMBRECARGO}</p>
         <p>Empresa:<span className='px-1'>{data?.Seller.CCOSTO === '39632' ? 'SERVIRED' : 'MULTIRED'}</span></p>
-        <BottonExporCarteraMngr datos={data?.cartera || []} initial={saldoInicial} base={base} />
+        <BottonExporCarteraMngr datos={data?.cartera || []} initial={saldoInicial} base={base} info={data?.Seller}/>
       </Card>
       <Card className='mt-1'>
         <div className='flex justify-end'>
