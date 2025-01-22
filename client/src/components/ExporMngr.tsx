@@ -3,11 +3,21 @@ import { MngrRecaudo } from '../pages/ReportMngr'
 import { Button } from './ui'
 import { toast } from 'sonner'
 
-const generateExcelData = (datos: MngrRecaudo[], initial: number, base: number): unknown[] => {
+const generateExcelData = (
+  datos: MngrRecaudo[],
+  initial: number,
+  base: number,
+  info: {
+    NOMBRES: string
+    CCOSTO: string
+    NOMBRECARGO: string
+    DOCUMENTO: string
+  } | undefined): unknown[] => {
   const date = new Date().toLocaleDateString().split('/').reverse().join('-')
   const hour = new Date().toLocaleTimeString()
 
   const titulo = [{ A: `Reporte Manager - Generado: ${date} ${hour}` }]
+  const names = info ? [{ A: 'Nombres: ', B: `${info.NOMBRES}`, C: 'Documento: ', D: `${info.DOCUMENTO}` }] : []
   const headers = [
     {
       A: 'FECHA',
@@ -31,7 +41,7 @@ const generateExcelData = (datos: MngrRecaudo[], initial: number, base: number):
     F: (it.ingresos - it.egresos) - it.abonos_cartera
   }))
 
-  return [...titulo, ...headers, ...initialRow, ...baseRow, ...rows]
+  return [...titulo, ...names, ...headers, ...initialRow, ...baseRow, ...rows]
 }
 
 // check the type of the data
@@ -53,9 +63,16 @@ const createExcelFile = (data: unknown[]): void => {
   writeFile(libro, 'ReporteCarteraManager.xlsx')
 }
 
-export const BottonExporCarteraMngr = ({ datos, initial, base }: { datos: MngrRecaudo[], initial: number, base: number }): JSX.Element => {
+export const BottonExporCarteraMngr = ({ datos, initial, base, info }: {
+  datos: MngrRecaudo[], initial: number, base: number, info: {
+    NOMBRES: string
+    CCOSTO: string
+    NOMBRECARGO: string
+    DOCUMENTO: string
+  } | undefined
+}): JSX.Element => {
   const handleDownload = (): void => {
-    const dataFinal = generateExcelData(datos, initial, base)
+    const dataFinal = generateExcelData(datos, initial, base, info)
 
     const promises = new Promise((resolve) => {
       setTimeout(() => {
