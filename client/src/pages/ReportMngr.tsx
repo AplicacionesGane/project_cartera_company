@@ -63,7 +63,7 @@ export default function ReportMngr () {
       <Card className='flex justify-around'>
         <p className='flex gap-2 items-center'>
           Cantida Datos:
-          <Badge variant='default'>{'0'}</Badge>
+          <Badge variant='default'>{data?.cartera.length || 0}</Badge>
         </p>
         <form className='flex items-center gap-4' onSubmit={handleSubmit}>
           <div className='flex gap-2 items-center'>
