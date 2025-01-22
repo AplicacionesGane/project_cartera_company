@@ -19,3 +19,30 @@ export interface CarteraI {
   Anulados: number;
   Zona: string;
 }
+
+export interface MngrReport {
+  fecha: string;
+  cuenta: string;
+  empresa: string;
+  vinculado: string;
+  ingresos: number;
+  egresos: number;
+  abonos_cartera: number;
+  version: number;
+}
+
+export interface Seller {
+  NOMBRES: string
+  CCOSTO: string
+  NOMBRECARGO: string
+  DOCUMENTO: string
+}
+
+export interface Response {
+  cartera: MngrReport[]
+  CarteraInicial: {
+    SALDO_ANT: number
+  },
+  Seller: Seller,
+  base: number
+}
