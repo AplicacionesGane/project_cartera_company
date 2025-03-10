@@ -1,4 +1,4 @@
-import { connOracle } from '../connections/oracledb';
+import { connOracle_naos } from '../connections/oracledb.naos';
 import { RowType } from '../types/interface';
 import { Connection } from 'oracledb';
 
@@ -9,7 +9,7 @@ export async function reportRecaudo(fecha1: string, fecha2: string, zona: string
 
   const datesString = FunBetweenDates(fecha1, fecha2);
 
-  const pool = await connOracle();
+  const pool = await connOracle_naos();
 
   console.log(documento);
 
