@@ -2,6 +2,7 @@ import { reportConsolidadoVenta } from '../services/report.services';
 import { Request, Response } from 'express';
 import { Recaudo, Sellers } from '../model';
 import { fn, Op } from 'sequelize';
+import { reportRecaudo } from '../services/report.recaudos';
 
 export const getRecaudo = async (req: Request, res: Response) => {
   const { id, estado } = req.params;
@@ -95,5 +96,44 @@ export const getReportOracle = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Error en getReportOracle' });
+  }
+}
+
+
+export const getReportOracleRecaudo = async (req: Request, res: Response) => {
+  const { fecha, fecha2, zona, documento} = req.body;
+
+  if (!fecha || !fecha2 || !zona || !documento) {
+    return res.status(400).json({ message: 'Falta fecha o documento, verificar estos datos' });
+  }
+
+
+  // calcular que entre la fecha 1 y la fecha 2 no pase mas de 61 dias
+  const date1 = new Date(fecha);
+  const date2 = new Date(fecha2);
+  zona
+  const diffTime = Math.abs(date2.getTime() - date1.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays > 61) {
+    return res.status(400).json({ message: 'El rango de fechas no puede ser mayor a 62 días' });
+  }
+
+  const formattedDate1 = fecha.split('-').reverse().join('/');
+  const formattedDate2 = fecha2.split('-').reverse().join('/');
+
+  try {
+    const { rows, metaData } = await reportRecaudo(formattedDate1, formattedDate2, zona, documento);
+
+    const data = rows.map(row => {
+      return metaData?.reduce((acc, meta, index) => {
+        acc[meta.name.toLowerCase()] = row[index];
+        return acc;
+      }, {} as Record<string | number, any>);
+    });
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error en getReportOracleRecaudo' });
   }
 }
