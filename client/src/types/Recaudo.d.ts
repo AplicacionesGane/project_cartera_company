@@ -48,3 +48,15 @@ export interface DataOracle {
   sucursal: number;
   nombre_comercial: string;
 }
+
+export interface DataRecaudo {
+  fecha: Date;
+  municipio: string;
+  vendedor: number;
+  nombre_vendedor: string;
+  hora_recaudo: string;
+  valor: number;
+  cajero: string;
+  nombre_cajero: string;
+  descripcion: string;
+}
