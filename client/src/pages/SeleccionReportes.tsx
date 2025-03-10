@@ -46,6 +46,18 @@ export default function SeleccionReportes () {
         </div>
       </article>
 
+      <article className='flex flex-col justify-around bg-gradient-to-r from-red-900 to-red-800 p-4 rounded-md shadow-xl space-y-2'>
+        <h1 className='font-semibold text-2xl text-white'>Reporte Recaudos Realizados</h1>
+        <p className='text-white text-balance'>
+        Reporte de los Reporte Recaudos Realizados Excel el reporte de recaudos realizados en puntos de venta se debe selecionar el rango de fechas, la empresa y la cedula
+        </p>
+        <div className='flex items-center justify-between'>
+          <RiCaravanLine size={48} color='white' />
+          <button onClick={() => navigate('/ReportRecaudos')}
+            className='bg-yellow-300 hover:bg-yellow-400 p-2 rounded-md font-semibold'>Ingresar</button>
+        </div>
+      </article>
+
     </section>
   )
 }
