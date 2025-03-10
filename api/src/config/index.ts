@@ -12,6 +12,7 @@ const envSchama = z.object({
   DB_ORACLE_USER: z.string().min(6),
   DB_ORACLE_PASS: z.string().min(6),
   DB_ORACLE_NAME: z.string().min(4),
+  DB_ORACLE_NAME_NAOS: z.string().min(4),
   DB_MNG_USER: z.string().min(6),
   DB_MNG_PASS: z.string().min(6),
   DB_ORACLE_DIR: z.string().min(6),
@@ -27,6 +28,6 @@ if (!success) {
 
 export const { PORT, CARTERA_FRONTEND, VERSION,
   DB_NAME, DB_USER, DB_PASS, DB_HOST, DB_PORT,
-  DB_ORACLE_USER, DB_ORACLE_PASS, DB_ORACLE_NAME, DB_MNG_USER,
+  DB_ORACLE_USER, DB_ORACLE_PASS, DB_ORACLE_NAME, DB_ORACLE_NAME_NAOS, DB_MNG_USER,
   DB_MNG_PASS, DB_ORACLE_DIR, DB_ORACLE_DIR_TNS
 } = data
