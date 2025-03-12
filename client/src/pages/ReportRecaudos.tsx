@@ -2,25 +2,25 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, Tabl
 import { BottonExporReporteRecaudoRealizados } from '../components/ExportRecaudo'
 import { LoadingSvg } from '../components/icons'
 import { DataRecaudo } from '../types/Recaudo'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useMemo, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
 import { toast } from 'sonner'
 
 function ReportOracle () {
   const [data, setData] = useState<DataRecaudo[] | null>(null)
-  const [documento, setDocumento] = useState<string>('')
   const [fecha, setFecha] = useState<string>('')
   const [fecha2, setFecha2] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [zona, setZona] = useState<string | undefined>(undefined)
+  const [filter, setFilter] = useState<string>('')
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault()
 
     setLoading(true)
 
-    axios.post(`${API_URL}/reportOracleRecaudo`, { fecha: fecha.slice(0, 10), fecha2: fecha2.slice(0, 10), zona, documento })
+    axios.post(`${API_URL}/reportOracleRecaudo`, { fecha: fecha.slice(0, 10), fecha2: fecha2.slice(0, 10), zona })
       .then(res => {
         setData(res.data)
       })
@@ -37,13 +37,18 @@ function ReportOracle () {
       })
   }
 
+  const filteredData = useMemo(() => {
+    if (!data) return null
+    return data.filter(item => String(item.vendedor).includes(filter))
+  }, [data, filter])
+
   return (
     <>
       <Card className='flex justify-around'>
 
         <p className='flex gap-0  items-center'>
           Cantida Datos:
-          <Badge variant='default'>{data?.length || '0'}</Badge>
+          <Badge variant='default'>{filteredData?.length || '0'}</Badge>
         </p>
 
         <form onSubmit={handleSubmit} className='flex items-center gap-10'>
@@ -65,15 +70,16 @@ function ReportOracle () {
             </select>
           </div>
 
-          <div className='flex gap-0  items-center'>
-            <Label htmlFor='documento'>Documento:</Label>
-            <Input type='text' id='documento' required value={documento} onChange={e => setDocumento(e.target.value)} />
+          <div className='flex gap-0 items-center'>
+            <Label>Filtrar N° Doc</Label>
+            <Input type="text" placeholder='1118*****' className='rounded-md' value={filter} onChange={ev => setFilter(ev.target.value)} />
           </div>
+
           <Button type='submit'>Buscar</Button>
         </form>
 
         <div className='flex items-center'>
-          <BottonExporReporteRecaudoRealizados datos={data || []} />
+          <BottonExporReporteRecaudoRealizados datos={filteredData || []} />
         </div>
 
       </Card>
@@ -96,11 +102,11 @@ function ReportOracle () {
             </TableHead>
             <TableBody>
               {
-                data?.map((item, index) => (
+                filteredData?.map((item, index) => (
                   <TableRow key={index}>
                     <TableCell className='text-justify'>{new Date(item.fecha).toLocaleDateString()}</TableCell>
                     <TableCell className='text-justify'>{item.municipio}</TableCell>
-                    <TableCell className='text-justify'>{item.vendedor.toString()} </TableCell>
+                    <TableCell className='text-justify'>{item.vendedor} </TableCell>
                     <TableCell className='text-justify'>{item.nombre_vendedor.slice(0, 16)}</TableCell>
                     <TableCell className='text-justify'>{item.hora_recaudo?.split(' ')[1] || 'Hora no válida'}</TableCell>
                     <TableCell className='text-justify'>{item.valor}</TableCell>
