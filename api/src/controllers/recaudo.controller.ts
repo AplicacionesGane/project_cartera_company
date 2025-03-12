@@ -101,9 +101,9 @@ export const getReportOracle = async (req: Request, res: Response) => {
 
 
 export const getReportOracleRecaudo = async (req: Request, res: Response) => {
-  const { fecha, fecha2, zona, documento} = req.body;
+  const { fecha, fecha2, zona} = req.body;
 
-  if (!fecha || !fecha2 || !zona || !documento) {
+  if (!fecha || !fecha2 || !zona) {
     return res.status(400).json({ message: 'Falta fecha o documento, verificar estos datos' });
   }
 
@@ -123,7 +123,7 @@ export const getReportOracleRecaudo = async (req: Request, res: Response) => {
   const formattedDate2 = fecha2.split('-').reverse().join('/');
 
   try {
-    const { rows, metaData } = await reportRecaudo(formattedDate1, formattedDate2, zona, documento);
+    const { rows, metaData } = await reportRecaudo(formattedDate1, formattedDate2, zona);
 
     const data = rows.map(row => {
       return metaData?.reduce((acc, meta, index) => {

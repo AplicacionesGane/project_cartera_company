@@ -4,14 +4,13 @@ import { Connection } from 'oracledb';
 
 const FunBetweenDates = (startDate: string, endDate: string) => `trunc (CJ.fechasys) between TO_DATE('${startDate}', 'DD/MM/YYYY') and TO_DATE('${endDate}', 'DD/MM/YYYY')`;
 
-export async function reportRecaudo(fecha1: string, fecha2: string, zona: string, documento: number,) {
+export async function reportRecaudo(fecha1: string, fecha2: string, zona: string,) {
   let connection: Connection | undefined;
 
   const datesString = FunBetweenDates(fecha1, fecha2);
 
   const pool = await connOracle_naos();
 
-  console.log(documento);
 
   if (pool instanceof Error) {
     throw new Error('Error al intentar conectar a la base de datos')
@@ -67,9 +66,8 @@ WHERE
     )
     and CJ.ZONA = ${zona}
     and CJ.VERSION = 0
-    and CJ.prs_documento = :documento
 ORDER BY CJ.CCOSTO, CJ.fechasys, CJ.loginregistro, CJ.prs_documento
-    `,[documento]);
+    `);
 
     if (!rows || !metaData) {
       throw new Error('No se encontraron datos')
