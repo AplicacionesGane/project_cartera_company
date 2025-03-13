@@ -75,6 +75,18 @@ function LoginPage (): JSX.Element {
           <Button>Iniciar Sesión</Button>
 
         </form >
+
+        {/* section to restore password */}
+        <section className='flex justify-center items-center pt-4'>
+          <a
+            href="https://admin-users.aplicacionesgane.cloud/reset-password"
+            className='text-sm lg:text-md 2xl:text-lg hover:text-blue-600'
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Olvidaste tu contraseña?
+          </a>
+        </section>
       </section>
 
       {errorString && toast.error(errorString, { description: 'Error al Iniciar Sesion', id: ' ', duration: 5000 })}
