@@ -70,7 +70,7 @@ export default function NavBar () {
 
       {visible && (
         <div ref={menuRef}
-          className='absolute z-50 bg-gray-200 shadow-md right-2 top-12 px-5 py-2 mt-1 rounded-md flex flex-col items-center gap-1'>
+          className='absolute z-50 bg-white border shadow-md right-2 top-14 px-5 py-2 mt-1 rounded-md flex flex-col gap-1'>
           <UserInfo key={user.id} user={user} />
         </div>
       )}

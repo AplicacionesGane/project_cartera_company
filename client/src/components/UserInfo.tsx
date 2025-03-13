@@ -24,16 +24,17 @@ function UserInfo ({ user }: Props) {
 
   return (
     <>
-      <h2 className='font-semibold border-b border-gray-700 text-lg'>Usuario</h2>
-      <article className=''>
-        <p className='font-medium'>User: {user.username}</p>
-        <p className='font-medium'><span>{user.names} {user.lastnames}</span></p>
-        <p className='font-medium'>{user.email}</p>
-      </article>
-
-      <button className='bg-blue-700 text-white rounded-full h-10 w-10 text-xl flex items-center justify-center cursor-pointer hover:bg-blue-500 dark:hover:bg-dark-tremor-brand-faint dark:bg-dark-tremor-brand-faint'
+      <div className='flex  items-center gap-2 border-b pb-2'>
+        <p className='text-2xl font-semibold rounded-full bg-blue-200 px-3 py-2 border shadow-md'>{user.names[0]}{user.lastnames[0]}</p>
+        <p className='font-medium pt-1'><span>{user.lastnames.split(' ')[0]} {user.names} </span></p>
+      </div>
+      <div className='border-b pb-2 pt-1'>
+        <p className='font-medium'>{user.email.toLocaleLowerCase()}</p>
+      </div>
+      <button className='flex items-center gap-2 pt-1 hover:underline hover:text-blue-500'
         onClick={handleLogout}>
         <LogoutIcon />
+        <span className='pt-0.5'>Cerrar sesión</span>
       </button>
     </>
   )
