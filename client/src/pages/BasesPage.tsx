@@ -66,7 +66,7 @@ const BasesPage = () => {
           </Badge>
         </div>
         {
-          user.sub_process === 'aux cartera'
+          user.sub_process === 'cartera'
             ? <Button onClick={handleCreateBase}>Asignar Nueva Base</Button>
             : <Button variant='ghost'></Button>
         }
@@ -97,7 +97,7 @@ const BasesPage = () => {
                 </TableCell>
                 <TableCell>
                   {
-                    user.sub_process === 'aux cartera'
+                    user.sub_process === 'cartera'
                       ? <Button variant='primary' onClick={handleClick(item.VINCULADO)}>Actualizar</Button>
                       : <Button variant='ghost' ></Button>
                   }
