@@ -47,7 +47,7 @@ const BasesDetalle = () => {
       OBS: fields.obs as string
     }
 
-    axios.post(`${API_URL}/updateBase`, { ...newData, VINCULADO: id, BASE_ACT: data?.BASE, RASPE_ACT: data?.RASPE, LOGIN: user.username })
+    axios.post(`${API_URL}/updateBase`, { ...newData, VINCULADO: id, BASE_ACT: data?.BASE, RASPE_ACT: data?.RASPE, LOGIN: user?.username })
       .then(response => {
         console.log(response)
         if (response.status === 200) {
