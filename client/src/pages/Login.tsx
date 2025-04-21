@@ -5,7 +5,7 @@ import { toast, Toaster } from 'sonner'
 import { useState } from 'react'
 import axios from 'axios'
 
-import { LOGIN_URL, APP_NAME } from '../utils/contanst'
+import { LOGIN_URL } from '../utils/contanst'
 import { useAuth } from '../auth/AuthProvider'
 
 function LoginPage (): JSX.Element {
@@ -17,7 +17,7 @@ function LoginPage (): JSX.Element {
   const handleSubmit = (ev: React.FormEvent) => {
     ev.preventDefault()
 
-    axios.post(`${LOGIN_URL}/login`, { username: user, password, app: APP_NAME })
+    axios.post(`${LOGIN_URL}/login`, { username: user, password })
       .then(res => {
         if (res.status === 200) {
           console.log(res.data)
