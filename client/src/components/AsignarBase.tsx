@@ -19,7 +19,7 @@ export function AginarNuevaBaseComponent ({ nombres, vinculado, funClose }: Prop
 
   const handleSubmit = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
-    axios.post(`${API_URL}/asignar-base`, { base, raspa, vinculado, login: user.username })
+    axios.post(`${API_URL}/asignar-base`, { base, raspa, vinculado, login: user?.username })
       .then(res => {
         console.log(res.data)
         if (res.status === 201) {

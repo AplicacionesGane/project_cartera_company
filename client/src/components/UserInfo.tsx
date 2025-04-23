@@ -5,7 +5,7 @@ import { LogoutIcon } from './icons'
 import axios from 'axios'
 
 interface Props {
-  user: User
+  user: User | null
 }
 
 function UserInfo ({ user }: Props) {
@@ -16,7 +16,7 @@ function UserInfo ({ user }: Props) {
     axios.post(`${LOGIN_URL}/logout`, { token })
       .then(res => {
         console.log(res.data)
-        setUser({ username: '', email: '', names: '', lastnames: '', company: '', process: '', sub_process: '', id: '', app: '' })
+        setUser(null)
         setIsAuthenticated(false)
       })
       .catch(err => console.log(err))
@@ -25,11 +25,11 @@ function UserInfo ({ user }: Props) {
   return (
     <>
       <div className='flex  items-center gap-2 border-b pb-2'>
-        <p className='text-2xl font-semibold rounded-full bg-blue-200 px-3 py-2 border shadow-md'>{user.names[0]}{user.lastnames[0]}</p>
-        <p className='font-medium pt-1'><span>{user.lastnames.split(' ')[0]} {user.names} </span></p>
+        <p className='text-2xl font-semibold rounded-full bg-blue-200 px-3 py-2 border shadow-md'>{user?.names[0]}{user?.lastnames[0]}</p>
+        <p className='font-medium pt-1'><span>{user?.lastnames.split(' ')[0]} {user?.names} </span></p>
       </div>
       <div className='border-b pb-2 pt-1'>
-        <p className='font-medium'>{user.email.toLocaleLowerCase()}</p>
+        <p className='font-medium'>{user?.email.toLocaleLowerCase()}</p>
       </div>
       <button className='flex items-center gap-2 pt-1 hover:underline hover:text-blue-500'
         onClick={handleLogout}>

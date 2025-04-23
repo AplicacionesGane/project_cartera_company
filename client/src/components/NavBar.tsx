@@ -62,8 +62,8 @@ export default function NavBar () {
            hover:bg-blue-500 dark:hover:bg-dark-tremor-brand-faint dark:bg-dark-tremor-brand-faint' ref={buttonRef}
           onClick={() => setVisible(!visible)} >
           <article className='font-semibold text-white flex gap-0.5'>
-            <p>{user.names.split(' ')[0].slice(0, 1).toUpperCase()}</p>
-            <p>{user.lastnames.split(' ')[0].slice(0, 1).toUpperCase()}</p>
+            <p>{user?.names.split(' ')[0].slice(0, 1).toUpperCase()}</p>
+            <p>{user?.lastnames.split(' ')[0].slice(0, 1).toUpperCase()}</p>
           </article>
         </button>
       </ul>
@@ -71,7 +71,7 @@ export default function NavBar () {
       {visible && (
         <div ref={menuRef}
           className='absolute z-50 bg-white border shadow-md right-2 top-14 px-5 py-2 mt-1 rounded-md flex flex-col gap-1'>
-          <UserInfo key={user.id} user={user} />
+          <UserInfo key={user?.id} user={user} />
         </div>
       )}
     </nav>
