@@ -8,18 +8,20 @@ import { CARTERA_FRONTEND, PORT, VERSION } from './config'
 
 const app = express()
 
-app.use(morgan('dev'))
-app.use(express.json())
-app.use(cors({
-  origin: CARTERA_FRONTEND,
-  credentials: true,
-}))
+app.disable('x-powered-by')
+  .use(express.json())
+  .use(morgan('dev'))
+  .use(express.urlencoded({ extended: true }))
+  .use(cors({
+    origin: CARTERA_FRONTEND,
+    credentials: true,
+  }))
 
 app.use(VERSION, CarteraRouter)
-app.use(VERSION, BasesRouter)
-app.use(VERSION, SellersRouter)
-app.use(VERSION, routerResumen)
-app.use(VERSION, recaudoRouter)
+  .use(VERSION, BasesRouter)
+  .use(VERSION, SellersRouter)
+  .use(VERSION, routerResumen)
+  .use(VERSION, recaudoRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running at http:localhost:${PORT}`)

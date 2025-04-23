@@ -12,10 +12,9 @@ function UserInfo ({ user }: Props) {
   const { setUser, setIsAuthenticated } = useAuth()
 
   const handleLogout = () => {
-    const token = document.cookie
-    axios.post(`${LOGIN_URL}/logout`, { token })
+    axios.get(`${LOGIN_URL}/logout`, )
       .then(res => {
-        console.log(res.data)
+        console.log(res);
         setUser(null)
         setIsAuthenticated(false)
       })
