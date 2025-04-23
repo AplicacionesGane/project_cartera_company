@@ -29,7 +29,8 @@ export const getCartera = async (req: Request, res: Response) => {
   const { empresa, abs } = req.query;
 
   if (!empresa || !abs) {
-    return res.status(400).json({ message: 'Missing parameters' });
+    res.status(400).json({ message: 'Missing parameters' });
+    return 
   }
 
   const absBool = abs === 'true' ? true : false;
@@ -37,10 +38,10 @@ export const getCartera = async (req: Request, res: Response) => {
   try {
     const results = await CarteraDataServices(empresa as string, absBool);
     const mapeado = mapCarteraResults(results);
-    return res.status(200).json(mapeado);
+    res.status(200).json(mapeado);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Internal server error', error });
+    res.status(500).json({ message: 'Internal server error', error });
   }
 }
 
@@ -48,11 +49,13 @@ export const getReportMngr = async (req: Request, res: Response) => {
   const { success, data, error } = schema.safeParse(req.body);
 
   if (!success) {
-    return res.status(400).json({ message: error.format() });
+    res.status(400).json({ message: error.format() });
+    return 
   }
 
   if (!data) {
-    return res.status(400).json({ message: 'Missing parameters' });
+    res.status(400).json({ message: 'Missing parameters' });
+    return 
   }
 
   const fecha1 = data.fecha1.split(' ')[0];
@@ -81,7 +84,8 @@ export const getReportMngr = async (req: Request, res: Response) => {
     const SellerPowerBi = CarteraInicial?.Seller
 
     if (!SellerPowerBi) {
-      return res.status(404).json({ message: 'El documento ingresado no se encuentra en BD POWER BI' });
+      res.status(404).json({ message: 'El documento ingresado no se encuentra en BD POWER BI' });
+      return 
     }
 
     const base = await Bases.findOne({ attributes: ['BASE'], where: { VINCULADO: vinculado } })
@@ -120,10 +124,9 @@ export const getReportMngr = async (req: Request, res: Response) => {
     });
 
     res.status(200).json({ cartera: data, CarteraInicial, Seller: SellerPowerBi, base: base?.BASE || 0 });
-    return
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Internal server error', error });
+    res.status(500).json({ message: 'Internal server error', error });
   } finally {
     if (connetion) {
       connetion.close();
