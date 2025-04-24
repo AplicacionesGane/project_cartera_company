@@ -7,10 +7,11 @@ import { API_URL } from '../utils/contanst'
 import { toast } from 'sonner'
 import axios from 'axios'
 
-export default function ReportClienteGanadores () {
+export default function ReportClienteGanadores() {
   const [date1, setDate1] = useState('')
   const [date2, setDate2] = useState('')
   const [zona, setZona] = useState<string | undefined>(undefined)
+  const [loading, setLoading] = useState<boolean>(false)
   const [filter, setFilter] = useState<string>('')
 
   const [data, setData] = useState<DataReporte[] | null>(null)
@@ -30,9 +31,12 @@ export default function ReportClienteGanadores () {
       return
     }
 
+    setLoading(true)
+
     axios.post<DataReporte[]>(`${API_URL}/reportRecaudo`, { fecha1: date1.toString().slice(0, 10), fecha2: date2.toString().slice(0, 10), zona })
       .then(res => setData(res.data))
       .catch(err => console.log(err))
+      .finally(() => setLoading(false))
   }
 
   const filteredData = useMemo(() => {
@@ -61,8 +65,18 @@ export default function ReportClienteGanadores () {
             <option value='102'>Multired</option>
           </SelectNative>
 
-          <Button type='submit'>
-            Buscar
+          <Button
+            disabled={loading}
+            type='submit'
+          >
+            {
+              loading ? <div className='flex items-center justify-center gap-2'>
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 1 1 16 0A8 8 0 0 1 4 12z"></path>
+                </svg>
+                Buscando ...</div> : 'Buscar'
+            }
           </Button>
         </form>
 
