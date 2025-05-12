@@ -5,6 +5,7 @@ import { FormEvent, useState } from 'react'
 import { Response } from '../types/cartera'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
+import { toast } from 'sonner'
 
 export default function ReportMngr () {
   const [data, setData] = useState<Response | null>(null)
@@ -15,6 +16,13 @@ export default function ReportMngr () {
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault()
+
+    // validar que el documento tenga solo números
+    if (!documento.match(/^[0-9]+$/)) {
+      toast.error('El documento debe tener solo números', { description: 'Verificar documento' })
+      setLoading(false)
+      return
+    }
 
     setLoading(true)
     axios.post(`${API_URL}/carteraMngr`, { vinculado: documento, fecha1, fecha2 }, { timeout: 180000 })

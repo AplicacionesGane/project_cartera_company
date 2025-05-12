@@ -82,7 +82,7 @@ export const getReportOracle = async (req: Request, res: Response) => {
 
   const formattedDate1 = fecha.split('-').reverse().join('/');
   const formattedDate2 = fecha2.split('-').reverse().join('/');
-
+  
   try {
     const { rows, metaData } = await reportConsolidadoVenta(formattedDate1, formattedDate2, documento);
 
