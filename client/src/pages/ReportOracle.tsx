@@ -21,6 +21,13 @@ function ReportOracle() {
 
     setLoading(true)
 
+    // validar que el documento tenga solo números
+    if (!documento.match(/^[0-9]+$/)) {
+      toast.error('El documento debe tener solo números', { description: 'Verificar documento' })
+      setLoading(false)
+      return
+    }
+
     axios.post(`${API_URL}/reportOracle`, { fecha: fecha.slice(0, 10), fecha2: fecha2.slice(0, 10), documento })
       .then(res => {
         setData(res.data)
