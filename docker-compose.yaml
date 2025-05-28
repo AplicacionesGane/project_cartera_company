@@ -15,7 +15,7 @@ services:
 
   api-cartera-v1:
     build: ./api
-    image: api-cartera:v1.1
+    image: api-cartera:v1.2
     container_name: api_cartera_v1
     restart: always
     networks:

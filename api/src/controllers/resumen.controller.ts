@@ -21,7 +21,7 @@ export const getCarteraResumen = async (req: Request, res: Response) => {
     const Array = Object.entries(ReduceCartera).map(([Empresa, Cargo]) => ({
       Empresa,
       ...Cargo
-    }))
+    }))  
 
     return res.status(200).json(Array)
   } catch (error) {
