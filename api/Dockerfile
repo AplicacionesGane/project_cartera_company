@@ -7,9 +7,6 @@ COPY . /app
 # Instalar dependencias necesarias
 RUN apt-get update && apt-get install -y libaio1
 
-# Instalar dependencias y construir la aplicación
-RUN npm install && npm run build
-
 # Configurar Oracle Instant Client
 RUN mkdir -p /opt/oracle && \
     mv /app/instantclient_11_2 /opt/oracle && \
