@@ -1,4 +1,4 @@
-import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow, DonutChart } from './ui'
+import { DonutChart } from './ui'
 import { formatValue } from '../utils/funtions'
 import { DataIU } from '../types/interface'
 
@@ -38,36 +38,6 @@ export function TableInfo ({ data }: { data: DataIU[] }) {
         </div>
 
         <h1 className='text-center text-xl font-bold'>Total: {formatValue(total)}</h1>
-      </div>
-
-      <div className='flex items-center'>
-        <TableRoot>
-          <Table>
-            <TableHead className='bg-blue-600'>
-              <TableRow>
-                <TableHeaderCell className='text-white'>Empresa</TableHeaderCell>
-                <TableHeaderCell className='text-white'>Caj Comercial</TableHeaderCell>
-                <TableHeaderCell className='text-white'>Col Independiente</TableHeaderCell>
-                <TableHeaderCell className='text-white'>Caj Tesorería</TableHeaderCell>
-                <TableHeaderCell className='text-white'>Vendedor</TableHeaderCell>
-                <TableHeaderCell className='text-white'>No definido</TableHeaderCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell>{item.Empresa}</TableCell>
-                  <TableCell>{formatValue(item.Caj_Comercial)}</TableCell>
-                  <TableCell>{formatValue(item.Colo_Independiente)}</TableCell>
-                  <TableCell>{formatValue(item.Caj_Tesoreria || 0)}</TableCell>
-                  <TableCell>{formatValue(item.Vendedor || 0)}</TableCell>
-                  <TableCell>{formatValue(item.No_Definido || 0)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableRoot>
-
       </div>
 
     </section>
