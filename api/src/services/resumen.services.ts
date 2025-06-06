@@ -140,11 +140,6 @@ export const getCarteraXhoras = async (fecha?: string) => {
       empresa,
       totalRegistros: datos.length,
       datos: datos.sort((a, b) => a.HORA.localeCompare(b.HORA)), // Ordenar por hora
-      resumen: {
-        totalVLR_CA: datos.reduce((sum, item) => sum + (Number(item.VLR_CA) || 0), 0),
-        totalVLR_CI: datos.reduce((sum, item) => sum + (Number(item.VLR_CI) || 0), 0),
-        totalVLR_CT: datos.reduce((sum, item) => sum + (Number(item.VLR_CT) || 0), 0),
-      }
     }))
 
     // Asegurar que siempre retornemos datos para ambas empresas (aunque estén vacías)

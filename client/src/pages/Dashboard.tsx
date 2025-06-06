@@ -9,7 +9,7 @@ import axios from 'axios'
 
 function Dashboard () {
   const [data, setData] = useState<DataIU[]>([])
-  const [recaudo, setRecaudo] = useState<RecaudoI>({ multired: [], servired: [] })
+  const [recaudo, setRecaudo] = useState<RecaudoI | undefined>(undefined)
   const [fecha, setFecha] = useState<string>()
 
   const handleFechaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +29,7 @@ function Dashboard () {
 
     const fetchRecaudo = async () => {
       try {
-        const res = await axios.get(`${API_URL}/resumenRecaudo?fecha=${fecha || ''}`)
+        const res = await axios.get<RecaudoI>(`${API_URL}/resumenRecaudo?fecha=${fecha || ''}`)
         setRecaudo(res.data)
       } catch (err) {
         console.error(err)
@@ -114,10 +114,18 @@ function Dashboard () {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl p-6 border border-blue-200/50 dark:border-blue-700/50">
-              <ResumenRecaudo datos={recaudo.multired} name='Multired' />
+              {
+                recaudo && recaudo.multired && recaudo.multired.length > 0
+                  ? <ResumenRecaudo datos={recaudo.multired} name='Multired' />
+                  : <p className="text-gray-500 dark:text-gray-400">No hay datos de recaudo para Multired</p>
+              }
             </div>
             <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20 rounded-xl p-6 border border-indigo-200/50 dark:border-indigo-700/50">
-              <ResumenRecaudo datos={recaudo.servired} name='Servired' />
+              {
+                recaudo && recaudo.servired && recaudo.servired.length > 0
+                  ? <ResumenRecaudo datos={recaudo.servired} name='Servired' />
+                  : <p className="text-gray-500 dark:text-gray-400">No hay datos de recaudo para Servired</p>
+              }
             </div>
           </div>
         </section>
