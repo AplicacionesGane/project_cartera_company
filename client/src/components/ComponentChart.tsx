@@ -1,40 +1,21 @@
 import { LineChart, TooltipProps } from '../components/ui/ChartUtils'
-import { cx } from '../lib/utils'
 import { CarteraDataXHoraI } from '../types/interface'
+import { cx } from '../lib/utils'
 
 interface Issue {
-  status: 'completed' | 'in progress' | 'on hold'
+  status: 'VLR_CA' | 'VLR_CI' | 'VLR_CT'
   value: number
   percentage: number
 }
-
-interface DataEntry {
-  date: string
-  issues: Issue[]
-}
-
-// Transform data into a format suitable for LineChart
-const formattedArray = data.map((entry) => {
-  return {
-    date: entry.date,
-    ...entry.issues.reduce(
-      (acc, issue) => {
-        acc[issue.status] = issue.value
-        return acc
-      },
-      {} as { [key in Issue['status']]?: number }
-    )
-  }
-})
 
 const valueFormatter = (number: number) => {
   return Intl.NumberFormat('us').format(number).toString()
 }
 
 const status = {
-  completed: 'bg-blue-500 dark:bg-blue-500',
-  'in progress': 'bg-cyan-500 dark:bg-cyan-500',
-  'on hold': 'bg-violet-500 dark:bg-violet-500'
+  VLR_CA: 'bg-blue-500 dark:bg-blue-500',
+  VLR_CI: 'bg-cyan-500 dark:bg-cyan-500',
+  VLR_CT: 'bg-violet-500 dark:bg-violet-500'
 }
 
 const Tooltip = ({ payload, active, label }: TooltipProps) => {
@@ -45,9 +26,9 @@ const Tooltip = ({ payload, active, label }: TooltipProps) => {
     value: item.value,
     percentage: (
       (item.value /
-        (item.payload.completed +
-          item.payload['in progress'] +
-          item.payload['on hold'])) *
+        (item.payload.VLR_CA +
+          item.payload.VLR_CI +
+          item.payload.VLR_CT)) *
       100
     ).toFixed(2)
   }))
@@ -92,18 +73,39 @@ const Tooltip = ({ payload, active, label }: TooltipProps) => {
   )
 }
 
-export function LineChart4 ({ dataCartera }: { dataCartera?: CarteraDataXHoraI[] }) {
-  return (
-    <div>
+interface LineChart4Props {
+  dataCartera?: CarteraDataXHoraI[]
+  empresa?: string
+  total?: number
+}
 
+export function LineChart4 ({ dataCartera, empresa, total }:LineChart4Props) {
+  // Transform the dataCartera array to the format expected by LineChart
+  const formattedData = dataCartera?.map(item => ({
+    date: item.HORA,
+    VLR_CA: item.VLR_CA,
+    VLR_CI: item.VLR_CI,
+    VLR_CT: item.VLR_CT
+  })) || []
+
+  return (
+    <div className='w-full'>
+      <header>
+        <div className='flex items-center mb-6'>
+          <div className='w-1 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full mr-4' />
+          <h2 className='text-xl font-semibold text-slate-800 dark:text-white'>
+            {empresa} ({total} registros)
+          </h2>
+        </div>
+      </header>
       <LineChart
-        className='h-64'
-        data={formattedArray}
+        className='h-80'
+        data={formattedData}
         index='date'
-        categories={['completed', 'in progress', 'on hold']}
+        categories={['VLR_CA', 'VLR_CI', 'VLR_CT']}
         colors={['blue', 'cyan', 'violet']}
         valueFormatter={valueFormatter}
-        yAxisWidth={35}
+        yAxisWidth={100}
         showLegend={false}
         customTooltip={Tooltip}
       />
