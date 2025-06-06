@@ -23,14 +23,7 @@ const Tooltip = ({ payload, active, label }: TooltipProps) => {
 
   const data = payload.map((item) => ({
     status: item.category as Issue['status'],
-    value: item.value,
-    percentage: (
-      (item.value /
-        (item.payload.VLR_CA +
-          item.payload.VLR_CI +
-          item.payload.VLR_CT)) *
-      100
-    ).toFixed(2)
+    value: item.value
   }))
 
   return (
@@ -59,10 +52,7 @@ const Tooltip = ({ payload, active, label }: TooltipProps) => {
               </span>
               <div className='flex items-center space-x-1'>
                 <span className='font-medium text-gray-900 dark:text-gray-50'>
-                  {item.value}
-                </span>
-                <span className='text-gray-500 dark:text-gray-500'>
-                  ({item.percentage}&#37;)
+                  $ {valueFormatter(item.value)}
                 </span>
               </div>
             </div>
