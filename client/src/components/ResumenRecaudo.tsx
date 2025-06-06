@@ -34,9 +34,9 @@ const RenderEstado = ({ estado }: { estado: string }) => {
 
 function ResumenRecaudo ({ datos, name }: { datos: DatesI[], name: string }) {
   return (
-    <section className='mt-12'>
+    <section className='flex flex-col w-full items-center justify-center'>
       <h1 className='text-center py-2 font-semibold'>Resumen Recaudo {name}</h1>
-      <TableRoot className='mt-8'>
+      <TableRoot className='mt-8 bg-slate-50 shadow-lg rounded-lg'>
         <Table>
           <TableHead>
             <TableRow className='bg-blue-600'>

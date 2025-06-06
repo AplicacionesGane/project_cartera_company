@@ -4,7 +4,7 @@ import { TableRoot, Table, TableBody, TableCell, TableHead, TableHeaderCell, Tab
 
 export function TableInfo2Comp({ data }: { data: DataIU[] }) {
     return (
-        <div className='flex items-center'>
+        <div className='flex w-full items-center justify-center'>
             <TableRoot>
                 <Table>
                     <TableHead className='bg-blue-600'>

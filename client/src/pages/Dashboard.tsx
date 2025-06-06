@@ -42,30 +42,101 @@ function Dashboard() {
   }, [])
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      {/* Header con título y stats rápidas */}
+      <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-700 z-10">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-800 dark:text-white">
+                Dashboard
+              </h1>
+              <p className="text-slate-600 dark:text-slate-300 mt-1">
+                Panel de control de cartera y recaudos
+              </p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 px-3 py-1 rounded-full text-sm font-medium">
+                🟢 En línea
+              </div>
+              <div className="text-sm text-slate-500 dark:text-slate-400">
+                Actualizado por ultima vez: {new Date().toLocaleTimeString()}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <section className='max-w-7xl mx-auto p-4'>
-        <LineChart4 />
-      </section>
+      <div className="mx-auto p-6 space-y-8">
+        {/* Sección de gráficos principales */}
+        <section className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 dark:border-slate-700/50 p-6 hover:shadow-2xl transition-all duration-300">
+          <div className="flex items-center mb-6">
+            <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full mr-4"></div>
+            <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
+              Análisis de Tendencias
+            </h2>
+          </div>
+          <LineChart4 />
+        </section>
 
-      <section className='flex w-full gap-2'>
-        <TableInfo data={data} />
-      </section>
+        {/* Grid de información principal */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          {/* Tabla de información principal */}
+          <section className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 dark:border-slate-700/50 p-6 hover:shadow-2xl transition-all duration-300">
+            <div className="flex items-center mb-6">
+              <div className="w-1 h-8 bg-gradient-to-b from-emerald-500 to-green-600 rounded-full mr-4"></div>
+              <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
+                Información de Cartera
+              </h2>
+            </div>
+            <TableInfo data={data} />
+          </section>
 
-      <section className='flex w-full justify-around mt-4'>
-        <TableInfo2Comp data={data} />
-      </section>
+          {/* Tabla de información secundaria */}
+          <section className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 dark:border-slate-700/50 p-6 hover:shadow-2xl transition-all duration-300">
+            <div className="flex items-center mb-6">
+              <div className="w-1 h-8 bg-gradient-to-b from-purple-500 to-violet-600 rounded-full mr-4"></div>
+              <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
+                Resumen Detallado
+              </h2>
+            </div>
+            <TableInfo2Comp data={data} />
+          </section>
+        </div>
 
-      <section className='flex justify-around'>
-        {
-          <>
-            <ResumenRecaudo datos={recaudo.multired} name='Multired' />
-            <ResumenRecaudo datos={recaudo.servired} name='Servired' />
-          </>
-        }
-      </section>
+        {/* Sección de recaudos */}
+        <section className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 dark:border-slate-700/50 p-6 hover:shadow-2xl transition-all duration-300">
+          <div className="flex items-center mb-6">
+            <div className="w-1 h-8 bg-gradient-to-b from-orange-500 to-red-600 rounded-full mr-4"></div>
+            <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
+              Resumen de Recaudos
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl p-6 border border-blue-200/50 dark:border-blue-700/50">
+              <ResumenRecaudo datos={recaudo.multired} name='Multired' />
+            </div>
+            <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20 rounded-xl p-6 border border-indigo-200/50 dark:border-indigo-700/50">
+              <ResumenRecaudo datos={recaudo.servired} name='Servired' />
+            </div>
+          </div>
+        </section>
+      </div>
 
-    </>
+      {/* Footer con información adicional */}
+      <div className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border-t border-slate-200 dark:border-slate-700 mt-12">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">
+            <div>
+              © 2025 Sistema de Cartera. Todos los derechos reservados.
+            </div>
+            <div className="flex items-center space-x-4">
+              <span>Última actualización: {new Date().toLocaleTimeString()}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
