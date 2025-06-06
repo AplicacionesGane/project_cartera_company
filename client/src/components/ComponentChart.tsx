@@ -257,7 +257,10 @@ const Tooltip = ({ payload, active, label }: TooltipProps) => {
   )
 }
 
-export function LineChart4 () {
+export function LineChart4 ({ funDate }: { funDate: (event: React.ChangeEvent<HTMLInputElement>) => void }) {
+  // Obtener la fecha actual en formato YYYY-MM-DD
+  const today = new Date().toISOString().split('T')[0]
+
   return (
     <div>
       <header className='flex items-center justify-between mb-6'>
@@ -272,7 +275,13 @@ export function LineChart4 () {
             <Label className=''>
               Seleccione fecha
             </Label>
-            <Input type='date' className='w-44' />
+            <Input
+              type='date'
+              className='w-44'
+              max={today}
+              defaultValue={today}
+              onChange={funDate}
+            />
           </article>
         </div>
       </header>

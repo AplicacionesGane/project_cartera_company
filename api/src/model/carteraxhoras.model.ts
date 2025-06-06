@@ -1,5 +1,6 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 import { conection } from '../connections'
+import exp from 'constants';
 
 class Carteraxhoras extends Model<InferAttributes<Carteraxhoras>, InferCreationAttributes<Carteraxhoras>> {
   declare FECHA: Date;
@@ -25,3 +26,5 @@ Carteraxhoras.init({
   tableName: 'CARTERAXHORAS',
   timestamps: false
 });
+
+export { Carteraxhoras };

@@ -10,6 +10,12 @@ import axios from 'axios'
 function Dashboard () {
   const [data, setData] = useState<DataIU[]>([])
   const [recaudo, setRecaudo] = useState<RecaudoI>({ multired: [], servired: [] })
+  const [fecha, setFecha] = useState<string>()
+
+  const handleFechaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
+    setFecha(event.target.value)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +29,7 @@ function Dashboard () {
 
     const fetchRecaudo = async () => {
       try {
-        const res = await axios.get(`${API_URL}/resumenRecaudo`)
+        const res = await axios.get(`${API_URL}/resumenRecaudo?fecha=${fecha || ''}`)
         setRecaudo(res.data)
       } catch (err) {
         console.error(err)
@@ -39,7 +45,7 @@ function Dashboard () {
     }, 900000) // 15 minutes in milliseconds
 
     return () => clearInterval(interval)
-  }, [])
+  }, [fecha])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
@@ -70,7 +76,7 @@ function Dashboard () {
       <div className="mx-auto p-6 space-y-8">
         {/* Sección de gráficos principales */}
         <section className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 dark:border-slate-700/50 p-6 hover:shadow-2xl transition-all duration-300">
-          <LineChart4 />
+          <LineChart4 funDate={handleFechaChange} />
         </section>
 
         {/* Grid de información principal */}
