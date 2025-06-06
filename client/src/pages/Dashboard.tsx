@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
 
-function Dashboard() {
+function Dashboard () {
   const [data, setData] = useState<DataIU[]>([])
   const [recaudo, setRecaudo] = useState<RecaudoI>({ multired: [], servired: [] })
 
@@ -70,12 +70,6 @@ function Dashboard() {
       <div className="mx-auto p-6 space-y-8">
         {/* Sección de gráficos principales */}
         <section className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 dark:border-slate-700/50 p-6 hover:shadow-2xl transition-all duration-300">
-          <div className="flex items-center mb-6">
-            <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full mr-4"></div>
-            <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
-              Análisis de Tendencias
-            </h2>
-          </div>
           <LineChart4 />
         </section>
 
@@ -123,19 +117,6 @@ function Dashboard() {
         </section>
       </div>
 
-      {/* Footer con información adicional */}
-      <div className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border-t border-slate-200 dark:border-slate-700 mt-12">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">
-            <div>
-              © 2025 Sistema de Cartera. Todos los derechos reservados.
-            </div>
-            <div className="flex items-center space-x-4">
-              <span>Última actualización: {new Date().toLocaleTimeString()}</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }

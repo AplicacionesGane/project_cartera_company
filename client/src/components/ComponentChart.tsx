@@ -1,8 +1,9 @@
-import { LineChart, TooltipProps } from "../components/ui/ChartUtils"
-import { cx } from "../lib/utils"
+import { LineChart, TooltipProps } from '../components/ui/ChartUtils'
+import { cx } from '../lib/utils'
+import { Input, Label } from './ui'
 
 interface Issue {
-  status: "completed" | "in progress" | "on hold"
+  status: 'completed' | 'in progress' | 'on hold'
   value: number
   percentage: number
 }
@@ -13,168 +14,168 @@ interface DataEntry {
 }
 
 const data: DataEntry[] = [
-  //array-start
+  // array-start
   {
-    date: "Jun 1, 24",
+    date: 'Jun 1, 24',
     issues: [
       {
-        status: "completed",
+        status: 'completed',
         value: 47,
-        percentage: 24.2,
+        percentage: 24.2
       },
       {
-        status: "in progress",
+        status: 'in progress',
         value: 83,
-        percentage: 41.9,
+        percentage: 41.9
       },
       {
-        status: "on hold",
+        status: 'on hold',
         value: 67,
-        percentage: 33.9,
-      },
-    ],
+        percentage: 33.9
+      }
+    ]
   },
   {
-    date: "Jun 2, 24",
+    date: 'Jun 2, 24',
     issues: [
       {
-        status: "completed",
+        status: 'completed',
         value: 20,
-        percentage: 20.6,
+        percentage: 20.6
       },
       {
-        status: "in progress",
+        status: 'in progress',
         value: 97,
-        percentage: 77.3,
+        percentage: 77.3
       },
       {
-        status: "on hold",
+        status: 'on hold',
         value: 12,
-        percentage: 2.1,
-      },
-    ],
+        percentage: 2.1
+      }
+    ]
   },
   {
-    date: "Jun 3, 24",
+    date: 'Jun 3, 24',
     issues: [
       {
-        status: "completed",
+        status: 'completed',
         value: 30,
-        percentage: 29.4,
+        percentage: 29.4
       },
       {
-        status: "in progress",
+        status: 'in progress',
         value: 45,
-        percentage: 43.1,
+        percentage: 43.1
       },
       {
-        status: "on hold",
+        status: 'on hold',
         value: 66,
-        percentage: 27.5,
-      },
-    ],
+        percentage: 27.5
+      }
+    ]
   },
   {
-    date: "Jun 4, 24",
+    date: 'Jun 4, 24',
     issues: [
       {
-        status: "completed",
+        status: 'completed',
         value: 41,
-        percentage: 28.1,
+        percentage: 28.1
       },
       {
-        status: "in progress",
+        status: 'in progress',
         value: 18,
-        percentage: 17.9,
+        percentage: 17.9
       },
       {
-        status: "on hold",
+        status: 'on hold',
         value: 70,
-        percentage: 54.0,
-      },
-    ],
+        percentage: 54.0
+      }
+    ]
   },
   {
-    date: "Jun 5, 24",
+    date: 'Jun 5, 24',
     issues: [
       {
-        status: "completed",
+        status: 'completed',
         value: 55,
-        percentage: 28.8,
+        percentage: 28.8
       },
       {
-        status: "in progress",
+        status: 'in progress',
         value: 14,
-        percentage: 25.0,
+        percentage: 25.0
       },
       {
-        status: "on hold",
+        status: 'on hold',
         value: 60,
-        percentage: 46.2,
-      },
-    ],
+        percentage: 46.2
+      }
+    ]
   },
   {
-    date: "Jun 6, 24",
+    date: 'Jun 6, 24',
     issues: [
       {
-        status: "completed",
+        status: 'completed',
         value: 35,
-        percentage: 28.8,
+        percentage: 28.8
       },
       {
-        status: "in progress",
+        status: 'in progress',
         value: 14,
-        percentage: 19.2,
+        percentage: 19.2
       },
       {
-        status: "on hold",
+        status: 'on hold',
         value: 80,
-        percentage: 51.9,
-      },
-    ],
+        percentage: 51.9
+      }
+    ]
   },
   {
-    date: "Jun 7, 24",
+    date: 'Jun 7, 24',
     issues: [
       {
-        status: "completed",
+        status: 'completed',
         value: 15,
-        percentage: 20.0,
+        percentage: 20.0
       },
       {
-        status: "in progress",
+        status: 'in progress',
         value: 55,
-        percentage: 35.2,
+        percentage: 35.2
       },
       {
-        status: "on hold",
+        status: 'on hold',
         value: 72,
-        percentage: 44.8,
-      },
-    ],
+        percentage: 44.8
+      }
+    ]
   },
   {
-    date: "Jun 8, 24",
+    date: 'Jun 8, 24',
     issues: [
       {
-        status: "completed",
+        status: 'completed',
         value: 15,
-        percentage: 21.7,
+        percentage: 21.7
       },
       {
-        status: "in progress",
+        status: 'in progress',
         value: 69,
-        percentage: 48.2,
+        percentage: 48.2
       },
       {
-        status: "on hold",
+        status: 'on hold',
         value: 45,
-        percentage: 30.1,
-      },
-    ],
-  },
-  //array-end
+        percentage: 30.1
+      }
+    ]
+  }
+  // array-end
 ]
 
 // Transform data into a format suitable for LineChart
@@ -186,65 +187,65 @@ const formattedArray = data.map((entry) => {
         acc[issue.status] = issue.value
         return acc
       },
-      {} as { [key in Issue["status"]]?: number },
-    ),
+      {} as { [key in Issue['status']]?: number }
+    )
   }
 })
 
 const valueFormatter = (number: number) => {
-  return Intl.NumberFormat("us").format(number).toString()
+  return Intl.NumberFormat('us').format(number).toString()
 }
 
 const status = {
-  completed: "bg-blue-500 dark:bg-blue-500",
-  "in progress": "bg-cyan-500 dark:bg-cyan-500",
-  "on hold": "bg-violet-500 dark:bg-violet-500",
+  completed: 'bg-blue-500 dark:bg-blue-500',
+  'in progress': 'bg-cyan-500 dark:bg-cyan-500',
+  'on hold': 'bg-violet-500 dark:bg-violet-500'
 }
 
 const Tooltip = ({ payload, active, label }: TooltipProps) => {
   if (!active || !payload || payload.length === 0) return null
 
   const data = payload.map((item) => ({
-    status: item.category as Issue["status"],
+    status: item.category as Issue['status'],
     value: item.value,
     percentage: (
       (item.value /
         (item.payload.completed +
-          item.payload["in progress"] +
-          item.payload["on hold"])) *
+          item.payload['in progress'] +
+          item.payload['on hold'])) *
       100
-    ).toFixed(2),
+    ).toFixed(2)
   }))
 
   return (
     <>
-      <div className="w-60 rounded-md border border-gray-500/10 bg-blue-500 px-4 py-1.5 text-sm shadow-md dark:border-gray-400/20 dark:bg-gray-900">
-        <p className="flex items-center justify-between">
-          <span className="text-gray-50 dark:text-gray-50">Date</span>
-          <span className="font-medium text-gray-50 dark:text-gray-50">
+      <div className='w-60 rounded-md border border-gray-500/10 bg-blue-500 px-4 py-1.5 text-sm shadow-md dark:border-gray-400/20 dark:bg-gray-900'>
+        <p className='flex items-center justify-between'>
+          <span className='text-gray-50 dark:text-gray-50'>Date</span>
+          <span className='font-medium text-gray-50 dark:text-gray-50'>
             {label}
           </span>
         </p>
       </div>
-      <div className="mt-1 w-60 space-y-1 rounded-md border border-gray-500/10 bg-white px-4 py-2 text-sm shadow-md dark:border-gray-400/20 dark:bg-gray-900">
+      <div className='mt-1 w-60 space-y-1 rounded-md border border-gray-500/10 bg-white px-4 py-2 text-sm shadow-md dark:border-gray-400/20 dark:bg-gray-900'>
         {data.map((item, index) => (
-          <div key={index} className="flex items-center space-x-2.5">
+          <div key={index} className='flex items-center space-x-2.5'>
             <span
               className={cx(
                 status[item.status],
-                "size-2.5 shrink-0 rounded-xs",
+                'size-2.5 shrink-0 rounded-xs'
               )}
               aria-hidden={true}
             />
-            <div className="flex w-full justify-between">
-              <span className="text-gray-700 dark:text-gray-300">
+            <div className='flex w-full justify-between'>
+              <span className='text-gray-700 dark:text-gray-300'>
                 {item.status}
               </span>
-              <div className="flex items-center space-x-1">
-                <span className="font-medium text-gray-900 dark:text-gray-50">
+              <div className='flex items-center space-x-1'>
+                <span className='font-medium text-gray-900 dark:text-gray-50'>
                   {item.value}
                 </span>
-                <span className="text-gray-500 dark:text-gray-500">
+                <span className='text-gray-500 dark:text-gray-500'>
                   ({item.percentage}&#37;)
                 </span>
               </div>
@@ -256,15 +257,32 @@ const Tooltip = ({ payload, active, label }: TooltipProps) => {
   )
 }
 
-export function LineChart4() {
+export function LineChart4 () {
   return (
     <div>
+      <header className='flex items-center justify-between mb-6'>
+        <div className="flex items-center">
+          <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full mr-4"></div>
+          <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
+            Análisis de Tendencias
+          </h2>
+        </div>
+        <div>
+          <article className='w-96 flex items-center justify-around border p-4 rounded-md'>
+            <Label className=''>
+              Seleccione fecha
+            </Label>
+            <Input type='date' className='w-44' />
+          </article>
+        </div>
+      </header>
+
       <LineChart
-        className="h-64"
+        className='h-64'
         data={formattedArray}
-        index="date"
-        categories={["completed", "in progress", "on hold"]}
-        colors={["blue", "cyan", "violet"]}
+        index='date'
+        categories={['completed', 'in progress', 'on hold']}
+        colors={['blue', 'cyan', 'violet']}
         valueFormatter={valueFormatter}
         yAxisWidth={35}
         showLegend={false}
