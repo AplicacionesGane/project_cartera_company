@@ -117,15 +117,52 @@ export const getCarteraXhoras = async (fecha?: string) => {
 
     const results = await Carteraxhoras.findAll(queryOptions)
 
-    const formattedResults = results.map(item => ({
-      EMPRESA: item.EMPRESA === '101' ? 'Servired' : 'Multired',
-      HORA: item.HORA,
-      VLR_CA: item.VLR_CA,
-      VLR_CI: item.VLR_CI,
-      VLR_CT: item.VLR_CT,
+    // Agrupar resultados por empresa
+    const empresasData = results.reduce((acc, item) => {
+      const nombreEmpresa = item.EMPRESA === '101' ? 'Servired' : 'Multired'
+      
+      if (!acc[nombreEmpresa]) {
+        acc[nombreEmpresa] = []
+      }
+      
+      acc[nombreEmpresa].push({
+        HORA: item.HORA,
+        VLR_CA: item.VLR_CA,
+        VLR_CI: item.VLR_CI,
+        VLR_CT: item.VLR_CT,
+      })
+      
+      return acc
+    }, {} as Record<string, any[]>)
+
+    // Formatear el resultado final como array de empresas
+    const formattedResults = Object.entries(empresasData).map(([empresa, datos]) => ({
+      empresa,
+      totalRegistros: datos.length,
+      datos: datos.sort((a, b) => a.HORA.localeCompare(b.HORA)), // Ordenar por hora
+      resumen: {
+        totalVLR_CA: datos.reduce((sum, item) => sum + (Number(item.VLR_CA) || 0), 0),
+        totalVLR_CI: datos.reduce((sum, item) => sum + (Number(item.VLR_CI) || 0), 0),
+        totalVLR_CT: datos.reduce((sum, item) => sum + (Number(item.VLR_CT) || 0), 0),
+      }
     }))
 
-    return formattedResults
+    // Asegurar que siempre retornemos datos para ambas empresas (aunque estén vacías)
+    const empresasCompletas = ['Servired', 'Multired'].map(empresa => {
+      const empresaData = formattedResults.find(item => item.empresa === empresa)
+      return empresaData || {
+        empresa,
+        totalRegistros: 0,
+        datos: [],
+        resumen: {
+          totalVLR_CA: 0,
+          totalVLR_CI: 0,
+          totalVLR_CT: 0,
+        }
+      }
+    })
+
+    return empresasCompletas
   } catch (error) {
     console.error('Error en getCarteraXhoras:', error)
     throw error
