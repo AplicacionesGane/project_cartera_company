@@ -6,11 +6,16 @@ import { TableInfo } from '../components/TableInfo'
 import { useEffect, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
+import { Label } from 'recharts'
+import { Input } from '../components/ui'
 
 function Dashboard () {
   const [data, setData] = useState<DataIU[]>([])
   const [recaudo, setRecaudo] = useState<RecaudoI | undefined>(undefined)
   const [fecha, setFecha] = useState<string>()
+
+  // Obtener la fecha actual en formato YYYY-MM-DD
+  const today = new Date().toISOString().split('T')[0]
 
   const handleFechaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.value)
@@ -69,6 +74,28 @@ function Dashboard () {
                 Actualizado por ultima vez: {new Date().toLocaleTimeString()}
               </div>
             </div>
+            <header className='flex items-center justify-between mb-6'>
+              <div className="flex items-center">
+                <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full mr-4"></div>
+                <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
+                  Análisis de Tendencias
+                </h2>
+              </div>
+              <div>
+                <article className='w-96 flex items-center justify-around border p-4 rounded-md'>
+                  <Label className=''>
+                    Seleccione fecha
+                  </Label>
+                  <Input
+                    type='date'
+                    className='w-44'
+                    max={today}
+                    defaultValue={today}
+                    onChange={handleFechaChange}
+                  />
+                </article>
+              </div>
+            </header>
           </div>
         </div>
       </div>
@@ -76,7 +103,13 @@ function Dashboard () {
       <div className="mx-auto p-6 space-y-8">
         {/* Sección de gráficos principales */}
         <section className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm rounded-2xl shadow-xl border border-slate-200/50 dark:border-slate-700/50 p-6 hover:shadow-2xl transition-all duration-300">
-          <LineChart4 funDate={handleFechaChange} />
+          {
+            recaudo?.carteraXhoras && (
+              recaudo.carteraXhoras.map(emp => (
+                <LineChart4 key={emp.empresa} dataCartera={emp.datos}/>
+              ))
+            )
+          }
         </section>
 
         {/* Grid de información principal */}

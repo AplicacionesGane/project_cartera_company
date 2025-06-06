@@ -1,6 +1,6 @@
 import { LineChart, TooltipProps } from '../components/ui/ChartUtils'
 import { cx } from '../lib/utils'
-import { Input, Label } from './ui'
+import { CarteraDataXHoraI } from '../types/interface'
 
 interface Issue {
   status: 'completed' | 'in progress' | 'on hold'
@@ -12,171 +12,6 @@ interface DataEntry {
   date: string
   issues: Issue[]
 }
-
-const data: DataEntry[] = [
-  // array-start
-  {
-    date: 'Jun 1, 24',
-    issues: [
-      {
-        status: 'completed',
-        value: 47,
-        percentage: 24.2
-      },
-      {
-        status: 'in progress',
-        value: 83,
-        percentage: 41.9
-      },
-      {
-        status: 'on hold',
-        value: 67,
-        percentage: 33.9
-      }
-    ]
-  },
-  {
-    date: 'Jun 2, 24',
-    issues: [
-      {
-        status: 'completed',
-        value: 20,
-        percentage: 20.6
-      },
-      {
-        status: 'in progress',
-        value: 97,
-        percentage: 77.3
-      },
-      {
-        status: 'on hold',
-        value: 12,
-        percentage: 2.1
-      }
-    ]
-  },
-  {
-    date: 'Jun 3, 24',
-    issues: [
-      {
-        status: 'completed',
-        value: 30,
-        percentage: 29.4
-      },
-      {
-        status: 'in progress',
-        value: 45,
-        percentage: 43.1
-      },
-      {
-        status: 'on hold',
-        value: 66,
-        percentage: 27.5
-      }
-    ]
-  },
-  {
-    date: 'Jun 4, 24',
-    issues: [
-      {
-        status: 'completed',
-        value: 41,
-        percentage: 28.1
-      },
-      {
-        status: 'in progress',
-        value: 18,
-        percentage: 17.9
-      },
-      {
-        status: 'on hold',
-        value: 70,
-        percentage: 54.0
-      }
-    ]
-  },
-  {
-    date: 'Jun 5, 24',
-    issues: [
-      {
-        status: 'completed',
-        value: 55,
-        percentage: 28.8
-      },
-      {
-        status: 'in progress',
-        value: 14,
-        percentage: 25.0
-      },
-      {
-        status: 'on hold',
-        value: 60,
-        percentage: 46.2
-      }
-    ]
-  },
-  {
-    date: 'Jun 6, 24',
-    issues: [
-      {
-        status: 'completed',
-        value: 35,
-        percentage: 28.8
-      },
-      {
-        status: 'in progress',
-        value: 14,
-        percentage: 19.2
-      },
-      {
-        status: 'on hold',
-        value: 80,
-        percentage: 51.9
-      }
-    ]
-  },
-  {
-    date: 'Jun 7, 24',
-    issues: [
-      {
-        status: 'completed',
-        value: 15,
-        percentage: 20.0
-      },
-      {
-        status: 'in progress',
-        value: 55,
-        percentage: 35.2
-      },
-      {
-        status: 'on hold',
-        value: 72,
-        percentage: 44.8
-      }
-    ]
-  },
-  {
-    date: 'Jun 8, 24',
-    issues: [
-      {
-        status: 'completed',
-        value: 15,
-        percentage: 21.7
-      },
-      {
-        status: 'in progress',
-        value: 69,
-        percentage: 48.2
-      },
-      {
-        status: 'on hold',
-        value: 45,
-        percentage: 30.1
-      }
-    ]
-  }
-  // array-end
-]
 
 // Transform data into a format suitable for LineChart
 const formattedArray = data.map((entry) => {
@@ -257,34 +92,9 @@ const Tooltip = ({ payload, active, label }: TooltipProps) => {
   )
 }
 
-export function LineChart4 ({ funDate }: { funDate: (event: React.ChangeEvent<HTMLInputElement>) => void }) {
-  // Obtener la fecha actual en formato YYYY-MM-DD
-  const today = new Date().toISOString().split('T')[0]
-
+export function LineChart4 ({ dataCartera }: { dataCartera?: CarteraDataXHoraI[] }) {
   return (
     <div>
-      <header className='flex items-center justify-between mb-6'>
-        <div className="flex items-center">
-          <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full mr-4"></div>
-          <h2 className="text-xl font-semibold text-slate-800 dark:text-white">
-            Análisis de Tendencias
-          </h2>
-        </div>
-        <div>
-          <article className='w-96 flex items-center justify-around border p-4 rounded-md'>
-            <Label className=''>
-              Seleccione fecha
-            </Label>
-            <Input
-              type='date'
-              className='w-44'
-              max={today}
-              defaultValue={today}
-              onChange={funDate}
-            />
-          </article>
-        </div>
-      </header>
 
       <LineChart
         className='h-64'
