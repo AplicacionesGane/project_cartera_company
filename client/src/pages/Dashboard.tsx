@@ -1,11 +1,13 @@
 import { ResumenRecaudo } from '../components/ResumenRecaudo'
-import { TableInfo } from '../components/TableInfo'
+import { TableInfo2Comp } from '../components/TableInfo2Comp'
+import { LineChart4 } from '../components/ComponentChart'
 import { DataIU, RecaudoI } from '../types/interface'
+import { TableInfo } from '../components/TableInfo'
 import { useEffect, useState } from 'react'
 import { API_URL } from '../utils/contanst'
 import axios from 'axios'
 
-function Dashboard () {
+function Dashboard() {
   const [data, setData] = useState<DataIU[]>([])
   const [recaudo, setRecaudo] = useState<RecaudoI>({ multired: [], servired: [] })
 
@@ -41,15 +43,24 @@ function Dashboard () {
 
   return (
     <>
+
+      <section className='max-w-7xl mx-auto p-4'>
+        <LineChart4 />
+      </section>
+
       <section className='flex w-full gap-2'>
         <TableInfo data={data} />
+      </section>
+
+      <section className='flex w-full justify-around mt-4'>
+        <TableInfo2Comp data={data} />
       </section>
 
       <section className='flex justify-around'>
         {
           <>
-            <ResumenRecaudo datos={recaudo.multired} name='Multired'/>
-            <ResumenRecaudo datos={recaudo.servired} name='Servired'/>
+            <ResumenRecaudo datos={recaudo.multired} name='Multired' />
+            <ResumenRecaudo datos={recaudo.servired} name='Servired' />
           </>
         }
       </section>
