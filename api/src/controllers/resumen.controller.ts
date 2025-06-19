@@ -1,5 +1,5 @@
 import { getDetalleRecaudoMultired, getDetalleRecaudoServired, getResumenCartera, getCarteraXhoras } from '../services/resumen.services'
-import { calculateCartera, ReturCargo, sumarCarteraPorEmpresaYCargo } from '../utils/funtions'
+import { calculateCartera, sumarCarteraPorEmpresaYCargo } from '../utils/funtions'
 import { ObjectCartera } from '../types/interface'
 import { Request, Response } from 'express'
 
@@ -11,7 +11,7 @@ export const getCarteraResumen = async (req: Request, res: Response) => {
     const MapCartera = Queryresults.map((item) => ({
       Cartera: calculateCartera(item),
       Empresa: item.EMPRESA === '101' ? 'Servired' : 'Multired',
-      Cargo: ReturCargo(item.Seller?.NOMBRECARGO || 'NO DEFINIDO')
+      Cargo: item.Seller?.NOMBRECARGO || 'NO DEFINIDO'
     }))
 
     const FilterMayor0 = MapCartera.filter((item) => item.Cartera > 0) as ObjectCartera[]
