@@ -1,5 +1,6 @@
 import { ObjectCartera } from '../types/interface';
 
+/*
 export function ReturCargo(seller: string): string {
   const sellerRoles: { [key: string]: string } = {
     VENDEDOR: 'Vendedor',
@@ -10,6 +11,7 @@ export function ReturCargo(seller: string): string {
 
   return sellerRoles[seller] || 'No_Definido';
 }
+*/
 
 export function calcularNuevoSaldo(item: any): number {
   return item.SALDO_ANT - item.CREDITO - item.DEBITO
@@ -24,7 +26,7 @@ export function mapCarteraResults(results: any) {
     Empresa: item.EMPRESA === '101' ? 'Servired' : 'Multired',
     Vinculado: item.VINCULADO,
     Nombres: item.Seller?.NOMBRES,
-    Cargo: ReturCargo(item.Seller?.NOMBRECARGO),
+    Cargo: item.Seller?.NOMBRECARGO || 'No Registrado Bnet',
     Base: item.Basis?.BASE || 0,
     Raspe: item.Basis?.RASPE || 0,
     SaldoAnt: item.SALDO_ANT,
