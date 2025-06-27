@@ -111,7 +111,7 @@ export const getReportMngr = async (req: Request, res: Response) => {
       WHERE mcncuenta = '13459501'
       And mcnfecha between TO_DATE(:fecha1, 'DD-MM-YYYY') and TO_DATE(:fecha2, 'DD-MM-YYYY')
       AND (mcntpreg = 0 or mcntpreg = 1 or mcntpreg = 2 or mcntpreg > 6)
-      AND mcnVincula in (:documento)
+      AND mcnVincula = :documento
       GROUP BY mcnfecha, mcncuenta, mcnEmpresa, mcnVincula
       ORDER BY mcnfecha
     `, [frmDate1, frmDate2, vinculado]);
