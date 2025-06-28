@@ -21,11 +21,11 @@ export function TableInfo2Comp({ data }: { data: DataIU[] }) {
                         {data.map((item, index) => (
                             <TableRow key={index}>
                                 <TableCell>{item.Empresa}</TableCell>
-                                <TableCell>{formatValue(item.Caj_Comercial)}</TableCell>
-                                <TableCell>{formatValue(item.Colo_Independiente)}</TableCell>
-                                <TableCell>{formatValue(item.Caj_Tesoreria || 0)}</TableCell>
-                                <TableCell>{formatValue(item.Vendedor || 0)}</TableCell>
-                                <TableCell>{formatValue(item.No_Definido || 0)}</TableCell>
+                                <TableCell>{formatValue(item.CAJERO_COMERCIAL)}</TableCell>
+                                <TableCell>{formatValue(item.COLOCADOR_INDEPENDIENTE)}</TableCell>
+                                <TableCell>{formatValue(item.CAJERO_TESORERIA || 0)}</TableCell>
+                                <TableCell>{formatValue(item.VENDEDOR || 0)}</TableCell>
+                                <TableCell>{formatValue(item.NO_DEFINIDO || 0)}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
