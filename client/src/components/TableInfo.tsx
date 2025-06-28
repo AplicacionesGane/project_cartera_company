@@ -5,10 +5,8 @@ import { DataIU } from '../types/interface'
 export function TableInfo ({ data }: { data: DataIU[] }) {
   const dataUnifi = data.map((item) => ({
     name: item.Empresa,
-    value: (item.Caj_Comercial | 0) + (item.Colo_Independiente | 0) + (item.Caj_Tesoreria | 0) + (item.Vendedor | 0) + (item.No_Definido | 0)
+    value: (item.CAJERO_COMERCIAL | 0) + (item.COLOCADOR_INDEPENDIENTE | 0) + (item.CAJERO_TESORERIA | 0) + (item.VENDEDOR | 0) + (item.NO_DEFINIDO | 0)
   }))
-
-  console.log(dataUnifi);
 
   const total = dataUnifi.reduce((acc, item) => acc + item.value, 0)
 
