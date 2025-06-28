@@ -12,11 +12,11 @@ interface DatesI {
 
 export interface DataIU {
   Empresa: string;
-  Caj_Comercial: number;
-  Colo_Independiente: number;
-  Caj_Tesoreria: number;
-  Vendedor: number;
-  No_Definido: number;
+  CAJERO_COMERCIAL: number;
+  COLOCADOR_INDEPENDIENTE: number;
+  CAJERO_TESORERIA: number;
+  VENDEDOR: number;
+  NO_DEFINIDO: number;
 }
 
 export interface CarteraDataXHoraI {
